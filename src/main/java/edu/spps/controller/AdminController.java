@@ -14,6 +14,11 @@ public class AdminController {
 	@Autowired
 	AdminService adminservice;
 
+	@GetMapping("/")
+	public String home() {
+		return "AddTeacher";
+	}
+
 	@GetMapping("/addteacher")
 	public String showAddTeacherPage() {
 		return "AddTeacher";
@@ -24,7 +29,6 @@ public class AdminController {
 
 		adminservice.addTeacher(model);
 
-		return "redirect:/addteacher";
+		return "AddTeacher";
 	}
-
 }
