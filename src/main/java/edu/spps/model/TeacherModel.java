@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 public class TeacherModel {
 	private int id;
-	private String teacher_name;
+	private String name;
 	private String email;
 	private String contact;
 	private int experience;

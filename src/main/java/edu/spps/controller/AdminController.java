@@ -1,10 +1,14 @@
 package edu.spps.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import edu.spps.model.SubjectModel;
 import edu.spps.model.TeacherModel;
 import edu.spps.service.AdminService;
 
@@ -15,7 +19,12 @@ public class AdminController {
 	AdminService adminservice;
 
 	@GetMapping("/")
-	public String home() {
+	public String showAddTeacherPage(Model model) {
+
+		List<SubjectModel> subjectList = adminservice.getAllSubjects();
+
+		model.addAttribute("subjects", subjectList);
+
 		return "AddTeacher";
 	}
 
