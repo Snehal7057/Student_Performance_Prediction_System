@@ -5,12 +5,13 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class AdminModel {
+public class TeacherModel {
 	private int id;
-	private String Admin_name;
+	private String teacher_name;
 	private String email;
-	private String password;
 	private String contact;
+	private int experience;
+	private int subid;
 	private int role_id;
 
 }

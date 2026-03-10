@@ -1,5 +1,7 @@
 package edu.spps.service;
 
-public interface AdminService {
+import edu.spps.model.TeacherModel;
 
+public interface AdminService {
+	public boolean addTeacher(TeacherModel model);
 }

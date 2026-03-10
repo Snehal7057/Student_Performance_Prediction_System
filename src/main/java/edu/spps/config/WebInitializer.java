@@ -1,6 +1,7 @@
 package edu.spps.config;
 
 import org.springframework.web.WebApplicationInitializer;
+import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
@@ -22,6 +23,7 @@ public class WebInitializer implements WebApplicationInitializer {
 
 		AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
 		ctx.register(DBConfig.class);
+		servletContext.addListener(new ContextLoaderListener(ctx));
 	}
 
 }
