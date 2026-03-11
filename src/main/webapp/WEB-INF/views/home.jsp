@@ -7,7 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-    <a href="addteacher">Add Teachers</a> <br>
-    <a href="viewteachers">View All Teachers</a>
+<h1>Home page</h1>
 </body>
 </html>

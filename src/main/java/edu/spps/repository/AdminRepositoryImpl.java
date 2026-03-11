@@ -22,7 +22,7 @@ public class AdminRepositoryImpl implements AdminRepository {
 		String sql = "insert into teachers(name,email,contact,experience,subject_id) values(?,?,?,?,?)";
 
 		int value = jdbcTemplate.update(sql, model.getName(), model.getEmail(), model.getContact(),
-				model.getExperience(), model.getSubid());
+				model.getExperience(), model.getSubject_id());
 		return value > 0 ? true : false;
 	}
 
@@ -43,4 +43,62 @@ public class AdminRepositoryImpl implements AdminRepository {
 		});
 	}
 
+	@Override
+	public List<TeacherModel> getAllTeacher() {
+		String sql = "SELECT t.id, t.name, t.email, t.contact, t.experience, s.subject_name FROM teachers t JOIN subjects s ON t.subject_id = s.id";
+
+		return jdbcTemplate.query(sql, new RowMapper<TeacherModel>() {
+
+			@Override
+			public TeacherModel mapRow(ResultSet rs, int rowNum) throws SQLException {
+				TeacherModel tm = new TeacherModel();
+				tm.setId(rs.getInt("id"));
+				tm.setName(rs.getString("name"));
+				tm.setEmail(rs.getString("email"));
+				tm.setContact(rs.getString("contact"));
+				tm.setExperience(rs.getInt("experience"));
+				tm.setSubjectName(rs.getString("subject_name"));
+				System.out.println("Teacher ID = " + rs.getInt("id"));
+				return tm;
+			}
+
+		});
+	}
+
+	@Override
+	public boolean deleteTeacher(int id) {
+		String sql = "delete from teachers where id=?";
+		int value = jdbcTemplate.update(sql, id);
+		return value > 0 ? true : false;
+	}
+
+	@Override
+	public TeacherModel getTeacherById(int id) {
+
+		String sql = "select * from teachers where id=?";
+
+		List<TeacherModel> list = jdbcTemplate.query(sql, new Object[] { id }, new RowMapper<TeacherModel>() {
+
+			@Override
+			public TeacherModel mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+				TeacherModel tm = new TeacherModel();
+
+				tm.setId(rs.getInt("id"));
+				tm.setName(rs.getString("name"));
+				tm.setEmail(rs.getString("email"));
+				tm.setContact(rs.getString("contact"));
+				tm.setExperience(rs.getInt("experience"));
+				tm.setSubject_id(rs.getInt("subject_id"));
+
+				return tm;
+			}
+		});
+
+		if (list.isEmpty()) {
+			return null;
+		}
+
+		return list.get(0);
+	}
 }

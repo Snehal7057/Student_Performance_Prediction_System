@@ -11,7 +11,8 @@ public class TeacherModel {
 	private String email;
 	private String contact;
 	private int experience;
-	private int subid;
+	private int subject_id;
 	private int role_id;
+	private String subjectName;
 
 }

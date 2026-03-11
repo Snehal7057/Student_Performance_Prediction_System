@@ -26,4 +26,22 @@ public class AdminServiceImpl implements AdminService {
 		return adminRepo.getAllSubjects();
 	}
 
+	@Override
+	public List<TeacherModel> getAllTeacher() {
+		// TODO Auto-generated method stub
+		return adminRepo.getAllTeacher();
+	}
+
+	@Override
+	public boolean deleteTeacher(int id) {
+		// TODO Auto-generated method stub
+		return adminRepo.deleteTeacher(id);
+	}
+
+	@Override
+	public TeacherModel getTeacherById(int id) {
+		// TODO Auto-generated method stub
+		return adminRepo.getTeacherById(id);
+	}
+
 }
