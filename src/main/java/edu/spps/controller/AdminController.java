@@ -22,21 +22,18 @@ public class AdminController {
 	public String showAddTeacherPage(Model model) {
 
 		List<SubjectModel> subjectList = adminservice.getAllSubjects();
-
 		model.addAttribute("subjects", subjectList);
 
 		return "AddTeacher";
 	}
 
-	@GetMapping("/addteacher")
-	public String showAddTeacherPage() {
-		return "AddTeacher";
-	}
-
 	@PostMapping("/addteacher")
-	public String addTeacher(TeacherModel model) {
+	public String addTeacher(TeacherModel model, Model m) {
 
 		adminservice.addTeacher(model);
+
+		List<SubjectModel> subjectList = adminservice.getAllSubjects();
+		m.addAttribute("subjects", subjectList);
 
 		return "AddTeacher";
 	}

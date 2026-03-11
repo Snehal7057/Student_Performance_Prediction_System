@@ -14,19 +14,19 @@ public class WebInitializer implements WebApplicationInitializer {
 	@Override
 	public void onStartup(ServletContext servletContext) throws ServletException {
 
-		AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-		context.register(WebMVCConfig.class);
+		AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
+		rootContext.register(DBConfig.class);
 
-		DispatcherServlet ds = new DispatcherServlet(context);
+		servletContext.addListener(new ContextLoaderListener(rootContext));
 
-		ServletRegistration.Dynamic servlet = servletContext.addServlet("dispatcher", ds);
-		servlet.addMapping("/");
+		AnnotationConfigWebApplicationContext servletContextConfig = new AnnotationConfigWebApplicationContext();
+		servletContextConfig.register(WebMVCConfig.class);
+
+		DispatcherServlet dispatcherServlet = new DispatcherServlet(servletContextConfig);
+
+		ServletRegistration.Dynamic servlet = servletContext.addServlet("dispatcher", dispatcherServlet);
+
 		servlet.setLoadOnStartup(1);
-
-		AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
-		ctx.register(DBConfig.class);
-
-		servletContext.addListener(new ContextLoaderListener(ctx));
+		servlet.addMapping("/");
 	}
-
 }

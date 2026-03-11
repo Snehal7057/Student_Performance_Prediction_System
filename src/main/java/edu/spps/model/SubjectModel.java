@@ -7,5 +7,6 @@ import lombok.Setter;
 @Getter
 public class SubjectModel {
 	private int id;
-	private String subName;
+	private String subjectName;
+
 }

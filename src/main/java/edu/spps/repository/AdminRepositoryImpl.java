@@ -36,7 +36,7 @@ public class AdminRepositoryImpl implements AdminRepository {
 			public SubjectModel mapRow(ResultSet rs, int rowNum) throws SQLException {
 				SubjectModel sm = new SubjectModel();
 				sm.setId(rs.getInt("id"));
-				sm.setSubName(rs.getString("subject_name"));
+				sm.setSubjectName(rs.getString("subject_name"));
 				return sm;
 			}
 

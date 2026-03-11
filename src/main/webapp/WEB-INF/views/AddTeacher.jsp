@@ -12,18 +12,18 @@
 
 	<form action="addteacher" method="post">
 
-		Name <input type="text" name="name"><br>
-		<br> Email <input type="email" name="email"><br>
-		<br> Contact <input type="text" name="contact"><br>
-		<br> Experience <input type="number" name="experience"><br>
-		<br> Subject <select name="subjectId">
+		Name <input type="text" name="name"><br> <br> Email
+		<input type="email" name="email"><br> <br> Contact <input
+			type="text" name="contact"><br> <br> Experience <input
+			type="number" name="experience"><br> <br> Subject 
+			
+			<select name="subid">
 
-			<c:forEach var="s" items="${subjects}">
-				<option value="${s.id}">${s.subject_name}</option>
-			</c:forEach>
+<c:forEach var="s" items="${subjects}">
+    <option value="${s.id}">${s.subjectName}</option>
+</c:forEach>
 
-		</select><br>
-		<br>
+</select><br> <br>
 
 		<button type="submit">Add Teacher</button>
 
