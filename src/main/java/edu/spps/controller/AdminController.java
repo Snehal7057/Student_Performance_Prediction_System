@@ -18,12 +18,10 @@ public class AdminController {
 	@Autowired
 	AdminService adminservice;
 
-	@GetMapping("/")
+	@GetMapping("/admin")
 	public String showAddTeacherPage(Model model) {
-
 		List<SubjectModel> subjectList = adminservice.getAllSubjects();
 		model.addAttribute("subjects", subjectList);
-
 		return "AddTeacher";
 	}
 
