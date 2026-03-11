@@ -27,4 +27,21 @@ return dataSource;
 public JdbcTemplate jdbcTemplate(DriverManagerDataSource ds) {
 return new JdbcTemplate(ds);
 }
+	@Bean
+	public DriverManagerDataSource getDataSource() {
+
+		DriverManagerDataSource dataSource = new DriverManagerDataSource();
+
+		dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+		dataSource.setUrl("jdbc:mysql://localhost:3306/student_performance");
+		dataSource.setUsername("root");
+		dataSource.setPassword("root");
+
+		return dataSource;
+	}
+
+	@Bean
+	public JdbcTemplate jdbcTemplate(DriverManagerDataSource ds) {
+		return new JdbcTemplate(ds);
+	}
 }
