@@ -20,8 +20,6 @@ public class AdminController {
 
 	@GetMapping("/")
 	public String showAddTeacherPage(Model model) {
-		List<SubjectModel> subjectList = adminservice.getAllSubjects();
-		model.addAttribute("subjects", subjectList);
 
 		List<SubjectModel> subjectList = adminservice.getAllSubjects();
 
@@ -37,10 +35,9 @@ public class AdminController {
 
 	@PostMapping("/addteacher")
 	public String addTeacher(TeacherModel model) {
+
 		adminservice.addTeacher(model);
-		return "AddTeacher";
-	}
-}
+
 		return "AddTeacher";
 	}
 }
