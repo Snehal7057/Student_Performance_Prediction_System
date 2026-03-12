@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,23 +12,40 @@
 
 <body>
 
-	<form action="addteacher" method="post">
+<h2>Add Teacher</h2>
 
-		Name <input type="text" name="name"><br> <br> Email
-		<input type="email" name="email"><br> <br> Contact <input
-			type="text" name="contact"><br> <br> Experience <input
-			type="number" name="experience"><br> <br> Subject <select
-			name="subject_id">
+<form action="${pageContext.request.contextPath}/addteacher" method="post">
 
-			<c:forEach var="s" items="${subjects}">
-				<option value="${s.id}">${s.subjectName}</option>
-			</c:forEach>
+	Name:
+	<input type="text" name="name" required>
+	<br><br>
 
-		</select><br> <br>
+	Email:
+	<input type="email" name="email" required>
+	<br><br>
 
-		<button type="submit">Add Teacher</button>
+	Contact:
+	<input type="text" name="contact" required>
+	<br><br>
 
-	</form>
+	Experience:
+	<input type="number" name="experience" required>
+	<br><br>
+
+	Subject:
+	<select name="subject_id">
+		<option value="">Select Subject</option>
+
+		<c:forEach var="s" items="${subjects}">
+			<option value="${s.id}">${s.subjectName}</option>
+		</c:forEach>
+
+	</select>
+	<br><br>
+
+	<button type="submit">Add Teacher</button>
+
+</form>
 
 </body>
 </html>

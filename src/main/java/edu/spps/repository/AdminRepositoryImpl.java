@@ -101,4 +101,39 @@ public class AdminRepositoryImpl implements AdminRepository {
 
 		return list.get(0);
 	}
+
+	@Override
+	public boolean updateTeacher(TeacherModel teacher) {
+
+		String sql = "update teachers set name=?, email=?, contact=?, experience=?, subject_id=? where id=?";
+
+		int value = jdbcTemplate.update(sql, teacher.getName(), teacher.getEmail(), teacher.getContact(),
+				teacher.getExperience(), teacher.getSubject_id(), teacher.getId());
+
+		return value > 0;
+	}
+
+	@Override
+	public List<TeacherModel> searchTeacher(String keyword) {
+
+		String sql = "SELECT t.*, s.subject_name FROM teachers t " + "JOIN subjects s ON t.subject_id = s.id "
+				+ "WHERE t.name LIKE ? OR t.email LIKE ? OR s.subject_name LIKE ?";
+
+		String key = "%" + keyword + "%";
+
+		return jdbcTemplate.query(sql, new Object[] { key, key, key }, (rs, rowNum) -> {
+
+			TeacherModel teacher = new TeacherModel();
+
+			teacher.setId(rs.getInt("id"));
+			teacher.setName(rs.getString("name"));
+			teacher.setEmail(rs.getString("email"));
+			teacher.setContact(rs.getString("contact"));
+			teacher.setExperience(rs.getInt("experience"));
+			teacher.setSubject_id(rs.getInt("subject_id"));
+			teacher.setSubjectName(rs.getString("subject_name"));
+
+			return teacher;
+		});
+	}
 }

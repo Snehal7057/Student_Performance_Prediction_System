@@ -10,6 +10,17 @@
 
 <h2>Teacher List</h2>
 
+<form action="searchteacher" method="get">
+
+Search Teacher:
+<input type="text" name="keyword" placeholder="Enter name / email / subject">
+
+<input type="submit" value="Search">
+
+<a href="viewteachers">Reset</a>
+
+</form>
+
 <table border="1">
 
 <tr>
@@ -25,7 +36,7 @@
 <c:forEach var="t" items="${teachers}" varStatus="status">
 
 <tr>
-<td>${t.id}</td>
+<td>${status.count}</td> 
 <td>${t.name}</td>
 <td>${t.email}</td>
 <td>${t.contact}</td>
@@ -35,7 +46,7 @@
 <a href="deleteteacher?id=${t.id}">delete</a>
 </td>
 <td>
-<a href="">update</a>
+<a href="editteacher?id=${t.id}">update</a>
 </td>
 </tr>
 
