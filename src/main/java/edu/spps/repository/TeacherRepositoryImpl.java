@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import edu.spps.model.StudentModel;
+import edu.spps.model.TeacherModel;
 
 @Repository
 public class TeacherRepositoryImpl implements TeacherRepository{
@@ -65,5 +66,24 @@ JdbcTemplate jdbcTemplate;
 			s.setLocation(rs.getString("location"));
             return s;
 		});
+	}
+
+	//Search Bu Name
+	@Override
+	public List<StudentModel> searchStudent(String keyword) {
+		String sql="select * from students where name like ?";
+		
+		String searchKeyword="%"+keyword+"%";
+		
+		return jdbcTemplate.query(sql, new Object[] {searchKeyword}, 
+				(rs,rowNum) -> {
+					StudentModel s=new StudentModel();
+			        s.setId(rs.getInt("id"));
+			        s.setName(rs.getString("name"));
+			        s.setEmail(rs.getString("email"));
+			        s.setContact(rs.getString("contact"));
+			        s.setLocation(rs.getString("location"));
+			        return s;
+				});
 	}		
 }

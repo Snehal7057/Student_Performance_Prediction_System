@@ -78,6 +78,17 @@ public class TeacherController {
 		model.addAttribute("msg",status ? "Student Updated Successfully" : "Update Failed");
 		List<StudentModel> studentList = teacherService.getAllStudent();
 		model.addAttribute("students", studentList);	
+		return "redirect:/ViewStudent";
+	}
+	
+	//Search By Name
+	@GetMapping("/searchstudent")
+	public String searchStudent(@RequestParam(value="keyword",required=false) String keyword,Model model) {
+		List<StudentModel> studentList =(keyword==null || keyword.isEmpty()) ?
+				                        teacherService.getAllStudent():
+				                        teacherService.searchStudent(keyword);
+		model.addAttribute("students", studentList);
+		model.addAttribute("keyword",keyword);
 		return "ViewStudent";
 	}
 }

@@ -55,6 +55,18 @@ thead{
     background-color: #e68a00;
     color: white;
 }
+.btn-performance{
+    background-color: #2ca72e;
+    color: white;
+    border-radius: 20px;
+    padding: 5px 12px;
+    text-decoration: none;
+}
+
+.btn-performance:hover{
+    background-color: #e68a00;
+    color: white;
+}
 
 .btn-delete{
     background-color: #c23627;
@@ -76,12 +88,16 @@ thead{
 <div class="container mt-5">
     <div class="card p-4">
 
-        <h3 class="text-center mb-4">Teacher List</h3>
+        <h3 class="text-center mb-4">Student List</h3>
 
         <!-- Search Box -->
-        <input type="text" id="searchInput" class="form-control mb-3" placeholder="🔍 Search teachers...">
+<form action="searchstudent" method="get">
+Search Student:
+    <input type="text" name="keyword" placeholder="Enter Name" value="${keyword}">
+    <input type="submit" value="Search">
+<a href="searchstudent">Reset</a></form>
+<br/>
 
-        <!-- Responsive Table -->
         <div class="table-responsive">
             <table class="table table-bordered table-striped" id="teacherTable">
                 <thead>
@@ -92,6 +108,7 @@ thead{
                         <th>Contact</th>
                         <th>Location</th>
                         <th>Update</th>
+                        <th>View Performance</th>
                         <th>Delete</th>
                     </tr>
                 </thead>
@@ -105,8 +122,8 @@ thead{
                         <td>${student.contact}</td>
                         <td>${student.location}</td>
                         <td><a href="updateStudent?id=${student.id}" class="btn-update">Update</a></td>
+                        <td><a href="addPerformance?id=${student.id}" class="btn-performance">Add_Performance</a></td>
                         <td><a href="deleteStudent?id=${student.id}" class="btn-delete">Delete</a></td>
-                    </tr>
                </c:forEach>
                 </tbody>
             </table>

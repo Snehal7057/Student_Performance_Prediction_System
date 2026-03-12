@@ -12,4 +12,5 @@ public interface TeacherRepository {
 	public boolean deleteStudent(int id);
     public boolean isUpdateStudent(StudentModel model);
     StudentModel getStudentById(int id);
+	public List<StudentModel> searchStudent(String keyword);
 }

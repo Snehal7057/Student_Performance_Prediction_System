@@ -37,4 +37,9 @@ public class TeacherServiceImpl implements TeacherService{
 	public StudentModel getStudentById(int id) {
 		return studRepo.getStudentById(id);
 	}
+
+	@Override
+	public List<StudentModel> searchStudent(String keyword) {
+		return studRepo.searchStudent(keyword);
+	}
 }
