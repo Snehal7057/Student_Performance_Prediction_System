@@ -7,6 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
+<h1>Teacher Dashboard</h1>
  <a href="addStudent">Add Student</a> <br>
- <a href="viewStudent">View All Student</a></body>
+ <a href="viewStudent">View All Student</a><br/>
+  <a href="viewPerformance">View Overall Performance</a>
+ </body>
 </html>

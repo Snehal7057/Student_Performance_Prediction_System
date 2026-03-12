@@ -10,9 +10,13 @@ import edu.spps.model.TeacherModel;
 public interface TeacherService {
 	public boolean addStudent(StudentModel model);
 	public List<StudentModel> getAllStudent();
+	
 	public boolean deleteStudent(int id);
     public boolean isUpdateStudent(StudentModel model);
+    
     StudentModel getStudentById(int id);
 	public List<StudentModel> searchStudent(String keyword);
+	
 	public boolean addPerformance(PerformanceModel model);
+	public List<PerformanceModel> getAllPerformance();
 }

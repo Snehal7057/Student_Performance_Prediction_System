@@ -46,6 +46,11 @@ public class TeacherServiceImpl implements TeacherService{
 
 	@Override
 	public boolean addPerformance(PerformanceModel model) {
-		return false;
+		return studRepo.addPerformance(model);
+	}
+
+	@Override
+	public List<PerformanceModel> getAllPerformance() {
+		return studRepo.getAllPerformance();
 	}
 }

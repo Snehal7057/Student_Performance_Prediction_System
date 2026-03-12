@@ -70,7 +70,7 @@ JdbcTemplate jdbcTemplate;
 		});
 	}
 
-	//Search Bu Name
+	//Search By Name
 	@Override
 	public List<StudentModel> searchStudent(String keyword) {
 		String sql="select * from students where name like ?";
@@ -89,8 +89,36 @@ JdbcTemplate jdbcTemplate;
 				});
 	}
 
+	//Add Student Performance
 	@Override
 	public boolean addPerformance(PerformanceModel model) {
-		return false;
+		String sql = "insert into performance(student_id,attendance,study_hours,assessment,participation,percentage) values(?,?,?,?,?,?)";
+
+	    int value = jdbcTemplate.update(sql,
+	            model.getStudent_id(),
+	            model.getAttendance(),
+	            model.getStudy_hours(),
+	            model.getAssessment(),
+	            model.getParticipation(),
+	            model.getPercentage());
+	    
+		return value>0?true:false;
+	}
+
+	//View Performance
+	@Override
+	public List<PerformanceModel> getAllPerformance() {
+		String sql="select s.name,p.attendance,p.study_hours,p.assessment,p.participation,p.percentage,p.performance_date from students s join performance p on p.student_id=s.id";
+		return jdbcTemplate.query(sql,(rs,rowNum)->{
+			
+			PerformanceModel p=new PerformanceModel();
+			p.setName(rs.getString("name"));
+			p.setAttendance(rs.getInt("attendance"));
+			p.setStudy_hours(rs.getInt("study_hours"));
+			p.setAssessment(rs.getInt("assessment"));
+			p.setParticipation(rs.getInt("participation"));
+			p.setPercentage(rs.getDouble("percentage"));
+			p.setPerformance_date(rs.getDate("performance_date").toLocalDate());			return p;
+		});
 	}		
 }

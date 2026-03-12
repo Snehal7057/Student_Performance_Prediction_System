@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<h1>Admin Dashboard</h1>
 	<a href="addteacher">Add Teachers</a>
 	<br>
 	<a href="viewteachers">View All Teachers</a>

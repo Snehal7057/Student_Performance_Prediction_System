@@ -102,33 +102,29 @@ Search Student:
             <table class="table table-bordered table-striped" id="teacherTable">
                 <thead>
                     <tr>
-                        <th>Photo</th>
                         <th>Name</th>
-                        <th>Email</th>
-                        <th>Contact</th>
-                        <th>Location</th>
-                        <th>Update</th>
-                        <th>View Performance</th>
-                        <th>Delete</th>
+                        <th>Attendance</th>
+                        <th>Study_Hours</th>
+                        <th>Assessment</th>
+                        <th>Participation</th>
+                        <th>Percentage</th>
+                        <th>Date</th>
                     </tr>
                 </thead>
-
                 <tbody>
-                <c:forEach var="student" items="${students}">
+                <c:forEach var="viewP" items="${performances}">
                     <tr>
-                        <td>${student.id}</td>
-                        <td>${student.name}</td>
-                        <td>${student.email}</td>
-                        <td>${student.contact}</td>
-                        <td>${student.location}</td>
-                        <td><a href="updateStudent?id=${student.id}" class="btn-update">Update</a></td>
-                        <td><a href="addPerformance?student_id=${student.id}" class="btn-performance">Add_Performance</a></td>
-                        <td><a href="deleteStudent?id=${student.id}" class="btn-delete">Delete</a></td>
+                        <td>${viewP.name}</td>
+                        <td>${viewP.attendance}</td>
+                        <td>${viewP.study_hours}</td>
+                        <td>${viewP.assessment}</td>
+                        <td>${viewP.participation}</td>
+                        <td>${viewP.percentage}</td>
+                        <td>${viewP.performance_date}</td>
                </c:forEach>
                 </tbody>
             </table>
         </div>
-
     </div>
 </div>
 </body>

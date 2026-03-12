@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import edu.spps.model.PerformanceModel;
 import edu.spps.model.StudentModel;
 import edu.spps.model.SubjectModel;
 import edu.spps.model.TeacherModel;
@@ -93,4 +94,35 @@ public class TeacherController {
 	}
 	
 	//Add Performance
+	@GetMapping("/addPerformance")
+	public String addPerformance(@RequestParam("student_id") int studentId, Model model){
+	    PerformanceModel performance = new PerformanceModel();
+	    performance.setStudent_id(studentId);   // set student id
+	    model.addAttribute("performance", performance);
+	    return "AddPerformance";
+	}
+
+	
+     //Save Performance
+	@PostMapping("/addPerformance")
+	public String savePerformance(PerformanceModel model, Model m) {
+	    boolean status = teacherService.addPerformance(model);
+
+	    if (status) {
+	        m.addAttribute("msg", "Performance Added Successfully");
+	    } else {
+	        m.addAttribute("msg", "Performance Not Added");
+	    }
+
+	    m.addAttribute("performance", new PerformanceModel());
+	    return "AddPerformance";
+	}
+	
+	//View Performance
+	@GetMapping("/viewPerformance")
+	public String overallPerformance(Model model) {
+		List<PerformanceModel> performancelist=teacherService.getAllPerformance();
+		model.addAttribute("performances",performancelist);
+		return "ViewPerformance";
+	} 
 }
