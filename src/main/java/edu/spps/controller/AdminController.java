@@ -69,4 +69,32 @@ public class AdminController {
 
 		return "redirect:/viewteachers";
 	}
+
+	@GetMapping("/editteacher")
+	public String editTeacher(@RequestParam("id") int id, Model model) {
+
+		TeacherModel teacher = adminservice.getTeacherById(id);
+		List<SubjectModel> subjects = adminservice.getAllSubjects();
+
+		model.addAttribute("teacher", teacher);
+		model.addAttribute("subjects", subjects);
+
+		return "editteacher";
+	}
+
+	@PostMapping("/updateteacher")
+	public String updateTeacher(TeacherModel teacher) {
+
+		adminservice.updateTeacher(teacher);
+
+		return "redirect:/viewteachers";
+	}
+
+	@GetMapping("/searchteacher")
+	public String searchTeacher(@RequestParam("keyword") String keyword, Model model) {
+		List<TeacherModel> teacherList = adminservice.searchTeacher(keyword);
+		model.addAttribute("teachers", teacherList);
+
+		return "ViewTeacher";
+	}
 }

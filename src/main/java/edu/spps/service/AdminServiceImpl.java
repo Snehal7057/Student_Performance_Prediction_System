@@ -44,4 +44,14 @@ public class AdminServiceImpl implements AdminService {
 		return adminRepo.getTeacherById(id);
 	}
 
+	@Override
+	public boolean updateTeacher(TeacherModel teacher) {
+		return adminRepo.updateTeacher(teacher);
+	}
+
+	@Override
+	public List<TeacherModel> searchTeacher(String keyword) {
+		return adminRepo.searchTeacher(keyword);
+	}
+
 }

@@ -15,4 +15,8 @@ public interface AdminService {
 	public boolean deleteTeacher(int id);
 
 	TeacherModel getTeacherById(int id);
+
+	public boolean updateTeacher(TeacherModel teacher);
+
+	public List<TeacherModel> searchTeacher(String keyword);
 }
