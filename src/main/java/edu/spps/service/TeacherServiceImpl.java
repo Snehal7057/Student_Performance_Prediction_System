@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import edu.spps.model.PerformanceModel;
 import edu.spps.model.StudentModel;
 import edu.spps.repository.TeacherRepository;
 
@@ -41,5 +42,10 @@ public class TeacherServiceImpl implements TeacherService{
 	@Override
 	public List<StudentModel> searchStudent(String keyword) {
 		return studRepo.searchStudent(keyword);
+	}
+
+	@Override
+	public boolean addPerformance(PerformanceModel model) {
+		return false;
 	}
 }

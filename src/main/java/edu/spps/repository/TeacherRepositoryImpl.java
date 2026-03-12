@@ -4,6 +4,8 @@ import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import edu.spps.model.PerformanceModel;
 import edu.spps.model.StudentModel;
 import edu.spps.model.TeacherModel;
 
@@ -85,5 +87,10 @@ JdbcTemplate jdbcTemplate;
 			        s.setLocation(rs.getString("location"));
 			        return s;
 				});
+	}
+
+	@Override
+	public boolean addPerformance(PerformanceModel model) {
+		return false;
 	}		
 }
