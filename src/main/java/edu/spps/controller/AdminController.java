@@ -9,15 +9,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import edu.spps.model.StudentModel;
 import edu.spps.model.SubjectModel;
 import edu.spps.model.TeacherModel;
 import edu.spps.service.AdminService;
+import edu.spps.service.TeacherService;
 
 @Controller
 public class AdminController {
 
 	@Autowired
 	AdminService adminservice;
+	@Autowired
+	TeacherService teacherService;
 
 	@GetMapping("/")
 	public String home() {
@@ -96,5 +100,13 @@ public class AdminController {
 		model.addAttribute("teachers", teacherList);
 
 		return "ViewTeacher";
+	}
+
+	// View Student
+	@GetMapping("teacher/viewStudent")
+	public String viewStudent(Model model) {
+		List<StudentModel> studentList = adminservice.getAllStudents();
+		model.addAttribute("students", studentList);
+		return "ViewStudent";
 	}
 }
