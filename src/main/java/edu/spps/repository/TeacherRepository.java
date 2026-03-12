@@ -9,5 +9,7 @@ import edu.spps.model.TeacherModel;
 public interface TeacherRepository {
 	public boolean addStudent(StudentModel model);
 	public List<StudentModel> getAllStudents();
-
+	public boolean deleteStudent(int id);
+    public boolean isUpdateStudent(StudentModel model);
+    StudentModel getStudentById(int id);
 }

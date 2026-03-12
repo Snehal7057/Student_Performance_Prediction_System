@@ -23,4 +23,18 @@ public class TeacherServiceImpl implements TeacherService{
 		return studRepo.getAllStudents();
 	}
 
+	@Override
+	public boolean deleteStudent(int id) {
+		return studRepo.deleteStudent(id);
+	}
+
+	@Override
+	public boolean isUpdateStudent(StudentModel model) {
+		return studRepo.isUpdateStudent(model);
+	}
+
+	@Override
+	public StudentModel getStudentById(int id) {
+		return studRepo.getStudentById(id);
+	}
 }
