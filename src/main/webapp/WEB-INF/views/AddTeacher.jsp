@@ -29,7 +29,7 @@
 	<br><br>
 
 	Experience:
-	<input type="number" name="experience" required>
+	<input type="number" name="experience" placeholder="Enter experience in years" required>
 	<br><br>
 
 	Subject:

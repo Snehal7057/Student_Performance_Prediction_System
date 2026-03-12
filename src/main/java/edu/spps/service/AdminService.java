@@ -2,6 +2,7 @@ package edu.spps.service;
 
 import java.util.List;
 
+import edu.spps.model.StudentModel;
 import edu.spps.model.SubjectModel;
 import edu.spps.model.TeacherModel;
 
@@ -19,4 +20,6 @@ public interface AdminService {
 	public boolean updateTeacher(TeacherModel teacher);
 
 	public List<TeacherModel> searchTeacher(String keyword);
+
+	public List<StudentModel> getAllStudents();
 }

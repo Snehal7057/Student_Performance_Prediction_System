@@ -5,6 +5,7 @@ import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
+import jakarta.servlet.MultipartConfigElement;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRegistration;
@@ -28,5 +29,8 @@ public class WebInitializer implements WebApplicationInitializer {
 
 		servlet.setLoadOnStartup(1);
 		servlet.addMapping("/");
+		MultipartConfigElement multipartConfigElement = new MultipartConfigElement("D:\\5 Project", 10 * 1024 * 1024,
+				20 * 1024 * 1024, 0);
+		servlet.setMultipartConfig(multipartConfigElement);
 	}
 }

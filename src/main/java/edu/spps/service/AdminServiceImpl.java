@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import edu.spps.model.StudentModel;
 import edu.spps.model.SubjectModel;
 import edu.spps.model.TeacherModel;
 import edu.spps.repository.AdminRepository;
@@ -48,6 +49,11 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public List<TeacherModel> searchTeacher(String keyword) {
 		return adminRepo.searchTeacher(keyword);
+	}
+
+	@Override
+	public List<StudentModel> getAllStudents() {
+		return adminRepo.getAllStudents();
 	}
 
 }

@@ -32,4 +32,5 @@ public class WebMVCConfig implements WebMvcConfigurer {
 	public StandardServletMultipartResolver multipartResolver() {
 		return new StandardServletMultipartResolver();
 	}
+
 }
