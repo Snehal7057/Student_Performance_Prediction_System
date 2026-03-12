@@ -8,5 +8,7 @@
 </head>
 <body>
  <a href="addStudent">Add Student</a> <br>
- <a href="viewStudent">View All Student</a></body>
+ <a href="viewStudent">View All Student</a><br>
+  <a href="uploadMaterial">Upload Study Material</a>
+ </body>
 </html>
