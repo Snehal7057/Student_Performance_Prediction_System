@@ -10,6 +10,7 @@
 <h1>Teacher Dashboard</h1>
  <a href="addStudent">Add Student</a> <br>
  <a href="viewStudent">View All Student</a><br/>
-  <a href="viewPerformance">View Overall Performance</a>
+  <a href="viewPerformance">View Overall Performance</a><br/>
+  <a href="uploadMaterial">Upload Study Material</a>
  </body>
 </html>

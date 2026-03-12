@@ -1,4 +1,5 @@
 package edu.spps.service;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,21 +7,22 @@ import org.springframework.stereotype.Service;
 
 import edu.spps.model.PerformanceModel;
 import edu.spps.model.StudentModel;
+import edu.spps.model.StudyMaterialModel;
 import edu.spps.repository.TeacherRepository;
 
 @Service
-public class TeacherServiceImpl implements TeacherService{
+public class TeacherServiceImpl implements TeacherService {
 
-	 @Autowired
-	 private TeacherRepository studRepo;
-	 
+	@Autowired
+	private TeacherRepository studRepo;
+
 	@Override
 	public boolean addStudent(StudentModel model) {
 		return studRepo.addStudent(model);
 	}
-
+	
 	@Override
-	public List<StudentModel> getAllStudent() {
+	public List<StudentModel> getAllStudents() {
 		return studRepo.getAllStudents();
 	}
 
@@ -53,4 +55,11 @@ public class TeacherServiceImpl implements TeacherService{
 	public List<PerformanceModel> getAllPerformance() {
 		return studRepo.getAllPerformance();
 	}
+
+	@Override
+	public boolean uploadMaterial(StudyMaterialModel model) {
+		// TODO Auto-generated method stub
+		return studRepo.uploadMaterial(model);
+	}
+
 }

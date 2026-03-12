@@ -4,19 +4,16 @@ import java.util.List;
 
 import edu.spps.model.PerformanceModel;
 import edu.spps.model.StudentModel;
-import edu.spps.model.SubjectModel;
-import edu.spps.model.TeacherModel;
+import edu.spps.model.StudyMaterialModel;
 
 public interface TeacherService {
 	public boolean addStudent(StudentModel model);
-	public List<StudentModel> getAllStudent();
-	
+	public List<StudentModel> getAllStudents();
 	public boolean deleteStudent(int id);
-    public boolean isUpdateStudent(StudentModel model);
-    
-    StudentModel getStudentById(int id);
+	public boolean isUpdateStudent(StudentModel model);
+	StudentModel getStudentById(int id);
 	public List<StudentModel> searchStudent(String keyword);
-	
 	public boolean addPerformance(PerformanceModel model);
 	public List<PerformanceModel> getAllPerformance();
+	public boolean uploadMaterial(StudyMaterialModel model);
 }
