@@ -9,13 +9,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import edu.spps.model.PerformanceModel;
 import edu.spps.model.StudentModel;
 import edu.spps.model.SubjectModel;
 import edu.spps.model.TeacherModel;
 import edu.spps.service.AdminService;
 import edu.spps.service.TeacherService;
-import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class AdminController {
@@ -107,12 +105,11 @@ public class AdminController {
 	// View Student
 	@GetMapping("admin/viewStudent")
 	public String viewStudent(Model model) {
-		List<StudentModel> studentList = adminservice.getAllStudents();
+		List<StudentModel> studentList = teacherService.getAllStudents();
 		model.addAttribute("students", studentList);
 		return "ViewStud";
 	}
-	
-	//search student
 
-		
+	// search student
+
 }

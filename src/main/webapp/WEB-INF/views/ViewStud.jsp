@@ -108,6 +108,7 @@ Search Student:
                         <th>Contact</th>
                         <th>Location</th>
                         <th>Delete</th>
+                        <th>Register Date</th>
                     </tr>
                 </thead>
 
@@ -120,6 +121,7 @@ Search Student:
                         <td>${student.contact}</td>
                         <td>${student.location}</td>
                         <td><a href="deleteStudent?id=${student.id}" class="btn-delete">Delete</a></td>
+                        <td>${student.createdDate}</td>
                </c:forEach>
                 </tbody>
             </table>

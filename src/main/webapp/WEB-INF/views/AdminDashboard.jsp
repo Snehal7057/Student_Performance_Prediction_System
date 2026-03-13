@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <h1>Admin Dashboard</h1>
@@ -15,7 +16,6 @@
 	<a href="admin/viewStudent">View All Student</a>
 	<br>
 	<a href="admin/viewPerformance">View Overall Performance</a>
-	<a href="viewStudents">View Students</a>
 </body>
 </html>
 

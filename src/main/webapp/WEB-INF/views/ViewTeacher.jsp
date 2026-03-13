@@ -4,7 +4,8 @@
 <html>
 <head>
 <title>View Teachers</title>
-</head>
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <body>
 
@@ -25,18 +26,34 @@ Search Teacher:
 
 <tr>
 <th>ID</th>
+<th>Photo</th>
 <th>Name</th>
 <th>Email</th>
 <th>Contact</th>
 <th>Experience</th>
 <th>Subject Name</th>
 <th colspan="2">Action</th>
+<th>Register Date</th>
 </tr>
 
 <c:forEach var="t" items="${teachers}" varStatus="status">
 
 <tr>
 <td>${status.count}</td> 
+<td><c:choose>
+
+<c:when test="${t.name.startsWith('Mr')}">
+<i class="fa-solid fa-circle-user"
+style="font-size:32px;color:#2c3e50;"></i>
+</c:when>
+
+<c:otherwise>
+<i class="fa-solid fa-user-circle"
+style="font-size:32px;color:#2c3e50;"></i>
+</c:otherwise>
+
+</c:choose>
+</td>
 <td>${t.name}</td>
 <td>${t.email}</td>
 <td>${t.contact}</td>
@@ -48,6 +65,7 @@ Search Teacher:
 <td>
 <a href="editteacher?id=${t.id}">update</a>
 </td>
+<td>${t.createdDate}</td>
 </tr>
 
 </c:forEach>
