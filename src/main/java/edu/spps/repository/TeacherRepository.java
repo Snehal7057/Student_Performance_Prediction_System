@@ -15,5 +15,6 @@ public interface TeacherRepository {
 	public List<StudentModel> searchStudent(String keyword);
 	public boolean addPerformance(PerformanceModel model);
 	public List<PerformanceModel> getAllPerformance();
+	public List<PerformanceModel> searchNameforPerformance(String word);
 	public boolean uploadMaterial(StudyMaterialModel model);
 }

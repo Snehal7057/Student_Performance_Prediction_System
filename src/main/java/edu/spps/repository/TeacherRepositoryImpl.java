@@ -73,7 +73,7 @@ public class TeacherRepositoryImpl implements TeacherRepository {
 		});
 	}
 
-	// Search By Name
+	// Search By Name in Student Table
 	@Override
 	public List<StudentModel> searchStudent(String keyword) {
 		String sql = "select * from students where name like ?";
@@ -125,13 +125,32 @@ public class TeacherRepositoryImpl implements TeacherRepository {
 		});
 	}
 
+	//Upload Files
 	@Override
 	public boolean uploadMaterial(StudyMaterialModel model) {
-
 		String sql = "insert into study_material(subject_id,file_name,uploaded_by) values (?,?,?)";
-
 		int value = jdbcTemplate.update(sql, model.getSubject_id(), model.getFile_name(), model.getUploaded_by());
-
 		return value > 0;
+	}
+
+	// Search By Name in Performance Table
+	public List<PerformanceModel> searchNameforPerformance(String word) {
+		String sql="select s.name,p.attendance,p.study_hours,p.assessment,"
+	               + "p.participation,p.percentage,p.performance_date "
+	               + "from students s join performance p on p.student_id=s.id "
+	               + "where s.name like ?";
+		String search="%" + word + "%";
+		
+		return jdbcTemplate.query(sql, new Object[] {search}, (rs, rowNum) -> {
+			PerformanceModel pm=new PerformanceModel();
+			pm.setName(rs.getString("name"));
+			pm.setAttendance(rs.getInt("attendance"));
+			pm.setStudy_hours(rs.getInt("study_hours"));
+			pm.setAssessment(rs.getInt("assessment"));
+			pm.setParticipation(rs.getInt("participation"));
+			pm.setPercentage(rs.getDouble("percentage"));
+			pm.setPerformance_date(rs.getDate("performance_date").toLocalDate());			
+            return pm;
+		});
 	}
 }

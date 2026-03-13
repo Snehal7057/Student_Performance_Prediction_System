@@ -36,7 +36,7 @@ public class TeacherController {
 	// Add Student
 	@GetMapping("/addStudent")
 	public String addStudent(Model model) {
-		List<StudentModel> studentList = teacherService.getAllStudent();
+		List<StudentModel> studentList = teacherService.getAllStudents();
 		model.addAttribute("students", studentList);
 		return "AddStudent";
 	}
@@ -56,7 +56,7 @@ public class TeacherController {
 	// View Student
 	@GetMapping("/viewStudent")
 	public String viewStudent(Model model) {
-		List<StudentModel> studentList = teacherService.getAllStudent();
+		List<StudentModel> studentList = teacherService.getAllStudents();
 		model.addAttribute("students", studentList);
 		return "ViewStudent";
 	}
@@ -65,7 +65,7 @@ public class TeacherController {
 	@GetMapping("/deleteStudent")
 	public String deleteStudent(@RequestParam("id") int id, Model model) {
 		teacherService.deleteStudent(id);
-		List<StudentModel> studentList = teacherService.getAllStudent();
+		List<StudentModel> studentList = teacherService.getAllStudents();
 		model.addAttribute("students", studentList);
 		return "ViewStudent";
 	}
@@ -83,15 +83,16 @@ public class TeacherController {
 	public String updateStudentSave(StudentModel students, Model model) {
 		boolean status = teacherService.isUpdateStudent(students);
 		model.addAttribute("msg", status ? "Student Updated Successfully" : "Update Failed");
-		List<StudentModel> studentList = teacherService.getAllStudent();
+		List<StudentModel> studentList = teacherService.getAllStudents();
 		model.addAttribute("students", studentList);
 		return "redirect:/ViewStudent";
 	}
 
 	// Search By Name
 	@GetMapping("/searchstudent")
-	public String searchStudent(@RequestParam(value = "keyword", required = false) String keyword, Model model) {
-		List<StudentModel> studentList = (keyword == null || keyword.isEmpty()) ? teacherService.getAllStudent()
+	public String searchStudent(HttpServletRequest request, Model model) {
+		String keyword=request.getParameter("keyword");
+		List<StudentModel> studentList = (keyword == null || keyword.isEmpty()) ? teacherService.getAllStudents()
 				: teacherService.searchStudent(keyword);
 		model.addAttribute("students", studentList);
 		model.addAttribute("keyword", keyword);
@@ -124,13 +125,27 @@ public class TeacherController {
 	}
 	
 	//View Performance
-	@GetMapping("/viewPerformance")
+	@GetMapping({"/viewPerformance","/admin/viewPerformance","student/viewPerformance"})
 	public String overallPerformance(Model model) {
 		List<PerformanceModel> performancelist=teacherService.getAllPerformance();
 		model.addAttribute("performances",performancelist);
 		return "ViewPerformance";
 	} 
 
+	// Search By Name in Performance Table
+	@GetMapping({"/searchPerformance","/admin/searchPerformance","student/searchPerformance"})
+	 public String searchPerformance(HttpServletRequest request,Model model) {
+		  String word=request.getParameter("word");
+		  
+		  List<PerformanceModel> performancelists=(word==null || word.isEmpty()) ? 
+				                                  teacherService.getAllPerformance() :
+			                                      teacherService.searchNameforPerformance(word);
+		  
+		  model.addAttribute("performances",performancelists);
+		  model.addAttribute("word",word);
+			return "ViewPerformance";
+		}
+	    
 	// upload study material
 	@GetMapping("/uploadMaterial")
 	public String showUploadPage(Model model) {
@@ -139,15 +154,14 @@ public class TeacherController {
 		return "uploadMaterial";
 
 	}
-
+  
+	 //upload
 	@PostMapping("/uploadMaterial")
 	public String uploadMaterial(@RequestParam("subject_id") int subjectId, @RequestParam("file") MultipartFile file,
 			HttpServletRequest request, HttpSession session) {
 
 		try {
-
 			String uploadPath = request.getServletContext().getRealPath("/uploads/study_material/");
-
 			File dir = new File(uploadPath);
 
 			if (!dir.exists()) {
@@ -155,13 +169,10 @@ public class TeacherController {
 			}
 
 			String fileName = file.getOriginalFilename();
-
 			File destination = new File(uploadPath + File.separator + fileName);
-
 			file.transferTo(destination);
 
 			StudyMaterialModel material = new StudyMaterialModel();
-
 			material.setSubject_id(subjectId);
 			material.setFile_name(fileName);
 			material.setUploaded_by(1); // later session teacher id

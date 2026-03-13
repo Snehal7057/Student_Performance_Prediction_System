@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<%@include file="Navbar.jsp"%>
 <body>
 <h1>Teacher Dashboard</h1>
  <a href="addStudent">Add Student</a> <br>

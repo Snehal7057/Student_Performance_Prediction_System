@@ -82,7 +82,6 @@ thead{
 }
 </style>
 </head>
-
 <body>
 
 <div class="container mt-5">
@@ -108,7 +107,7 @@ Search Student:
                         <th>Contact</th>
                         <th>Location</th>
                         <th>Update</th>
-                        <th>View Performance</th>
+                        <th>Add Performance</th>
                         <th>Delete</th>
                     </tr>
                 </thead>

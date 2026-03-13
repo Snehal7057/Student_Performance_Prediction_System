@@ -12,7 +12,9 @@
 	<br>
 	<a href="viewteachers">View All Teachers</a>
 	<br>
-	<a href="teacher/viewStudent">View All Student</a>
+	<a href="admin/viewStudent">View All Student</a>
+	<br>
+	<a href="admin/viewPerformance">View Overall Performance</a>
 </body>
 </html>
 

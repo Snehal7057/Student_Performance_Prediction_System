@@ -58,8 +58,12 @@ public class TeacherServiceImpl implements TeacherService {
 
 	@Override
 	public boolean uploadMaterial(StudyMaterialModel model) {
-		// TODO Auto-generated method stub
 		return studRepo.uploadMaterial(model);
+	}
+
+	@Override
+	public List<PerformanceModel> searchNameforPerformance(String word) {
+		return studRepo.searchNameforPerformance(word);
 	}
 
 }

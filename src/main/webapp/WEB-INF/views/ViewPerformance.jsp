@@ -91,11 +91,11 @@ thead{
         <h3 class="text-center mb-4">Student List</h3>
 
         <!-- Search Box -->
-<form action="searchstudent" method="get">
+<form action="<c:url value='/searchPerformance'/>" method="get">
 Search Student:
-    <input type="text" name="keyword" placeholder="Enter Name" value="${keyword}">
+    <input type="text" name="word" placeholder="Enter Name" value="${word}">
     <input type="submit" value="Search">
-<a href="searchstudent">Reset</a></form>
+<a href="<c:url value='/viewPerformance'/>">Reset</a></form>
 <br/>
 
         <div class="table-responsive">
@@ -121,6 +121,7 @@ Search Student:
                         <td>${viewP.participation}</td>
                         <td>${viewP.percentage}</td>
                         <td>${viewP.performance_date}</td>
+                        </tr>
                </c:forEach>
                 </tbody>
             </table>
