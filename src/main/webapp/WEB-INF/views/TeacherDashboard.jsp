@@ -11,6 +11,7 @@
  <a href="addStudent">Add Student</a> <br>
  <a href="viewStudent">View All Student</a><br/>
   <a href="viewPerformance">View Overall Performance</a><br/>
-  <a href="uploadMaterial">Upload Study Material</a>
+  <a href="uploadMaterial">Upload Study Material</a><br/>
+  <a href="viewMaterial">View Study Material</a>
  </body>
 </html>

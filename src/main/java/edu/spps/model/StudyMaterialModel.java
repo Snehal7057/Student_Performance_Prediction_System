@@ -12,4 +12,7 @@ public class StudyMaterialModel {
 	private String file_name;
 	private int uploaded_by;
 	private String upload_date;
+	private String subject_name;
+	private String teacher_name;
+
 }

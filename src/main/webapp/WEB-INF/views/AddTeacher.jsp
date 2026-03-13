@@ -44,7 +44,9 @@
 	<br><br>
 
 	<button type="submit">Add Teacher</button>
-
+	<br>
+	<br>
+<a href="admin">Back To DashBoard</a>
 </form>
 
 </body>

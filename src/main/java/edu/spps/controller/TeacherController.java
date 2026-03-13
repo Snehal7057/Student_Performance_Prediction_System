@@ -36,7 +36,7 @@ public class TeacherController {
 	// Add Student
 	@GetMapping("/addStudent")
 	public String addStudent(Model model) {
-		List<StudentModel> studentList = teacherService.getAllStudent();
+		List<StudentModel> studentList = teacherService.getAllStudents();
 		model.addAttribute("students", studentList);
 		return "AddStudent";
 	}
@@ -56,7 +56,7 @@ public class TeacherController {
 	// View Student
 	@GetMapping("/viewStudent")
 	public String viewStudent(Model model) {
-		List<StudentModel> studentList = teacherService.getAllStudent();
+		List<StudentModel> studentList = teacherService.getAllStudents();
 		model.addAttribute("students", studentList);
 		return "ViewStudent";
 	}
@@ -65,7 +65,7 @@ public class TeacherController {
 	@GetMapping("/deleteStudent")
 	public String deleteStudent(@RequestParam("id") int id, Model model) {
 		teacherService.deleteStudent(id);
-		List<StudentModel> studentList = teacherService.getAllStudent();
+		List<StudentModel> studentList = teacherService.getAllStudents();
 		model.addAttribute("students", studentList);
 		return "ViewStudent";
 	}
@@ -83,7 +83,7 @@ public class TeacherController {
 	public String updateStudentSave(StudentModel students, Model model) {
 		boolean status = teacherService.isUpdateStudent(students);
 		model.addAttribute("msg", status ? "Student Updated Successfully" : "Update Failed");
-		List<StudentModel> studentList = teacherService.getAllStudent();
+		List<StudentModel> studentList = teacherService.getAllStudents();
 		model.addAttribute("students", studentList);
 		return "redirect:/ViewStudent";
 	}
@@ -91,45 +91,44 @@ public class TeacherController {
 	// Search By Name
 	@GetMapping("/searchstudent")
 	public String searchStudent(@RequestParam(value = "keyword", required = false) String keyword, Model model) {
-		List<StudentModel> studentList = (keyword == null || keyword.isEmpty()) ? teacherService.getAllStudent()
+		List<StudentModel> studentList = (keyword == null || keyword.isEmpty()) ? teacherService.getAllStudents()
 				: teacherService.searchStudent(keyword);
 		model.addAttribute("students", studentList);
 		model.addAttribute("keyword", keyword);
 		return "ViewStudent";
 	}
-	
-	//Add Performance
+
+	// Add Performance
 	@GetMapping("/addPerformance")
-	public String addPerformance(@RequestParam("student_id") int studentId, Model model){
-	    PerformanceModel performance = new PerformanceModel();
-	    performance.setStudent_id(studentId);   // set student id
-	    model.addAttribute("performance", performance);
-	    return "AddPerformance";
+	public String addPerformance(@RequestParam("student_id") int studentId, Model model) {
+		PerformanceModel performance = new PerformanceModel();
+		performance.setStudent_id(studentId); // set student id
+		model.addAttribute("performance", performance);
+		return "AddPerformance";
 	}
 
-	
-     //Save Performance
+	// Save Performance
 	@PostMapping("/addPerformance")
 	public String savePerformance(PerformanceModel model, Model m) {
-	    boolean status = teacherService.addPerformance(model);
+		boolean status = teacherService.addPerformance(model);
 
-	    if (status) {
-	        m.addAttribute("msg", "Performance Added Successfully");
-	    } else {
-	        m.addAttribute("msg", "Performance Not Added");
-	    }
+		if (status) {
+			m.addAttribute("msg", "Performance Added Successfully");
+		} else {
+			m.addAttribute("msg", "Performance Not Added");
+		}
 
-	    m.addAttribute("performance", new PerformanceModel());
-	    return "AddPerformance";
+		m.addAttribute("performance", new PerformanceModel());
+		return "AddPerformance";
 	}
-	
-	//View Performance
+
+	// View Performance
 	@GetMapping("/viewPerformance")
 	public String overallPerformance(Model model) {
-		List<PerformanceModel> performancelist=teacherService.getAllPerformance();
-		model.addAttribute("performances",performancelist);
+		List<PerformanceModel> performancelist = teacherService.getAllPerformance();
+		model.addAttribute("performances", performancelist);
 		return "ViewPerformance";
-	} 
+	}
 
 	// upload study material
 	@GetMapping("/uploadMaterial")
@@ -146,25 +145,33 @@ public class TeacherController {
 
 		try {
 
+			// Get upload folder path
 			String uploadPath = request.getServletContext().getRealPath("/uploads/study_material/");
 
 			File dir = new File(uploadPath);
 
+			// Create folder if it doesn't exist
 			if (!dir.exists()) {
 				dir.mkdirs();
 			}
 
+			// Get file name
 			String fileName = file.getOriginalFilename();
 
+			// Destination file
 			File destination = new File(uploadPath + File.separator + fileName);
 
+			// Save file
 			file.transferTo(destination);
 
+			// Save to database
 			StudyMaterialModel material = new StudyMaterialModel();
 
 			material.setSubject_id(subjectId);
 			material.setFile_name(fileName);
-			material.setUploaded_by(1); // later session teacher id
+
+			// TEMPORARY teacher id (must exist in teachers table)
+			material.setUploaded_by(11);
 
 			teacherService.uploadMaterial(material);
 
@@ -172,7 +179,15 @@ public class TeacherController {
 			e.printStackTrace();
 		}
 
-		return "redirect:/uploadMaterial";
+		return "redirect:/viewMaterial";
+	}
+
+	// view Material
+	@GetMapping("/viewMaterial")
+	public String viewMaterial(Model model) {
+		List<StudyMaterialModel> materials = teacherService.getAllMaterials();
+		model.addAttribute("materials", materials);
+		return "ViewMaterial";
 	}
 
 }

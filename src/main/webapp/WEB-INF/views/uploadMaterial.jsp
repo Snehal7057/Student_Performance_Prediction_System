@@ -14,7 +14,9 @@ pageEncoding="UTF-8"%>
 
 <h2>Upload Study Material</h2>
 
-<form action="uploadMaterial" method="post" enctype="multipart/form-data">
+<form action="${pageContext.request.contextPath}/uploadMaterial"
+      method="post"
+      enctype="multipart/form-data">
 
 Subject
 

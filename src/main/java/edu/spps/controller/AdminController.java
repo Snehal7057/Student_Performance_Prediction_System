@@ -103,10 +103,10 @@ public class AdminController {
 	}
 
 	// View Student
-	@GetMapping("teacher/viewStudent")
+	@GetMapping("/viewStudents")
 	public String viewStudent(Model model) {
 		List<StudentModel> studentList = adminservice.getAllStudents();
 		model.addAttribute("students", studentList);
-		return "ViewStudent";
+		return "ViewStud";
 	}
 }
