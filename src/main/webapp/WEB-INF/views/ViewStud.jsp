@@ -91,11 +91,11 @@ thead{
         <h3 class="text-center mb-4">Student List</h3>
 
         <!-- Search Box -->
-<form action="searchstudent" method="get">
+<form action="searchStudent" method="get">
 Search Student:
-    <input type="text" name="keyword" placeholder="Enter Name" value="${keyword}">
+    <input type="text" name="word" placeholder="Enter Name" value="${word}">
     <input type="submit" value="Search">
-<a href="searchstudent">Reset</a></form>
+<a href="searchStudent">Reset</a></form>
 <br/>
 
         <div class="table-responsive">
@@ -120,11 +120,11 @@ Search Student:
                         <td>${student.contact}</td>
                         <td>${student.location}</td>
                         <td><a href="deleteStudent?id=${student.id}" class="btn-delete">Delete</a></td>
+                        </tr>
                </c:forEach>
                 </tbody>
             </table>
         </div>
-
     </div>
 </div>
 

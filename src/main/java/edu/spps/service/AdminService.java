@@ -22,4 +22,6 @@ public interface AdminService {
 	public List<TeacherModel> searchTeacher(String keyword);
 
 	public List<StudentModel> getAllStudents();
+	public List<StudentModel> searchStudent(String word); 
+
 }
