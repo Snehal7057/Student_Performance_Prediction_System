@@ -54,5 +54,8 @@ Search Teacher:
 
 </table>
 
+<br>
+<a href="admin">Back To DashBoard</a>
+
 </body>
 </html>

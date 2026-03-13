@@ -15,6 +15,7 @@
 	<a href="admin/viewStudent">View All Student</a>
 	<br>
 	<a href="admin/viewPerformance">View Overall Performance</a>
+	<a href="viewStudents">View Students</a>
 </body>
 </html>
 

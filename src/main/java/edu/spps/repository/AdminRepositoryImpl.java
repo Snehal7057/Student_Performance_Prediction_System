@@ -46,7 +46,7 @@ public class AdminRepositoryImpl implements AdminRepository {
 
 	@Override
 	public List<TeacherModel> getAllTeacher() {
-		String sql = "SELECT t.id, t.name, t.email, t.contact, t.experience, s.subject_name FROM teachers t JOIN subjects s ON t.subject_id = s.id";
+		String sql = "Select t.id, t.name, t.email, t.contact, t.experience, s.subject_name from teachers t inner join subjects s on t.subject_id = s.id";
 
 		return jdbcTemplate.query(sql, new RowMapper<TeacherModel>() {
 
@@ -117,8 +117,7 @@ public class AdminRepositoryImpl implements AdminRepository {
 	@Override
 	public List<TeacherModel> searchTeacher(String keyword) {
 
-		String sql = "SELECT t.*, s.subject_name FROM teachers t " + "JOIN subjects s ON t.subject_id = s.id "
-				+ "WHERE t.name LIKE ? OR t.email LIKE ? OR s.subject_name LIKE ?";
+		String sql = "Select t.*, s.subject_name from teachers t inner join subjects s on t.subject_id = s.id where t.name like ? or t.email like ? or s.subject_name like ?";
 
 		String key = "%" + keyword + "%";
 

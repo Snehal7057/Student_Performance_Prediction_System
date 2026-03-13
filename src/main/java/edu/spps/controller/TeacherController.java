@@ -92,45 +92,45 @@ public class TeacherController {
 	@GetMapping("/searchstudent")
 	public String searchStudent(HttpServletRequest request, Model model) {
 		String keyword=request.getParameter("keyword");
+		
 		List<StudentModel> studentList = (keyword == null || keyword.isEmpty()) ? teacherService.getAllStudents()
 				: teacherService.searchStudent(keyword);
 		model.addAttribute("students", studentList);
 		model.addAttribute("keyword", keyword);
 		return "ViewStudent";
 	}
-	
-	//Add Performance
+
+	// Add Performance
 	@GetMapping("/addPerformance")
-	public String addPerformance(@RequestParam("student_id") int studentId, Model model){
-	    PerformanceModel performance = new PerformanceModel();
-	    performance.setStudent_id(studentId);   // set student id
-	    model.addAttribute("performance", performance);
-	    return "AddPerformance";
+	public String addPerformance(@RequestParam("student_id") int studentId, Model model) {
+		PerformanceModel performance = new PerformanceModel();
+		performance.setStudent_id(studentId); // set student id
+		model.addAttribute("performance", performance);
+		return "AddPerformance";
 	}
 
-	
-     //Save Performance
+	// Save Performance
 	@PostMapping("/addPerformance")
 	public String savePerformance(PerformanceModel model, Model m) {
-	    boolean status = teacherService.addPerformance(model);
+		boolean status = teacherService.addPerformance(model);
 
-	    if (status) {
-	        m.addAttribute("msg", "Performance Added Successfully");
-	    } else {
-	        m.addAttribute("msg", "Performance Not Added");
-	    }
+		if (status) {
+			m.addAttribute("msg", "Performance Added Successfully");
+		} else {
+			m.addAttribute("msg", "Performance Not Added");
+		}
 
-	    m.addAttribute("performance", new PerformanceModel());
-	    return "AddPerformance";
+		m.addAttribute("performance", new PerformanceModel());
+		return "AddPerformance";
 	}
 	
 	//View Performance
 	@GetMapping({"/viewPerformance","/admin/viewPerformance","student/viewPerformance"})
 	public String overallPerformance(Model model) {
-		List<PerformanceModel> performancelist=teacherService.getAllPerformance();
-		model.addAttribute("performances",performancelist);
+		List<PerformanceModel> performancelist = teacherService.getAllPerformance();
+		model.addAttribute("performances", performancelist);
 		return "ViewPerformance";
-	} 
+	}
 
 	// Search By Name in Performance Table
 	@GetMapping({"/searchPerformance","/admin/searchPerformance","student/searchPerformance"})
@@ -161,21 +161,31 @@ public class TeacherController {
 			HttpServletRequest request, HttpSession session) {
 
 		try {
+
+
+			// Get upload folder path
 			String uploadPath = request.getServletContext().getRealPath("/uploads/study_material/");
 			File dir = new File(uploadPath);
 
+			// Create folder if it doesn't exist
 			if (!dir.exists()) {
 				dir.mkdirs();
 			}
 
+			// Get file name
 			String fileName = file.getOriginalFilename();
 			File destination = new File(uploadPath + File.separator + fileName);
+
+			// Save file
 			file.transferTo(destination);
 
+			// Save to database
 			StudyMaterialModel material = new StudyMaterialModel();
 			material.setSubject_id(subjectId);
 			material.setFile_name(fileName);
-			material.setUploaded_by(1); // later session teacher id
+
+			// TEMPORARY teacher id (must exist in teachers table)
+			material.setUploaded_by(11);
 
 			teacherService.uploadMaterial(material);
 
@@ -183,7 +193,15 @@ public class TeacherController {
 			e.printStackTrace();
 		}
 
-		return "redirect:/uploadMaterial";
+		return "redirect:/viewMaterial";
+	}
+
+	// view Material
+	@GetMapping("/viewMaterial")
+	public String viewMaterial(Model model) {
+		List<StudyMaterialModel> materials = teacherService.getAllMaterials();
+		model.addAttribute("materials", materials);
+		return "ViewMaterial";
 	}
 
 }

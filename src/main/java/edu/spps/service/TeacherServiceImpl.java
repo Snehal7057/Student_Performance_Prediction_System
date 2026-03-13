@@ -20,7 +20,7 @@ public class TeacherServiceImpl implements TeacherService {
 	public boolean addStudent(StudentModel model) {
 		return studRepo.addStudent(model);
 	}
-	
+
 	@Override
 	public List<StudentModel> getAllStudents() {
 		return studRepo.getAllStudents();
@@ -59,6 +59,10 @@ public class TeacherServiceImpl implements TeacherService {
 	@Override
 	public boolean uploadMaterial(StudyMaterialModel model) {
 		return studRepo.uploadMaterial(model);
+	}
+
+	public List<StudyMaterialModel> getAllMaterials() {
+		return studRepo.getAllMaterials();
 	}
 
 	@Override

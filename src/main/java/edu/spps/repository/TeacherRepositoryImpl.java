@@ -91,36 +91,31 @@ public class TeacherRepositoryImpl implements TeacherRepository {
 		});
 	}
 
-	//Add Student Performance
+	// Add Student Performance
 	@Override
 	public boolean addPerformance(PerformanceModel model) {
 		String sql = "insert into performance(student_id,attendance,study_hours,assessment,participation,percentage) values(?,?,?,?,?,?)";
 
-	    int value = jdbcTemplate.update(sql,
-	            model.getStudent_id(),
-	            model.getAttendance(),
-	            model.getStudy_hours(),
-	            model.getAssessment(),
-	            model.getParticipation(),
-	            model.getPercentage());
-	    
-		return value>0?true:false;
+		int value = jdbcTemplate.update(sql, model.getStudent_id(), model.getAttendance(), model.getStudy_hours(),
+				model.getAssessment(), model.getParticipation(), model.getPercentage());
+
+		return value > 0 ? true : false;
 	}
 
-	//View Performance
+	// View Performance
 	@Override
 	public List<PerformanceModel> getAllPerformance() {
-		String sql="select s.name,p.attendance,p.study_hours,p.assessment,p.participation,p.percentage,p.performance_date from students s join performance p on p.student_id=s.id";
-		return jdbcTemplate.query(sql,(rs,rowNum)->{
-			
-			PerformanceModel p=new PerformanceModel();
+		String sql = "select s.name,p.attendance,p.study_hours,p.assessment,p.participation,p.percentage,p.performance_date from students s join performance p on p.student_id=s.id";
+		return jdbcTemplate.query(sql, (rs, rowNum) -> {
+
+			PerformanceModel p = new PerformanceModel();
 			p.setName(rs.getString("name"));
 			p.setAttendance(rs.getInt("attendance"));
 			p.setStudy_hours(rs.getInt("study_hours"));
 			p.setAssessment(rs.getInt("assessment"));
 			p.setParticipation(rs.getInt("participation"));
 			p.setPercentage(rs.getDouble("percentage"));
-			p.setPerformance_date(rs.getDate("performance_date").toLocalDate());			
+			p.setPerformance_date(rs.getDate("performance_date").toLocalDate());
 			return p;
 		});
 	}
@@ -129,6 +124,7 @@ public class TeacherRepositoryImpl implements TeacherRepository {
 	@Override
 	public boolean uploadMaterial(StudyMaterialModel model) {
 		String sql = "insert into study_material(subject_id,file_name,uploaded_by) values (?,?,?)";
+
 		int value = jdbcTemplate.update(sql, model.getSubject_id(), model.getFile_name(), model.getUploaded_by());
 		return value > 0;
 	}
@@ -151,6 +147,24 @@ public class TeacherRepositoryImpl implements TeacherRepository {
 			pm.setPercentage(rs.getDouble("percentage"));
 			pm.setPerformance_date(rs.getDate("performance_date").toLocalDate());			
             return pm;
+		});
+	}
+
+	@Override
+	public List<StudyMaterialModel> getAllMaterials() {
+		String sql = "select sm.id, s.subject_name, sm.file_name, t.name as teacher_name, sm.upload_date from study_materials sm inner join subjects s on sm.subject_id = s.id inner join teachers t on sm.uploaded_by = t.id";
+
+		return jdbcTemplate.query(sql, (rs, rowNum) -> {
+
+			StudyMaterialModel m = new StudyMaterialModel();
+
+			m.setId(rs.getInt("id"));
+			m.setSubject_name(rs.getString("subject_name"));
+			m.setFile_name(rs.getString("file_name"));
+			m.setTeacher_name(rs.getString("teacher_name"));
+			m.setUpload_date(rs.getString("upload_date"));
+
+			return m;
 		});
 	}
 }
