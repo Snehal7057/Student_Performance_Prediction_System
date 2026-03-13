@@ -54,7 +54,7 @@ public class TeacherController {
 	}
 
 	// View Student
-	@GetMapping("/viewStudent")
+	@GetMapping("teacher/viewStudent")
 	public String viewStudent(Model model) {
 		List<StudentModel> studentList = teacherService.getAllStudents();
 		model.addAttribute("students", studentList);
@@ -89,7 +89,7 @@ public class TeacherController {
 	}
 
 	// Search By Name
-	@GetMapping("/searchstudent")
+	@GetMapping("teacher/searchstudent")
 	public String searchStudent(HttpServletRequest request, Model model) {
 		String keyword=request.getParameter("keyword");
 		
@@ -197,7 +197,7 @@ public class TeacherController {
 	}
 
 	// view Material
-	@GetMapping("/viewMaterial")
+	@GetMapping({"/viewMaterial","student/viewMaterial"})
 	public String viewMaterial(Model model) {
 		List<StudyMaterialModel> materials = teacherService.getAllMaterials();
 		model.addAttribute("materials", materials);

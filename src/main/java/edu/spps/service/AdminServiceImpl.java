@@ -56,4 +56,8 @@ public class AdminServiceImpl implements AdminService {
 		return adminRepo.getAllStudents();
 	}
 
+	@Override
+	public List<StudentModel> searchStudent(String word) {
+		return adminRepo.searchStudent(word);
+	}
 }

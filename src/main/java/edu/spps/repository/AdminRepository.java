@@ -21,4 +21,5 @@ public interface AdminRepository {
 	public List<TeacherModel> searchTeacher(String keyword);
 
 	public List<StudentModel> getAllStudents();
+	public List<StudentModel> searchStudent(String word); 
 }

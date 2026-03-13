@@ -96,10 +96,8 @@ public class TeacherRepositoryImpl implements TeacherRepository {
 	@Override
 	public boolean addPerformance(PerformanceModel model) {
 		String sql = "insert into performance(student_id,attendance,study_hours,assessment,participation,percentage) values(?,?,?,?,?,?)";
-
 		int value = jdbcTemplate.update(sql, model.getStudent_id(), model.getAttendance(), model.getStudy_hours(),
 				model.getAssessment(), model.getParticipation(), model.getPercentage());
-
 		return value > 0 ? true : false;
 	}
 
@@ -150,11 +148,11 @@ public class TeacherRepositoryImpl implements TeacherRepository {
 		});
 	}
 
-	// view files
+	// View Study material
+
 	@Override
 	public List<StudyMaterialModel> getAllMaterials() {
 		String sql = "select sm.id, s.subject_name, sm.file_name, t.name as teacher_name, sm.upload_date from study_materials sm inner join subjects s on sm.subject_id = s.id inner join teachers t on sm.uploaded_by = t.id";
-
 		return jdbcTemplate.query(sql, (rs, rowNum) -> {
 
 			StudyMaterialModel m = new StudyMaterialModel();

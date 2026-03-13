@@ -9,5 +9,7 @@
 <body>
 <h1>Student Dashboard</h1>
 <a href="student/viewPerformance">View Overall Performance</a>
+<br>
+<a href="student/viewMaterial">View Study Material</a>
 </body>
 </html>

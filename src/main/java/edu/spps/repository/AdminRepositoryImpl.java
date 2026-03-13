@@ -18,6 +18,7 @@ public class AdminRepositoryImpl implements AdminRepository {
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 
+	//Add Teacher
 	@Override
 	public boolean addTeacher(TeacherModel model) {
 		String sql = "insert into teachers(name,email,contact,experience,subject_id) values(?,?,?,?,?)";
@@ -27,6 +28,7 @@ public class AdminRepositoryImpl implements AdminRepository {
 		return value > 0 ? true : false;
 	}
 
+	//view All Subject
 	@Override
 	public List<SubjectModel> getAllSubjects() {
 		String sql = "select *from subjects";
@@ -44,6 +46,7 @@ public class AdminRepositoryImpl implements AdminRepository {
 		});
 	}
 
+	//View All Teacher
 	@Override
 	public List<TeacherModel> getAllTeacher() {
 		String sql = "Select t.id, t.name, t.email, t.contact, t.experience, s.subject_name ,t.created_date from teachers t inner join subjects s on t.subject_id = s.id";
@@ -67,6 +70,7 @@ public class AdminRepositoryImpl implements AdminRepository {
 		});
 	}
 
+	//Delete Teacher
 	@Override
 	public boolean deleteTeacher(int id) {
 		String sql = "delete from teachers where id=?";
@@ -74,13 +78,11 @@ public class AdminRepositoryImpl implements AdminRepository {
 		return value > 0 ? true : false;
 	}
 
+	//Delete by ID
 	@Override
 	public TeacherModel getTeacherById(int id) {
-
 		String sql = "select * from teachers where id=?";
-
 		List<TeacherModel> list = jdbcTemplate.query(sql, new Object[] { id }, new RowMapper<TeacherModel>() {
-
 			@Override
 			public TeacherModel mapRow(ResultSet rs, int rowNum) throws SQLException {
 
@@ -104,6 +106,7 @@ public class AdminRepositoryImpl implements AdminRepository {
 		return list.get(0);
 	}
 
+	//Update Teacher
 	@Override
 	public boolean updateTeacher(TeacherModel teacher) {
 
@@ -115,6 +118,7 @@ public class AdminRepositoryImpl implements AdminRepository {
 		return value > 0;
 	}
 
+	//Search Teacher
 	@Override
 	public List<TeacherModel> searchTeacher(String keyword) {
 
@@ -125,7 +129,6 @@ public class AdminRepositoryImpl implements AdminRepository {
 		return jdbcTemplate.query(sql, new Object[] { key, key, key }, (rs, rowNum) -> {
 
 			TeacherModel teacher = new TeacherModel();
-
 			teacher.setId(rs.getInt("id"));
 			teacher.setName(rs.getString("name"));
 			teacher.setEmail(rs.getString("email"));
@@ -137,7 +140,8 @@ public class AdminRepositoryImpl implements AdminRepository {
 			return teacher;
 		});
 	}
-
+	
+     //view Student Data
 	@Override
 	public List<StudentModel> getAllStudents() {
 		String sql = "select * from students";
@@ -152,5 +156,22 @@ public class AdminRepositoryImpl implements AdminRepository {
 			return s;
 		});
 		return list;
+	}
+
+	//Search Student
+	@Override
+	public List<StudentModel> searchStudent(String word) {
+		 String sql="select * from students where name like ?";
+		
+		 String search="%" + word +"%";
+		 return jdbcTemplate.query(sql, new Object[] {search}, (rs,rowNum) -> {
+			 StudentModel s=new StudentModel();
+		     	s.setId(rs.getInt("id"));
+				s.setName(rs.getString("name"));
+				s.setEmail(rs.getString("email"));
+				s.setContact(rs.getString("contact"));
+				s.setLocation(rs.getString("location"));		
+				return s;		
+		 });
 	}
 }

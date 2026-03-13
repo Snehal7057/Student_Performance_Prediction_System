@@ -14,6 +14,7 @@ import edu.spps.model.SubjectModel;
 import edu.spps.model.TeacherModel;
 import edu.spps.service.AdminService;
 import edu.spps.service.TeacherService;
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class AdminController {
@@ -112,4 +113,16 @@ public class AdminController {
 
 	// search student
 
+	// search student
+	@GetMapping("admin/searchStudent")
+	public String searchStudent(HttpServletRequest request, Model model) {
+		String word = request.getParameter("word");
+
+		List<StudentModel> studentList = (word == null || word.isEmpty()) ? adminservice.getAllStudents()
+				: adminservice.searchStudent(word);
+
+		model.addAttribute("students", studentList);
+		model.addAttribute("word", word);
+		return "ViewStud";
+	}
 }
