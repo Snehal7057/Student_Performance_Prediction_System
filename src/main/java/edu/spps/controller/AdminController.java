@@ -112,9 +112,8 @@ public class AdminController {
 		model.addAttribute("students", studentList);
 		return "ViewStud";
 	}
-<<<<<<< HEAD
 	
-	//search student
+	/*//search student
 		@GetMapping("admin/searchStudent")
 		public String searchStudent(HttpServletRequest request, Model model) {
 			String word=request.getParameter("word");
@@ -127,8 +126,8 @@ public class AdminController {
 			model.addAttribute("students", studentList);
 			model.addAttribute("word", word);
 			return "ViewStud";
-		}
-		
+		}*/
+	
 		//delete student
 		@GetMapping("/admin/deleteStudent")
 		public String deleteStudent(@RequestParam("id") int studentId) {
@@ -136,9 +135,7 @@ public class AdminController {
 		    return "redirect:/admin/viewStudent";  
 		}
 
-=======
 
-	// search student
 
 	// search student
 	@GetMapping("admin/searchStudent")
@@ -152,5 +149,4 @@ public class AdminController {
 		model.addAttribute("word", word);
 		return "ViewStud";
 	}
->>>>>>> 181a61ee612775d2909cadf8e39e5c00c9eefc48
 }
