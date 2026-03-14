@@ -23,7 +23,7 @@ public class AdminController {
 	AdminService adminservice;
 	@Autowired
 	TeacherService teacherService;
-
+    
 	@GetMapping("/")
 	public String home() {
 
@@ -39,6 +39,10 @@ public class AdminController {
 		return "AdminDashboard";
 	}
 
+	@GetMapping("/welcome")
+    public String welcomePage() {
+        return "Welcome"; // Spring will resolve to /WEB-INF/views/Welcome.jsp
+    }
 	@GetMapping("/addteacher")
 
 	public String showAddTeacherPage(Model model) {
@@ -69,9 +73,7 @@ public class AdminController {
 
 	@GetMapping("/deleteteacher")
 	public String deleteTeacher(@RequestParam("id") int id) {
-
 		adminservice.deleteTeacher(id);
-
 		return "redirect:/viewteachers";
 	}
 
@@ -110,6 +112,31 @@ public class AdminController {
 		model.addAttribute("students", studentList);
 		return "ViewStud";
 	}
+<<<<<<< HEAD
+	
+	//search student
+		@GetMapping("admin/searchStudent")
+		public String searchStudent(HttpServletRequest request, Model model) {
+			String word=request.getParameter("word");
+			
+			List<StudentModel> studentList = 
+					(word == null || word.isEmpty()) ? 
+					adminservice.getAllStudents() :
+					adminservice.searchStudent(word);
+			
+			model.addAttribute("students", studentList);
+			model.addAttribute("word", word);
+			return "ViewStud";
+		}
+		
+		//delete student
+		@GetMapping("/admin/deleteStudent")
+		public String deleteStudent(@RequestParam("id") int studentId) {
+		    teacherService.deleteStudent(studentId);
+		    return "redirect:/admin/viewStudent";  
+		}
+
+=======
 
 	// search student
 
@@ -125,4 +152,5 @@ public class AdminController {
 		model.addAttribute("word", word);
 		return "ViewStud";
 	}
+>>>>>>> 181a61ee612775d2909cadf8e39e5c00c9eefc48
 }

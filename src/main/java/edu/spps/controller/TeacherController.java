@@ -2,6 +2,8 @@ package edu.spps.controller;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -85,7 +87,7 @@ public class TeacherController {
 		model.addAttribute("msg", status ? "Student Updated Successfully" : "Update Failed");
 		List<StudentModel> studentList = teacherService.getAllStudents();
 		model.addAttribute("students", studentList);
-		return "redirect:/ViewStudent";
+		return "redirect:/teacher/iewStudent";
 	}
 
 	// Search By Name
@@ -101,7 +103,7 @@ public class TeacherController {
 	}
 
 	// Add Performance
-	@GetMapping("/addPerformance")
+	@GetMapping("/teacher/addPerformance")
 	public String addPerformance(@RequestParam("student_id") int studentId, Model model) {
 		PerformanceModel performance = new PerformanceModel();
 		performance.setStudent_id(studentId); // set student id
@@ -110,7 +112,7 @@ public class TeacherController {
 	}
 
 	// Save Performance
-	@PostMapping("/addPerformance")
+	@PostMapping("/teacher/addPerformance")
 	public String savePerformance(PerformanceModel model, Model m) {
 		boolean status = teacherService.addPerformance(model);
 
@@ -125,11 +127,23 @@ public class TeacherController {
 	}
 	
 	//View Performance
-	@GetMapping({"/viewPerformance","/admin/viewPerformance","student/viewPerformance"})
+	/*@GetMapping({"/viewPerformance","/admin/viewPerformance","student/viewPerformance"})
 	public String overallPerformance(Model model) {
 		List<PerformanceModel> performancelist = teacherService.getAllPerformance();
 		model.addAttribute("performances", performancelist);
 		return "ViewPerformance";
+	}*/
+	
+	@GetMapping({"/viewPerformance","/admin/viewPerformance","student/viewPerformance"})
+	public String overallPerformance(Model model) {
+	    List<PerformanceModel> performancelist = teacherService.getAllPerformance();
+
+	    // Group performances by student
+	    Map<String, List<PerformanceModel>> studentPerformances = performancelist.stream()
+	        .collect(Collectors.groupingBy(p -> p.getName())); // assuming getStudentName() exists
+
+	    model.addAttribute("studentPerformances", studentPerformances);
+	    return "ViewPerformance";
 	}
 
 	// Search By Name in Performance Table
@@ -141,7 +155,9 @@ public class TeacherController {
 				                                  teacherService.getAllPerformance() :
 			                                      teacherService.searchNameforPerformance(word);
 		  
-		  model.addAttribute("performances",performancelists);
+		  Map<String, List<PerformanceModel>> studentPerformances = performancelists.stream()
+			        .collect(Collectors.groupingBy(p -> p.getName()));
+		  model.addAttribute("studentPerformances",studentPerformances);
 		  model.addAttribute("word",word);
 			return "ViewPerformance";
 		}
@@ -161,8 +177,6 @@ public class TeacherController {
 			HttpServletRequest request, HttpSession session) {
 
 		try {
-
-
 			// Get upload folder path
 			String uploadPath = request.getServletContext().getRealPath("/uploads/study_material/");
 			File dir = new File(uploadPath);
@@ -192,7 +206,6 @@ public class TeacherController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		return "redirect:/viewMaterial";
 	}
 
