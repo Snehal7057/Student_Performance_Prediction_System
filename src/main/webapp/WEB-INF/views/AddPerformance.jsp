@@ -12,7 +12,6 @@ pageEncoding="UTF-8"%>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Add Performance</title>
-<<<<<<< HEAD
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -200,9 +199,7 @@ return valid;
 
 </script>
 
-=======
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
->>>>>>> 181a61ee612775d2909cadf8e39e5c00c9eefc48
 </head>
 
 <body>

@@ -1,12 +1,9 @@
-<<<<<<< HEAD
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-=======
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
->>>>>>> 181a61ee612775d2909cadf8e39e5c00c9eefc48
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +11,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<<<<<<< HEAD
 <title>Student List</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -101,7 +97,6 @@ box-shadow:0 10px 25px rgba(255,140,0,0.4);
 
 .student-card h5{
 color:orange;
-=======
 <!-- Bootstrap CSS -->
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
@@ -178,7 +173,6 @@ thead {
 .btn-delete:hover {
 	background-color: #c0392b;
 	color: white;
->>>>>>> 181a61ee612775d2909cadf8e39e5c00c9eefc48
 }
 
 .student-card p{
@@ -218,7 +212,6 @@ color:orangered;
 
 <body>
 
-<<<<<<< HEAD
 <h2>Student List</h2>
 
 <!-- Search Panel -->
@@ -283,7 +276,6 @@ value="${keyword != null ? keyword : ''}">
 </c:forEach>
 </div>
 </div>
-=======
 	<div class="container mt-5">
 		<div class="card p-4">
 
@@ -338,6 +330,5 @@ value="${keyword != null ? keyword : ''}">
 
 		</div>
 	</div>
->>>>>>> 181a61ee612775d2909cadf8e39e5c00c9eefc48
 </body>
 </html>

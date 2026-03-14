@@ -138,7 +138,6 @@ h3{
 
 <h3>Student List</h3>
 
-<<<<<<< HEAD
 <!-- ===== Search Panel ===== -->
 
 <form action="searchStudent" method="get" class="row g-2 justify-content-center search-box mb-4">
@@ -212,7 +211,6 @@ value="${word != null ? word : ''}">
 
 </div>
 
-=======
         <div class="table-responsive">
             <table class="table table-bordered table-striped" id="teacherTable">
                 <thead>
@@ -243,7 +241,6 @@ value="${word != null ? word : ''}">
             </table>
         </div>
     </div>
->>>>>>> 181a61ee612775d2909cadf8e39e5c00c9eefc48
 </div>
 
 </body>
