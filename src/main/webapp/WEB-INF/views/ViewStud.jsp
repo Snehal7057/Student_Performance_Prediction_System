@@ -137,6 +137,7 @@ h3{
 
 <h3>Student List</h3>
 
+<<<<<<< HEAD
 <!-- ===== Search Panel ===== -->
 
 <form action="searchStudent" method="get" class="row g-2 justify-content-center search-box mb-4">
@@ -210,6 +211,38 @@ value="${word != null ? word : ''}">
 
 </div>
 
+=======
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped" id="teacherTable">
+                <thead>
+                    <tr>
+                        <th>Photo</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Contact</th>
+                        <th>Location</th>
+                        <th>Delete</th>
+                        <th>Register Date</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                <c:forEach var="student" items="${students}">
+                    <tr>
+                        <td>${student.id}</td>
+                        <td>${student.name}</td>
+                        <td>${student.email}</td>
+                        <td>${student.contact}</td>
+                        <td>${student.location}</td>
+                        <td><a href="deleteStudent?id=${student.id}" class="btn-delete">Delete</a></td>
+                        <td>${student.createdDate}</td>
+                        </tr>
+               </c:forEach>
+                </tbody>
+            </table>
+        </div>
+    </div>
+>>>>>>> 181a61ee612775d2909cadf8e39e5c00c9eefc48
 </div>
 
 </body>

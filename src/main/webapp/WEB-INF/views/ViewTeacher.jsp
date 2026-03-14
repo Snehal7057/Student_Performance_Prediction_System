@@ -8,6 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>View Teachers</title>
+<<<<<<< HEAD
 
 <!-- Bootstrap -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -131,6 +132,10 @@ h2{
 
 </style>
 </head>
+=======
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+>>>>>>> 181a61ee612775d2909cadf8e39e5c00c9eefc48
 
 <body>
 
@@ -168,10 +173,25 @@ value="${param.keyword != null ? param.keyword : ''}">
 
 </div>
 
+<<<<<<< HEAD
 <!-- ===== Teacher Cards ===== -->
+=======
+<tr>
+<th>ID</th>
+<th>Photo</th>
+<th>Name</th>
+<th>Email</th>
+<th>Contact</th>
+<th>Experience</th>
+<th>Subject Name</th>
+<th colspan="2">Action</th>
+<th>Register Date</th>
+</tr>
+>>>>>>> 181a61ee612775d2909cadf8e39e5c00c9eefc48
 
 <div class="container">
 
+<<<<<<< HEAD
 <div class="row g-4">
 
 <c:forEach var="t" items="${teachers}">
@@ -201,6 +221,37 @@ value="${param.keyword != null ? param.keyword : ''}">
 </div>
 
 </div>
+=======
+<tr>
+<td>${status.count}</td> 
+<td><c:choose>
+
+<c:when test="${t.name.startsWith('Mr')}">
+<i class="fa-solid fa-circle-user"
+style="font-size:32px;color:#2c3e50;"></i>
+</c:when>
+
+<c:otherwise>
+<i class="fa-solid fa-user-circle"
+style="font-size:32px;color:#2c3e50;"></i>
+</c:otherwise>
+
+</c:choose>
+</td>
+<td>${t.name}</td>
+<td>${t.email}</td>
+<td>${t.contact}</td>
+<td>${t.experience}</td>
+<td>${t.subjectName}</td>
+<td>
+<a href="deleteteacher?id=${t.id}">delete</a>
+</td>
+<td>
+<a href="editteacher?id=${t.id}">update</a>
+</td>
+<td>${t.createdDate}</td>
+</tr>
+>>>>>>> 181a61ee612775d2909cadf8e39e5c00c9eefc48
 
 </c:forEach>
 

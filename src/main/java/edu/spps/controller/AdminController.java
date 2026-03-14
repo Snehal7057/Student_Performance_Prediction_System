@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import edu.spps.model.PerformanceModel;
 import edu.spps.model.StudentModel;
 import edu.spps.model.SubjectModel;
 import edu.spps.model.TeacherModel;
@@ -109,10 +108,11 @@ public class AdminController {
 	// View Student
 	@GetMapping("admin/viewStudent")
 	public String viewStudent(Model model) {
-		List<StudentModel> studentList = adminservice.getAllStudents();
+		List<StudentModel> studentList = teacherService.getAllStudents();
 		model.addAttribute("students", studentList);
 		return "ViewStud";
 	}
+<<<<<<< HEAD
 	
 	//search student
 		@GetMapping("admin/searchStudent")
@@ -136,4 +136,21 @@ public class AdminController {
 		    return "redirect:/admin/viewStudent";  
 		}
 
+=======
+
+	// search student
+
+	// search student
+	@GetMapping("admin/searchStudent")
+	public String searchStudent(HttpServletRequest request, Model model) {
+		String word = request.getParameter("word");
+
+		List<StudentModel> studentList = (word == null || word.isEmpty()) ? adminservice.getAllStudents()
+				: adminservice.searchStudent(word);
+
+		model.addAttribute("students", studentList);
+		model.addAttribute("word", word);
+		return "ViewStud";
+	}
+>>>>>>> 181a61ee612775d2909cadf8e39e5c00c9eefc48
 }
