@@ -43,13 +43,15 @@ Search Teacher:
 <td><c:choose>
 
 <c:when test="${t.name.startsWith('Mr')}">
-<i class="fa-solid fa-circle-user"
-style="font-size:32px;color:#2c3e50;"></i>
+<i class="fa-solid fa-user-tie"
+style="font-size:28px;color:white;background:linear-gradient(135deg,#3498db,#2c3e50);
+padding:10px;border-radius:50%;"></i>
 </c:when>
 
 <c:otherwise>
-<i class="fa-solid fa-user-circle"
-style="font-size:32px;color:#2c3e50;"></i>
+<i class="fa-solid fa-user"
+style="font-size:28px;color:white;background:linear-gradient(135deg,#ff6a88,#ff99ac);
+padding:10px;border-radius:50%;"></i>
 </c:otherwise>
 
 </c:choose>

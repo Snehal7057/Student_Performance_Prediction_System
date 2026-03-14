@@ -10,7 +10,8 @@
 
 <!-- Bootstrap CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
 body{
     background: linear-gradient(135deg, #141e30, #243b55);
@@ -115,7 +116,7 @@ Search Student:
                 <tbody>
                 <c:forEach var="student" items="${students}">
                     <tr>
-                        <td>${student.id}</td>
+                        <td><i class="fa-solid fa-user-circle" style="font-size:30px;color:#2c3e50;"></i></td>
                         <td>${student.name}</td>
                         <td>${student.email}</td>
                         <td>${student.contact}</td>

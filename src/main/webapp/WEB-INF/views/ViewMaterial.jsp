@@ -22,9 +22,10 @@ uri="http://java.sun.com/jsp/jstl/core"%>
 <td>${m.subject_name}</td>
 
 <td>
-<a href="uploads/study_material/${m.file_name}" target="_blank">
+<a href="${pageContext.request.contextPath}/uploads/study_material/${m.file_name}" target="_blank">
 ${m.file_name}
 </a>
+
 </td>
 
 <td>${m.teacher_name}</td>
