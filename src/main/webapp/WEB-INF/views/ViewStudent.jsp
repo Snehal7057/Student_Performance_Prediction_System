@@ -316,12 +316,12 @@ value="${keyword != null ? keyword : ''}">
 								<td>${s.contact}</td>
 								<td>${s.location}</td>
 
-								<td><a href="updateStudent?id=${student.id}"
-									class="btn-update">Update</a></td>
-								<td><a href="addPerformance?student_id=${student.id}"
+								<td>
+<a href="${pageContext.request.contextPath}/teacher/updateStudent?id=${s.id}">Update</a>
+</td>
+								<td><a href="addPerformance?student_id=${s.id}"
 									class="btn-performance">Add_Performance</a></td>
-								<td><a href="deleteStudent?id=${student.id}"
-									class="btn-delete">Delete</a></td>
+								<td><a href="${pageContext.request.contextPath}/teacher/deleteStudent?id=${s.id}">Delete</a></td>
 								<td>${s.createdDate}</td>
 						</c:forEach>
 					</tbody>

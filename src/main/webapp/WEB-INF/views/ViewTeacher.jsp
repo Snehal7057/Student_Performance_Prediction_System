@@ -171,17 +171,7 @@ value="${param.keyword != null ? param.keyword : ''}">
 </div>
 
 <!-- ===== Teacher Cards ===== -->
-<tr>
-<th>ID</th>
-<th>Photo</th>
-<th>Name</th>
-<th>Email</th>
-<th>Contact</th>
-<th>Experience</th>
-<th>Subject Name</th>
-<th colspan="2">Action</th>
-<th>Register Date</th>
-</tr>
+
 
 <div class="container">
 
@@ -202,6 +192,8 @@ value="${param.keyword != null ? param.keyword : ''}">
 <p><strong>Experience:</strong> ${t.experience} years</p>
 
 <p><strong>Subject:</strong> ${t.subjectName}</p>
+<p><strong>Joining Date:</strong> ${t.createdDate}</p>
+
 
 <div class="d-flex gap-2 mt-3">
 
@@ -214,37 +206,7 @@ value="${param.keyword != null ? param.keyword : ''}">
 </div>
 
 </div>
-<tr>
-<td>${status.count}</td> 
-<td><c:choose>
 
-<c:when test="${t.name.startsWith('Mr')}">
-<i class="fa-solid fa-user-tie"
-style="font-size:28px;color:white;background:linear-gradient(135deg,#3498db,#2c3e50);
-padding:10px;border-radius:50%;"></i>
-</c:when>
-
-<c:otherwise>
-<i class="fa-solid fa-user"
-style="font-size:28px;color:white;background:linear-gradient(135deg,#ff6a88,#ff99ac);
-padding:10px;border-radius:50%;"></i>
-</c:otherwise>
-
-</c:choose>
-</td>
-<td>${t.name}</td>
-<td>${t.email}</td>
-<td>${t.contact}</td>
-<td>${t.experience}</td>
-<td>${t.subjectName}</td>
-<td>
-<a href="deleteteacher?id=${t.id}">delete</a>
-</td>
-<td>
-<a href="editteacher?id=${t.id}">update</a>
-</td>
-<td>${t.createdDate}</td>
-</tr>
 
 </c:forEach>
 

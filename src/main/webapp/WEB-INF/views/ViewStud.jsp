@@ -166,50 +166,7 @@ value="${word != null ? word : ''}">
 
 </form>
 
-<!-- ===== Table ===== -->
 
-<div class="table-responsive">
-
-<table class="table table-bordered align-middle text-center">
-
-<thead>
-<tr>
-<th>ID</th>
-<th>Name</th>
-<th>Email</th>
-<th>Contact</th>
-<th>Location</th>
-<th>Delete</th>
-</tr>
-</thead>
-
-<tbody>
-
-<c:forEach var="student" items="${students}">
-
-<tr>
-
-<td>${student.id}</td>
-<td>${student.name}</td>
-<td>${student.email}</td>
-<td>${student.contact}</td>
-<td>${student.location}</td>
-
-<td>
-<a href="deleteStudent?id=${student.id}" class="btn btn-delete btn-sm">Delete</a>
-</td>
-
-</tr>
-
-</c:forEach>
-
-</tbody>
-
-</table>
-
-</div>
-
-</div>
 
         <div class="table-responsive">
             <table class="table table-bordered table-striped" id="teacherTable">
@@ -241,7 +198,6 @@ value="${word != null ? word : ''}">
             </table>
         </div>
     </div>
-</div>
 
 </body>
 </html>

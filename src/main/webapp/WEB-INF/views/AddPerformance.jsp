@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,145 +13,97 @@ pageEncoding="UTF-8"%>
 
 <title>Add Performance</title>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+</head>
 
 <style>
-
-body{
-font-family:'Segoe UI',Arial;
-background:rgb(5,39,69);
-color:white;
-
-height:100vh;
-display:flex;
-align-items:center;
-justify-content:center;
-
-margin:0;
-overflow:hidden;
+body {
+	font-family: 'Segoe UI', Arial;
+	background: rgb(5, 39, 69);
+	color: white;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	overflow: hidden;
 }
 
 /* Card */
-
-.form-card{
-
-background:#02213e;
-
-padding:28px;
-
-border-radius:12px;
-
-width:100%;
-max-width:520px;
-
-box-shadow:0 10px 25px rgba(0,0,0,0.6);
-
+.form-card {
+	background: #02213e;
+	padding: 28px;
+	border-radius: 12px;
+	width: 100%;
+	max-width: 520px;
+	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
 }
 
 /* Heading */
-
-h2{
-
-text-align:center;
-
-color:orange;
-
-margin-bottom:20px;
-
+h2 {
+	text-align: center;
+	color: orangered;
+	margin-bottom: 20px;
 }
 
 /* Inputs */
-
-.form-control{
-
-background:#01172b;
-
-border:1px solid #123a63;
-
-color:white;
-
+.form-control {
+	background: #01172b;
+	border: 1px solid #123a63;
+	color: white;
 }
 
-.form-control:focus{
-
-background:#01172b;
-
-border-color:orange;
-
-box-shadow:0 0 6px orange;
-
-color:white;
-
+.form-control:focus {
+	background: #01172b;
+	border-color: orange;
+	box-shadow: 0 0 6px orange;
+	color: white;
 }
 
 /* Button */
-
-.submit-btn{
-
-margin-top:15px;
-
-background:orange;
-
-border:none;
-
-color:black;
-
-font-weight:600;
-
+.submit-btn {
+	margin-top: 15px;
+	background: orange;
+	border: none;
+	color: black;
+	font-weight: 900;
 }
 
-.submit-btn:hover{
-
-background:orangered;
-
+.submit-btn:hover {
+	background: orangered;
 }
 
 /* Error */
-
-.error{
-
-color:#ff6b6b;
-
-font-size:13px;
-
-margin-top:4px;
-
+.error {
+	color: #ff6b6b;
+	font-size: 13px;
+	margin-top: 4px;
 }
 
 /* Success message */
-
-.msg{
-
-text-align:center;
-
-color:#4caf50;
-
-margin-bottom:10px;
-
+.msg {
+	text-align: center;
+	color: #4caf50;
+	margin-bottom: 10px;
 }
 
 /* Back */
-
-.back-link{
-
-display:block;
-
-text-align:center;
-
-margin-top:15px;
-
-color:orange;
-
-text-decoration:none;
-
+.back-link {
+	display: block;
+	text-align: center;
+	margin-top: 15px;
+	color: orange;
+	text-decoration: none;
 }
 
-.back-link:hover{
-
-color:orangered;
-
+.back-link:hover {
+	color: orangered;
 }
-
 </style>
 
 <script>
@@ -199,60 +151,63 @@ return valid;
 
 </script>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
+
 
 <body>
 
-<div class="form-card">
+	<div class="form-card">
 
-<h2>Add Student Performance</h2>
+		<h2>Add Student Performance</h2>
 
-<c:if test="${not empty msg}">
-<p class="msg">${msg}</p>
-</c:if>
+		<c:if test="${not empty msg}">
+			<p class="msg">${msg}</p>
+		</c:if>
 
-<form:form method="post" modelAttribute="performance" onsubmit="return validatePerformance()">
+		<form:form method="post" modelAttribute="performance"
+			onsubmit="return validatePerformance()">
 
-<form:hidden path="student_id"/>
+			<form:hidden path="student_id" />
 
-<div class="mb-2">
-<label>Attendance</label>
-<form:input path="attendance" id="attendance" type="number" cssClass="form-control" placeholder="0-100"/>
-<div class="error" id="attendanceError"></div>
-</div>
+			<div class="mb-2">
+				<label>Attendance</label>
+				<form:input path="attendance" id="attendance" type="number"
+					cssClass="form-control" placeholder="0-100" />
+				<div class="error" id="attendanceError"></div>
+			</div>
 
-<div class="mb-2">
-<label>Study Hours</label>
-<form:input path="study_hours" id="study_hours" type="number" cssClass="form-control" placeholder="Hours"/>
-<div class="error" id="studyHoursError"></div>
-</div>
+			<div class="mb-2">
+				<label>Study Hours</label>
+				<form:input path="study_hours" id="study_hours" type="number"
+					cssClass="form-control" placeholder="Hours" />
+				<div class="error" id="studyHoursError"></div>
+			</div>
 
-<div class="mb-2">
-<label>Assessment</label>
-<form:input path="assessment" id="assessment" type="number" cssClass="form-control" placeholder="0-100"/>
-<div class="error" id="assessmentError"></div>
-</div>
+			<div class="mb-2">
+				<label>Assessment</label>
+				<form:input path="assessment" id="assessment" type="number"
+					cssClass="form-control" placeholder="0-100" />
+				<div class="error" id="assessmentError"></div>
+			</div>
 
-<div class="mb-2">
-<label>Participation</label>
-<form:input path="participation" id="participation" type="number" cssClass="form-control" placeholder="0-10"/>
-<div class="error" id="participationError"></div>
-</div>
+			<div class="mb-2">
+				<label>Participation</label>
+				<form:input path="participation" id="participation" type="number"
+					cssClass="form-control" placeholder="0-10" />
+				<div class="error" id="participationError"></div>
+			</div>
 
-<div class="mb-2">
-<label>Percentage</label>
-<form:input path="percentage" id="percentage" type="number" cssClass="form-control" placeholder="0-100"/>
-<div class="error" id="percentageError"></div>
-</div>
+			<div class="mb-2">
+				<label>Percentage</label>
+				<form:input path="percentage" id="percentage" type="number"
+					cssClass="form-control" placeholder="0-100" />
+				<div class="error" id="percentageError"></div>
+			</div>
 
-<button class="btn submit-btn w-100">
-Add Performance
-</button>
+			<button class="btn submit-btn w-100">Add Performance</button>
 
-</form:form>
+		</form:form>
 
-</div>
+	</div>
 
 </body>
 </html>

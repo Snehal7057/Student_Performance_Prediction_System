@@ -72,29 +72,38 @@ public class TeacherController {
 		return "ViewStudent";
 	}
 
-	// Update Student
-	@GetMapping("/updateStudent")
+	@GetMapping("/teacher/deleteStudent")
+	public String deleteStudent(@RequestParam("id") int id) {
+
+		teacherService.deleteStudent(id);
+
+		return "redirect:/teacher/viewStudent";
+	}
+
+	// Update Student Page
+	@GetMapping("/teacher/updateStudent")
 	public String updateStudent(@RequestParam("id") int id, Model model) {
+
 		StudentModel student = teacherService.getStudentById(id);
 		model.addAttribute("student", student);
+
 		return "UpdateStudent";
 	}
 
-	// Save Update Student
-	@PostMapping("/updateStudent")
-	public String updateStudentSave(StudentModel students, Model model) {
-		boolean status = teacherService.isUpdateStudent(students);
-		model.addAttribute("msg", status ? "Student Updated Successfully" : "Update Failed");
-		List<StudentModel> studentList = teacherService.getAllStudents();
-		model.addAttribute("students", studentList);
-		return "redirect:/teacher/iewStudent";
+	// Save Updated Student
+	@PostMapping("/teacher/updateStudent")
+	public String updateStudentSave(StudentModel students) {
+
+		teacherService.isUpdateStudent(students);
+
+		return "redirect:/teacher/viewStudent";
 	}
 
 	// Search By Name
 	@GetMapping("teacher/searchstudent")
 	public String searchStudent(HttpServletRequest request, Model model) {
-		String keyword=request.getParameter("keyword");
-		
+		String keyword = request.getParameter("keyword");
+
 		List<StudentModel> studentList = (keyword == null || keyword.isEmpty()) ? teacherService.getAllStudents()
 				: teacherService.searchStudent(keyword);
 		model.addAttribute("students", studentList);
@@ -125,43 +134,43 @@ public class TeacherController {
 		m.addAttribute("performance", new PerformanceModel());
 		return "AddPerformance";
 	}
-	
-	//View Performance
-	/*@GetMapping({"/viewPerformance","/admin/viewPerformance","student/viewPerformance"})
+
+	// View Performance
+	/*
+	 * @GetMapping({"/viewPerformance","/admin/viewPerformance",
+	 * "student/viewPerformance"}) public String overallPerformance(Model model) {
+	 * List<PerformanceModel> performancelist = teacherService.getAllPerformance();
+	 * model.addAttribute("performances", performancelist); return
+	 * "ViewPerformance"; }
+	 */
+
+	@GetMapping({ "/viewPerformance", "/admin/viewPerformance", "student/viewPerformance" })
 	public String overallPerformance(Model model) {
 		List<PerformanceModel> performancelist = teacherService.getAllPerformance();
-		model.addAttribute("performances", performancelist);
+
+		// Group performances by student
+		Map<String, List<PerformanceModel>> studentPerformances = performancelist.stream()
+				.collect(Collectors.groupingBy(p -> p.getName())); // assuming getStudentName() exists
+
+		model.addAttribute("studentPerformances", studentPerformances);
 		return "ViewPerformance";
-	}*/
-	
-	@GetMapping({"/viewPerformance","/admin/viewPerformance","student/viewPerformance"})
-	public String overallPerformance(Model model) {
-	    List<PerformanceModel> performancelist = teacherService.getAllPerformance();
-
-	    // Group performances by student
-	    Map<String, List<PerformanceModel>> studentPerformances = performancelist.stream()
-	        .collect(Collectors.groupingBy(p -> p.getName())); // assuming getStudentName() exists
-
-	    model.addAttribute("studentPerformances", studentPerformances);
-	    return "ViewPerformance";
 	}
 
 	// Search By Name in Performance Table
-	@GetMapping({"/searchPerformance","/admin/searchPerformance","student/searchPerformance"})
-	 public String searchPerformance(HttpServletRequest request,Model model) {
-		  String word=request.getParameter("word");
-		  
-		  List<PerformanceModel> performancelists=(word==null || word.isEmpty()) ? 
-				                                  teacherService.getAllPerformance() :
-			                                      teacherService.searchNameforPerformance(word);
-		  
-		  Map<String, List<PerformanceModel>> studentPerformances = performancelists.stream()
-			        .collect(Collectors.groupingBy(p -> p.getName()));
-		  model.addAttribute("studentPerformances",studentPerformances);
-		  model.addAttribute("word",word);
-			return "ViewPerformance";
-		}
-	    
+	@GetMapping({ "/searchPerformance", "/admin/searchPerformance", "student/searchPerformance" })
+	public String searchPerformance(HttpServletRequest request, Model model) {
+		String word = request.getParameter("word");
+
+		List<PerformanceModel> performancelists = (word == null || word.isEmpty()) ? teacherService.getAllPerformance()
+				: teacherService.searchNameforPerformance(word);
+
+		Map<String, List<PerformanceModel>> studentPerformances = performancelists.stream()
+				.collect(Collectors.groupingBy(p -> p.getName()));
+		model.addAttribute("studentPerformances", studentPerformances);
+		model.addAttribute("word", word);
+		return "ViewPerformance";
+	}
+
 	// upload study material
 	@GetMapping("/uploadMaterial")
 	public String showUploadPage(Model model) {
@@ -170,8 +179,8 @@ public class TeacherController {
 		return "uploadMaterial";
 
 	}
-  
-	 //upload
+
+	// upload
 	@PostMapping("/uploadMaterial")
 	public String uploadMaterial(@RequestParam("subject_id") int subjectId, @RequestParam("file") MultipartFile file,
 			HttpServletRequest request, HttpSession session) {
@@ -210,7 +219,7 @@ public class TeacherController {
 	}
 
 	// view Material
-	@GetMapping({"/viewMaterial","student/viewMaterial"})
+	@GetMapping({ "/viewMaterial", "student/viewMaterial" })
 	public String viewMaterial(Model model) {
 		List<StudyMaterialModel> materials = teacherService.getAllMaterials();
 		model.addAttribute("materials", materials);

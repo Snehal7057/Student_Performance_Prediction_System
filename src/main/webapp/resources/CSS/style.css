@@ -30,9 +30,7 @@ color:#ffffff;
 /* ===== Announcement Slider ===== */
 
 .announcement-bar{
-	position:sticky;
-top:70px;   /* height of navbar */
-z-index:999;
+
 width:100%;
 background:#061A22;
 overflow:hidden;
