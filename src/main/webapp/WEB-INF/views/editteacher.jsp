@@ -18,127 +18,110 @@ pageEncoding="UTF-8"%>
 
 /* Page */
 
+/* ===== BODY ===== */
 body{
-font-family:'Segoe UI',Arial;
-background:rgb(5,39,69);
-color:white;
-
-height:100vh;
-display:flex;
-align-items:center;
-justify-content:center;
-
-overflow:hidden;
-margin:0;
+    margin:0;
+    font-family:'Segoe UI',sans-serif;
+    background:transparent;
 }
 
-/* Form Card */
-
+/* ===== FORM CARD ===== */
 .form-card{
+    width:100%;
+    max-width:400px;
+    margin:30px;
 
-width:100%;
-max-width:500px;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(12px);
 
-background:#02213e;
+    padding:25px;
+    border-radius:12px;
 
-padding:25px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.5);
 
-border-radius:12px;
-
-box-shadow:0 10px 25px rgba(0,0,0,0.6);
-
+    color:white;
 }
 
-/* Heading */
+/* ===== HEADER ===== */
+.form-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
+}
 
+/* TITLE */
 h2{
-text-align:center;
-color:orange;
-margin-bottom:20px;
+    margin:0;
+    font-size:20px;
+    color:black;
 }
 
-/* Labels */
+/* CLOSE BUTTON FIX 🔥 */
+.close-btn{
+    font-size:22px;
+    cursor:pointer;
+    color:white;
+    transition:0.8s;
+}
 
+.close-btn:hover{
+    transform:rotate(90deg);
+    color:#ff4d4d;
+}
+
+/* ===== INPUT ===== */
 label{
-margin-top:10px;
-font-weight:500;
+    margin-top:10px;
+    font-size:14px;
+    color:black;
 }
 
-/* Inputs */
+input,select{
+    width:100%;
+    padding:10px;
+    margin-top:5px;
 
-.form-control{
+    border-radius:6px;
+    border:1px solid rgba(255,255,255,0.3);
 
-background:#01172b;
-border:1px solid #123a63;
-color:white;
-
+    background:rgba(255,255,255,0.1);
+    color:white;
 }
 
-.form-control:focus{
-
-border-color:orange;
-box-shadow:0 0 6px orange;
-
-background:#01172b;
-color:white;
-
+/* FOCUS */
+input:focus,select:focus{
+    outline:none;
+    border-color:#38bdf8;
 }
 
-/* Button */
-
+/* ===== BUTTON (YOUR THEME) 🔥 */
 .update-btn{
+    width:100%;
+    margin-top:15px;
+    padding:12px;
 
-margin-top:15px;
+    border:none;
+    border-radius:8px;
 
-background:orange;
+    background:linear-gradient(to right, #0b0f14, #121826);
+    color:white;
 
-border:none;
-
-color:black;
-
-font-weight:600;
-
+    font-weight:600;
 }
 
+/* HOVER */
 .update-btn:hover{
-
-background:orangered;
-
+    background:linear-gradient(to right, #1e293b, #0f172a);
 }
 
-/* Errors */
-
+/* ===== ERROR ===== */
 .error{
-
-color:#ff6b6b;
-
-font-size:13px;
-
-margin-top:3px;
-
+    color:#ff6b6b;
+    font-size:12px;
 }
 
-/* Back */
 
-.back-link{
-
-display:block;
-
-text-align:center;
-
-margin-top:15px;
-
-color:orange;
-
-text-decoration:none;
-
-}
-
-.back-link:hover{
-
-color:orangered;
-
-}
 
 </style>
 
@@ -189,6 +172,10 @@ valid=false;
 return valid;
 
 }
+
+
+
+
 </script>
 
 </head>
@@ -197,9 +184,14 @@ return valid;
 
 <div class="form-card">
 
-<h2>Edit Teacher</h2>
 
-<form action="updateteacher" method="post" onsubmit="return validateEditTeacherForm()">
+<div class="form-header">
+    <h2>Edit Teacher</h2>
+    <span class="close-btn" onclick="parent.closeEditModal()">✖</span>
+</div>
+<form action="updateteacher" method="post" 
+      target="_top"
+      onsubmit="parent.closeEditModal(); return validateEditTeacherForm()">
 
 <input type="hidden" name="id" value="${teacher.id}">
 

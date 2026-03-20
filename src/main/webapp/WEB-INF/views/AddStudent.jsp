@@ -11,107 +11,129 @@ pageEncoding="UTF-8"%>
 
 <title>Add Student</title>
 
-<!-- Bootstrap -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
 <style>
 
-/* Page */
-
+/* ===== BODY ===== */
 body{
-font-family:'Segoe UI', Arial, sans-serif;
-background:rgb(5,39,69);
-color:white;
-padding:20px;
+    font-family:'Segoe UI',sans-serif;
+    margin:0;
+    background:transparent;
+
+    /* CENTER FORM */
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
 }
 
-/* Card */
+/* ===== CONTAINER ===== */
+.container{
+    width:100%;
+    max-width:420px;
 
-.form-card{
+    margin-top:30px;
+    padding:20px;
 
-max-width:520px;
-margin:auto;
+    background:white;
+    border-radius:12px;
 
-background:#02213e;
+    box-shadow:0 15px 35px rgba(0,0,0,0.3);
 
-padding:30px;
-
-border-radius:12px;
-
-box-shadow:0 10px 25px rgba(0,0,0,0.6);
+    animation:fadeIn 0.3s ease;
 }
 
-/* Heading */
+/* ===== HEADER ===== */
+.form-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:10px;
+}
 
 h2{
-text-align:center;
-color:orange;
-margin-bottom:25px;
+    margin:0;
+    font-weight:600;
 }
 
-/* Labels */
+/* CLOSE BUTTON */
+.close-btn{
+    font-size:20px;
+    cursor:pointer;
+    color:#e11d48;
+    transition:0.3s;
+}
 
+.close-btn:hover{
+    transform:rotate(90deg) scale(1.1);
+}
+
+/* ===== LABEL ===== */
 label{
-margin-top:12px;
-font-weight:500;
+    margin-top:10px;
+    font-size:14px;
+    color:#111;
 }
 
-/* Inputs */
+/* ===== INPUT ===== */
+input{
+    width:100%;
+    padding:10px;
 
-.form-control{
+    margin-top:6px;
+    margin-bottom:10px;
 
-background:#01172b;
-border:1px solid #123a63;
-color:white;
+    border-radius:6px;
+    border:1px solid #ccc;
+
+    transition:0.2s;
 }
 
-.form-control:focus{
-
-border-color:orange;
-
-box-shadow:0 0 6px orange;
-
-background:#01172b;
-
-color:white;
+/* FOCUS */
+input:focus{
+    border-color:#38bdf8;
+    box-shadow:0 0 6px rgba(56,189,248,0.5);
+    outline:none;
 }
 
-/* Error */
+/* ===== BUTTON ===== */
+button{
+    width:100%;
+    margin-top:15px;
+    padding:11px;
 
+    border:none;
+    border-radius:8px;
+
+    background:linear-gradient(to right, #0b0f14, #121826);
+    color:white;
+
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#0ea5e9;
+    transform:translateY(-1px);
+}
+
+/* ===== ERROR ===== */
 .error{
-color:#ff6b6b;
-font-size:13px;
-margin-top:4px;
+    font-size:12px;
+    color:#ef4444;
 }
 
-/* Button */
-
-.submit-btn{
-
-margin-top:20px;
-
-background:orange;
-
-border:none;
-
-color:black;
-
-font-weight:600;
-
-padding:10px;
-}
-
-.submit-btn:hover{
-background:orangered;
-}
-
-/* Success message */
-
+/* SUCCESS */
 .msg{
-margin-top:15px;
-text-align:center;
-color:#9be7a1;
-font-weight:500;
+    margin-top:10px;
+    text-align:center;
+    color:#16a34a;
+    font-weight:500;
+}
+
+/* ===== ANIMATION ===== */
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(15px);}
+    to{opacity:1; transform:translateY(0);}
 }
 
 </style>
@@ -159,61 +181,49 @@ return valid;
 
 }
 
+/* CLOSE MODAL */
+function closeModal(){
+    if(window.parent && window.parent.closeModal){
+        window.parent.closeModal();
+    }else{
+        window.history.back(); // fallback
+    }
+}
+
 </script>
 
 </head>
 
 <body>
 
-<div class="form-card">
+<div class="container">
 
-<h2>Add Student</h2>
+<div class="form-header">
+    <h2>Add Student</h2>
+    <span class="close-btn" onclick="closeModal()">❌</span>
+</div>
 
 <form action="addStudent" method="post" onsubmit="return validateForm()">
 
-<div class="mb-2">
-
 <label>Name</label>
-
-<input type="text" id="name" name="name" class="form-control" placeholder="Enter full name">
-
+<input type="text" id="name" name="name" placeholder="Enter full name">
 <div class="error" id="nameError"></div>
 
-</div>
-
-<div class="mb-2">
-
 <label>Email</label>
-
-<input type="email" id="email" name="email" class="form-control" placeholder="Enter email">
-
+<input type="email" id="email" name="email" placeholder="Enter email">
 <div class="error" id="emailError"></div>
 
-</div>
-
-<div class="mb-2">
-
 <label>Contact</label>
-
-<input type="tel" id="contact" name="contact" class="form-control" placeholder="10 digit number">
-
+<input type="text" id="contact" name="contact" placeholder="10 digit number">
 <div class="error" id="contactError"></div>
 
-</div>
-
-<div class="mb-2">
-
 <label>Location</label>
-
-<input type="text" id="location" name="location" class="form-control" placeholder="Enter location">
-
+<input type="text" id="location" name="location" placeholder="Enter location">
 <div class="error" id="locationError"></div>
-
-</div>
 
 <input type="hidden" name="role_id" value="3">
 
-<button class="btn submit-btn w-100">Add Student</button>
+<button type="submit">Add Student</button>
 
 <c:if test="${not empty msg}">
 <p class="msg">${msg}</p>

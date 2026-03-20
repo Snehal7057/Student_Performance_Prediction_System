@@ -2,96 +2,103 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teacher List</title>
 
-<title>View Teachers</title>
-
-<!-- Bootstrap -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
 
-/* ===== Global ===== */
-
+/* ===== BODY ===== */
 body{
-    background:rgb(5,39,69);
-    color:white;
+   background: linear-gradient(to right, #0b0f14, #121826);
+    color:#e5e5e5;
     font-family:'Segoe UI',sans-serif;
+}
+
+/* ===== WRAPPER ===== */
+.main-wrapper{
     padding:20px;
 }
 
-/* ===== Heading ===== */
-
+/* ===== TITLE ===== */
 h2{
     text-align:center;
-    color:orange;
-    margin-bottom:30px;
+    color:#ffffff;
+    margin-bottom:25px;
+    font-weight:600;
 }
 
-/* ===== Search Section ===== */
+/* ===== SEARCH ===== */
+.search-box{
+    max-width:700px;
+    margin:0 auto 30px;
+    
+}
 
 .search-box input{
-    background:#01172b;
-    border:1px solid #123a63;
+  background:white;
+    border:1px solid #333;
     color:white;
 }
 
 .search-box input:focus{
-    border-color:orange;
-    box-shadow:0 0 6px orange;
+    border-color:#888;
+    box-shadow:none;
 }
 
-/* Buttons */
-
+/* BUTTONS */
 .search-btn{
-    background:orange;
-    border:none;
+    background:#ffffff;
     color:black;
+    border:none;
     font-weight:600;
 }
 
-.search-btn:hover{
-    background:orangered;
-}
-
 .reset-btn{
-    background:#02213e;
-    border:1px solid orange;
-    color:orange;
+    border:1px solid #555;
+    color:white;
 }
 
-.reset-btn:hover{
-    background:orange;
+/* ===== CARD ===== */
+.teacher-card{
+    background:white;
+    border-radius:12px;
+    padding:20px;
+    padding-top:50px;
+    position:relative;
+    height:100%;
+    transition:0.3s;
     color:black;
 }
 
-/* ===== Teacher Cards ===== */
-
-.teacher-card{
-
-    background:#02213e;
-    border-radius:10px;
-
-    padding:20px;
-
-    box-shadow:0 6px 18px rgba(0,0,0,0.6);
-
-    height:100%;
-
-    transition:0.3s;
-}
-
 .teacher-card:hover{
-
-    transform:translateY(-6px);
-    box-shadow:0 10px 25px rgba(255,140,0,0.4);
+    transform:translateY(-5px);
 }
 
+/* PROFILE ICON */
+.profile-icon{
+    position:absolute;
+    top:-30px;
+    left:50%;
+    transform:translateX(-50%);
+    width:60px;
+    height:60px;
+    background:#2d2d2d;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+}
+
+/* TEXT */
 .teacher-card h5{
-    color:orange;
+    text-align:center;
+    color:black;
 }
 
 .teacher-card p{
@@ -99,81 +106,115 @@ h2{
     margin:5px 0;
 }
 
-/* ===== Action Buttons ===== */
-
+/* BUTTON */
 .card-btn{
-
-    background:orange;
+     background: linear-gradient(to right, #0b0f14, #121826);
+    color:white;
     border:none;
-    color:black;
-    font-size:14px;
+    font-weight:600;
 }
 
 .card-btn:hover{
-    background:orangered;
+    background:;
 }
 
-/* ===== Back Link ===== */
+/* GRID FIX */
+.container-fluid{
+    padding:0;
+}
 
-.back-link{
 
-    display:block;
+/* VIDEO BACKGROUND */
+.video-bg{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:-1;
+    filter:blur(5px) brightness(0.4);
+}
+
+/* CONTENT ABOVE VIDEO */
+.main-wrapper{
+    position:relative;
+    z-index:1;
+    padding:20px;
+}
+
+.teacher-card{
+    backdrop-filter: blur(10px);
+    color:black;
+    background:white;
+}
+
+.delete-modal{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+
+    background:rgba(0,0,0,0.6);
+
+    display:none;
+    align-items:center;
+    justify-content:center;
+
+    z-index:9999;
+}
+
+.delete-box{
+    background:#02213e;
+    padding:25px;
+    border-radius:10px;
     text-align:center;
-    margin-top:35px;
+    color:white;
+    width:300px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.5);
+}
 
+.delete-box h4{
     color:orange;
-    text-decoration:none;
 }
 
-.back-link:hover{
-    color:orangered;
-}
+
 
 </style>
 </head>
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <body>
 
+<video autoplay muted loop class="video-bg">
+    <source src="${pageContext.request.contextPath}/resources/videos/videoad.mp4">
+</video>
+
+<div class="main-wrapper">
+
 <h2>Teacher List</h2>
 
-<!-- ===== Search Section ===== -->
+<!-- SEARCH -->
+<form action="searchteacher" method="get" class="row g-2 search-box">
 
-<div class="container mb-4">
-
-<form action="searchteacher" method="get" class="row g-2 justify-content-center search-box">
-
-<div class="col-lg-6 col-md-8 col-12">
-
-<input type="text"
-class="form-control"
-name="keyword"
-placeholder="Search by name, email, or subject"
-value="${param.keyword != null ? param.keyword : ''}">
-
+<div class="col-md-8 col-12">
+<input type="text" class="form-control" name="keyword"
+placeholder="Search by name, email, subject"
+value="${param.keyword}">
 </div>
 
-<div class="col-lg-auto col-md-auto col-6">
-
+<div class="col-md-2 col-6">
 <button class="btn w-100 search-btn">Search</button>
-
 </div>
 
-<div class="col-lg-auto col-md-auto col-6">
-
+<div class="col-md-2 col-6">
 <a href="viewteachers" class="btn w-100 reset-btn">Reset</a>
-
 </div>
 
 </form>
 
-</div>
-
-<!-- ===== Teacher Cards ===== -->
-
-
-<div class="container">
+<!-- CARDS -->
+<div class="container-fluid">
 
 <div class="row g-4">
 
@@ -183,30 +224,30 @@ value="${param.keyword != null ? param.keyword : ''}">
 
 <div class="teacher-card">
 
+<div class="profile-icon">
+<i class="fas fa-user"></i>
+</div>
+
 <h5>${t.name}</h5>
 
 <p><strong>Email:</strong> ${t.email}</p>
-
 <p><strong>Contact:</strong> ${t.contact}</p>
-
 <p><strong>Experience:</strong> ${t.experience} years</p>
-
 <p><strong>Subject:</strong> ${t.subjectName}</p>
 <p><strong>Joining Date:</strong> ${t.createdDate}</p>
 
-
 <div class="d-flex gap-2 mt-3">
-
-<a href="editteacher?id=${t.id}" class="btn card-btn w-50">Update</a>
-
-<a href="admin/deleteteacher?id=${t.id}" class="btn card-btn w-50">Delete</a>
-
+<a href="#" onclick="parent.openEditModal(${t.id})" class="btn card-btn w-50">Update</a>
+<a href="#" 
+   class="btn card-btn w-50"
+   onclick="openDeleteModal(${t.id}); return false;">
+   Delete
+</a>
 </div>
 
 </div>
 
 </div>
-
 
 </c:forEach>
 
@@ -214,5 +255,36 @@ value="${param.keyword != null ? param.keyword : ''}">
 
 </div>
 
+
+</div>
+<div id="deleteModal" class="delete-modal">
+    <div class="delete-box">
+        <h4>⚠ Confirm Delete</h4>
+        <p>Are you sure you want to delete this teacher?</p>
+
+        <div class="d-flex justify-content-between mt-3">
+            <button class="btn btn-secondary" onclick="closeDeleteModal()">Cancel</button>
+
+            <a id="confirmDeleteBtn" class="btn btn-danger">
+                Yes, Delete
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+
+function openDeleteModal(id){
+    document.getElementById("deleteModal").style.display="flex";
+
+    document.getElementById("confirmDeleteBtn").href =
+        "${pageContext.request.contextPath}/deleteteacher?id=" + id;
+}
+
+function closeDeleteModal(){
+    document.getElementById("deleteModal").style.display="none";
+}
+
+</script>
 </body>
 </html>

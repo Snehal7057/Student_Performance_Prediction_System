@@ -1,175 +1,153 @@
-/**
- * 
- */
-
-function scrollCards(direction){
-
-const container = document.getElementById("cardSlider");
-
-container.scrollBy({
-left: direction * 320,
-behavior: "smooth"
-});
-
-}
-// ================= ANNOUNCEMENT SLIDER =================
-
-document.addEventListener("DOMContentLoaded", function () {
-
-    const track = document.getElementById("announcementTrack");
-
-    if (track) {
-        track.innerHTML += track.innerHTML; // duplicate for infinite scroll
-    }
-
-});
 
 
-
-// ================= HERO TYPING EFFECT =================
-
-const text = "AI-Powered Learning for Future Achievers";
-
-let index = 0;
-
-function typingEffect() {
-
-    const element = document.getElementById("typing-text");
-
-    if (!element) return;
-
-    if (index < text.length) {
-        element.innerHTML += text.charAt(index);
-        index++;
-        setTimeout(typingEffect, 60);
-    }
-}
-
-typingEffect();
-
-
-
-
-// ================= ADVANTAGE SLIDER =================
-
+// ================= SCROLL CARDS =================
 function scrollCards(direction) {
-
     const container = document.getElementById("cardSlider");
-
     if (!container) return;
 
     container.scrollBy({
         left: direction * 320,
         behavior: "smooth"
     });
-
 }
 
 
+// ================= ANNOUNCEMENT SLIDER =================
+document.addEventListener("DOMContentLoaded", function () {
 
-
-// ================= SCROLL REVEAL ANIMATION =================
-
-window.addEventListener("scroll", function () {
-
-    const reveals = document.querySelectorAll(".reveal");
-
-    for (let i = 0; i < reveals.length; i++) {
-
-        const windowHeight = window.innerHeight;
-
-        const elementTop = reveals[i].getBoundingClientRect().top;
-
-        const revealPoint = 120;
-
-        if (elementTop < windowHeight - revealPoint) {
-            reveals[i].classList.add("active");
-        }
-
+    const track = document.getElementById("announcementTrack");
+    if (track) {
+        track.innerHTML += track.innerHTML;
     }
+
+    // ================= HERO TYPING =================
+    const text = "AI-Powered Learning for Future Achievers";
+    let index = 0;
+
+    function typingEffect() {
+        const element = document.getElementById("typing-text");
+        if (!element) return;
+
+        if (index < text.length) {
+            element.innerHTML += text.charAt(index);
+            index++;
+            setTimeout(typingEffect, 60);
+        }
+    }
+    typingEffect();
+
+
+    // ================= STATS COUNTER =================
+    const counters = document.querySelectorAll(".stat-card h3");
+
+    counters.forEach(counter => {
+        const target = +counter.innerText.replace(/\D/g, "");
+
+        let count = 0;
+
+        const updateCount = () => {
+            const increment = target / 100;
+
+            if (count < target) {
+                count += increment;
+                counter.innerText = Math.ceil(count) + "%";
+                setTimeout(updateCount, 20);
+            } else {
+                counter.innerText = target + "%";
+            }
+        };
+
+        updateCount();
+    });
 
 });
 
 
+// ================= SCROLL REVEAL =================
+window.addEventListener("scroll", function () {
+
+    const reveals = document.querySelectorAll(".reveal");
+
+    reveals.forEach(el => {
+        const windowHeight = window.innerHeight;
+        const elementTop = el.getBoundingClientRect().top;
+
+        if (elementTop < windowHeight - 120) {
+            el.classList.add("active");
+        }
+    });
+
+});
 
 
-// ================= BACK TO TOP BUTTON =================
-
+// ================= BACK TO TOP =================
 const topBtn = document.getElementById("topBtn");
 
 window.onscroll = function () {
 
     if (!topBtn) return;
 
-    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-
+    if (document.documentElement.scrollTop > 300) {
         topBtn.style.display = "block";
-
     } else {
-
         topBtn.style.display = "none";
-
     }
-
 };
 
 function topFunction() {
-
-    document.body.scrollTop = 0;
-
     document.documentElement.scrollTop = 0;
-
 }
 
 
+// ================= SUBSCRIBE =================
+function subscribe() {
 
+    let email = document.getElementById("subscribeEmail").value;
 
-// ================= STATS COUNTER ANIMATION =================
+    if (email === "") {
+        alert("Please enter your email");
+        return;
+    }
 
-const counters = document.querySelectorAll(".stat-card h3");
-
-const speed = 100;
-
-counters.forEach(counter => {
-
-    const updateCount = () => {
-
-        const target = counter.innerText.replace(/\D/g, "");
-
-        const count = +counter.innerText.replace(/\D/g, "");
-
-        const increment = target / speed;
-
-        if (count < target) {
-
-            counter.innerText = Math.ceil(count + increment) + "%";
-
-            setTimeout(updateCount, 20);
-
-        } else {
-
-            counter.innerText = target + "%";
-
-        }
-
-    };
-
-    updateCount();
-
-});
-
-
-function subscribe(){
-
-let email=document.getElementById("subscribeEmail").value;
-
-if(email===""){
-alert("Please enter your email");
-return;
+    alert("Thank you for joining SmartGrade community!");
+    document.getElementById("subscribeEmail").value = "";
+}
+// =========nav============
+function toggleMenu() {
+  document.getElementById("navLinks").classList.toggle("active");
 }
 
-alert("Thank you for joining SmartGrade community!");
+// ================= ABOUT SECTION =================
+function showContent(type){
 
-document.getElementById("subscribeEmail").value="";
+  const imgBox = document.getElementById("image-box");
+  const contentBox = document.getElementById("content-box");
+  const title = document.getElementById("content-title");
+  const text = document.getElementById("content-text");
+
+  if (!imgBox || !contentBox) return;
+
+  imgBox.style.display = "none";
+  contentBox.style.display = "block";
+
+  if(type === "vision"){
+    title.innerText = "Our Vision";
+    text.innerText = "To guide students after 10th and 12th towards the right career path using AI.";
+  }
+
+  else if(type === "mission"){
+    title.innerText = "Our Mission";
+    text.innerText = "Provide personalized career guidance based on student skills.";
+  }
+
+  else if(type === "leadership"){
+    title.innerText = "Leadership";
+    text.innerText = "Our team consists of educators and industry experts.";
+  }
+
+  else if(type === "values"){
+    title.innerText = "Values";
+    text.innerText = "We believe in innovation, honesty and student-first approach.";
+  }
 
 }

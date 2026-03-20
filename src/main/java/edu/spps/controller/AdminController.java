@@ -23,26 +23,27 @@ public class AdminController {
 	AdminService adminservice;
 	@Autowired
 	TeacherService teacherService;
-    
+
 	@GetMapping("/")
 	public String home() {
 
-		return "home";
+		return "LandingPage";
 	}
 
 	@GetMapping("/admin")
-	public String adminDashboard() {
+	public String adminDashboard(Model model) {
 
-//		List<SubjectModel> subjectList = adminservice.getAllSubjects();
-//		model.addAttribute("subjects", subjectList);
+		List<SubjectModel> subjectList = adminservice.getAllSubjects();
+		model.addAttribute("subjects", subjectList);
 
 		return "AdminDashboard";
 	}
 
 	@GetMapping("/welcome")
-    public String welcomePage() {
-        return "Welcome"; // Spring will resolve to /WEB-INF/views/Welcome.jsp
-    }
+	public String welcomePage() {
+		return "Welcome"; // Spring will resolve to /WEB-INF/views/Welcome.jsp
+	}
+
 	@GetMapping("/addteacher")
 
 	public String showAddTeacherPage(Model model) {
@@ -59,7 +60,7 @@ public class AdminController {
 		List<SubjectModel> subjectList = adminservice.getAllSubjects();
 		m.addAttribute("subjects", subjectList);
 
-		return "redirect:/viewteachers";
+		return "redirect:/admin";
 	}
 
 	@GetMapping("/viewteachers")
@@ -94,7 +95,7 @@ public class AdminController {
 
 		adminservice.updateTeacher(teacher);
 
-		return "redirect:/viewteachers";
+		return "redirect:/admin";
 	}
 
 	@GetMapping("/searchteacher")
@@ -112,30 +113,27 @@ public class AdminController {
 		model.addAttribute("students", studentList);
 		return "ViewStud";
 	}
-	
-	/*//search student
-		@GetMapping("admin/searchStudent")
-		public String searchStudent(HttpServletRequest request, Model model) {
-			String word=request.getParameter("word");
-			
-			List<StudentModel> studentList = 
-					(word == null || word.isEmpty()) ? 
-					adminservice.getAllStudents() :
-					adminservice.searchStudent(word);
-			
-			model.addAttribute("students", studentList);
-			model.addAttribute("word", word);
-			return "ViewStud";
-		}*/
-	
-		//delete student
-		@GetMapping("/admin/deleteStudent")
-		public String deleteStudent(@RequestParam("id") int studentId) {
-		    teacherService.deleteStudent(studentId);
-		    return "redirect:/admin/viewStudent";  
-		}
 
+	/*
+	 * //search student
+	 * 
+	 * @GetMapping("admin/searchStudent") public String
+	 * searchStudent(HttpServletRequest request, Model model) { String
+	 * word=request.getParameter("word");
+	 * 
+	 * List<StudentModel> studentList = (word == null || word.isEmpty()) ?
+	 * adminservice.getAllStudents() : adminservice.searchStudent(word);
+	 * 
+	 * model.addAttribute("students", studentList); model.addAttribute("word",
+	 * word); return "ViewStud"; }
+	 */
 
+	// delete student
+	@GetMapping("/admin/deleteStudent")
+	public String deleteStudent(@RequestParam("id") int studentId) {
+		teacherService.deleteStudent(studentId);
+		return "redirect:/admin/viewStudent";
+	}
 
 	// search student
 	@GetMapping("admin/searchStudent")

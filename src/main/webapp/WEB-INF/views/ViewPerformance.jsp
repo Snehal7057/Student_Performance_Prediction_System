@@ -10,116 +10,123 @@ pageEncoding="UTF-8"%>
 
 <title>Student Performance</title>
 
-<!-- Bootstrap -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
 
-/* ===== Page ===== */
-
+/* ===== BODY ===== */
 body{
-    font-family:'Segoe UI', Arial, sans-serif;
-    background:rgb(5,39,69);
+    margin:0;
+    font-family:'Segoe UI',sans-serif;
     color:white;
-    padding:20px;
+    overflow-x:hidden;
 }
 
-/* ===== Heading ===== */
+/* ===== VIDEO BACKGROUND ===== */
+.video-bg{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:-2;
+}
 
+/* DARK OVERLAY */
+body::before{
+    content:"";
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(11,15,20,0.75);
+    z-index:-1;
+}
+
+/* ===== HEADING ===== */
 h2{
     text-align:center;
-    color:orange;
-    margin-bottom:30px;
-}
-
-/* ===== Search Section ===== */
-
-.search-box input{
-    background:#01172b;
-    border:1px solid #123a63;
-    color:white;
-}
-
-.search-box input:focus{
-    border-color:orange;
-    box-shadow:0 0 6px orange;
-}
-
-/* Buttons */
-
-.search-btn{
-    background:orange;
-    border:none;
-    color:black;
+    margin:30px 0;
     font-weight:600;
 }
 
-.search-btn:hover{
-    background:orangered;
+/* ===== SEARCH ===== */
+.search-box input{
+    background:rgba(255,255,255,0.1);
+    border:1px solid rgba(255,255,255,0.3);
+    color:white;
+}
+
+.search-box input::placeholder{
+    color:#ccc;
+}
+
+/* BUTTONS */
+.search-btn{
+    background:linear-gradient(to right, #0b0f14, #121826);
+    border:none;
+    color:white;
 }
 
 .reset-btn{
-    background:#02213e;
-    border:1px solid orange;
-    color:orange;
+    border:1px solid #aaa;
+    color:white;
 }
 
-.reset-btn:hover{
-    background:orange;
-    color:black;
-}
-
-/* ===== Performance Cards ===== */
-
+/* ===== CARD ===== */
 .performance-card{
-
-    background:#02213e;
-    border-radius:12px;
-
+    background:white;
+    color:black;
+    backdrop-filter:blur(12px);
+    border-radius:15px;
     padding:20px;
-
-    box-shadow:0 6px 18px rgba(0,0,0,0.6);
-
-    height:100%;
-
+    padding-top:50px;
+    position:relative;
     transition:0.3s;
+    height:100%;
 }
 
 .performance-card:hover{
-
     transform:translateY(-6px);
-    box-shadow:0 10px 25px rgba(255,140,0,0.4);
 }
 
+/* PROFILE ICON (Teacher style 🔥) */
+.profile-icon{
+    position:absolute;
+    top:-30px;
+    left:50%;
+    transform:translateX(-50%);
+    width:60px;
+    height:60px;
+    background:#1e293b;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+    color:#38bdf8;
+}
+
+/* TEXT */
 .performance-card h5{
-    color:orange;
-    margin-bottom:10px;
+    text-align:center;
+    margin-top:10px;
 }
 
 .performance-card p{
     font-size:14px;
-    margin:3px 0;
-}
-
-/* Divider */
-
-.card-divider{
-    border-top:1px solid #123a63;
     margin:10px 0;
+    margin-left:20px;
 }
 
-/* Back link */
-
-.back-link{
-    display:block;
-    text-align:center;
-    margin-top:30px;
-    color:orange;
-    text-decoration:none;
-}
-
-.back-link:hover{
-    color:orangered;
+/* DIVIDER */
+.card-divider{
+    border-top:1px solid rgba(255,255,255,0.2);
+    margin:10px 0;
 }
 
 </style>
@@ -127,10 +134,14 @@ h2{
 
 <body>
 
+<!-- 🔥 VIDEO BACKGROUND -->
+<video autoplay muted loop class="video-bg">
+    <source src="${pageContext.request.contextPath}/resources/videos/videoad.mp4">
+</video>
+
 <h2>Student Performance List</h2>
 
-<!-- ===== Search Section ===== -->
-
+<!-- SEARCH -->
 <div class="container mb-4">
 
 <form action="<c:url value='/searchPerformance'/>"
@@ -147,24 +158,19 @@ value="${word != null ? word : ''}">
 
 </div>
 
-<div class="col-lg-auto col-md-auto col-6">
-
+<div class="col-lg-auto col-6">
 <button class="btn w-100 search-btn">Search</button>
-
 </div>
 
-<div class="col-lg-auto col-md-auto col-6">
-
+<div class="col-lg-auto col-6">
 <a href="<c:url value='/viewPerformance'/>" class="btn w-100 reset-btn">Reset</a>
-
 </div>
 
 </form>
 
 </div>
 
-<!-- ===== Performance Cards ===== -->
-
+<!-- CARDS -->
 <div class="container">
 
 <div class="row g-4">
@@ -174,6 +180,11 @@ value="${word != null ? word : ''}">
 <div class="col-lg-4 col-md-6 col-12">
 
 <div class="performance-card">
+
+<!-- PROFILE ICON -->
+<div class="profile-icon">
+<i class="fas fa-user"></i>
+</div>
 
 <h5>${entry.key}</h5>
 

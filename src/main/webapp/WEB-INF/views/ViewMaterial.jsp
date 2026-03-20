@@ -13,90 +13,74 @@ uri="http://java.sun.com/jsp/jstl/core"%>
 
 <style>
 
+/* ===== BODY ===== */
 body{
-
-background:rgb(5,39,69);
-
-font-family:'Segoe UI',Arial;
-
-color:white;
-
-padding:20px;
-
+    margin:0;
+    font-family:'Segoe UI',sans-serif;
+    color:white;
 }
 
-/* Heading */
+/* VIDEO BG */
+.video-bg{
+    position:fixed;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:-2;
+}
 
+/* OVERLAY */
+body::before{
+    content:"";
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.7);
+    z-index:-1;
+}
+
+/* HEADING */
 h2{
-
-text-align:center;
-
-color:orange;
-
-margin-bottom:25px;
-
+    text-align:center;
+    margin:0;
+    padding:10px
 }
 
-/* Table Card */
-
+/* CARD */
 .table-card{
-
-background:#02213e;
-
-padding:20px;
-
-border-radius:10px;
-
-box-shadow:0 10px 25px rgba(0,0,0,0.6);
-
+    background:rgba(255,255,255,0.1);
+    backdrop-filter:blur(12px);
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.6);
 }
 
-/* Table */
-
+/* TABLE */
 .table{
-
-color:white;
-
+    color:white;
 }
 
 .table thead{
-
-background:#01172b;
-
+    background:rgba(0,0,0,0.6);
 }
 
 .table tbody tr:hover{
-
-background:#01172b;
-
+    background:rgba(255,255,255,0.1);
 }
 
-/* File button */
-
+/* FILE BUTTON */
 .file-btn{
-
-background:orange;
-
-border:none;
-
-color:black;
-
-font-size:14px;
-
-padding:5px 10px;
-
-border-radius:6px;
-
-text-decoration:none;
-
+    background:linear-gradient(to right, #0b0f14, #121826);
+    color:white;
+    font-size:13px;
+    padding:6px 10px;
+    border-radius:6px;
+    text-decoration:none;
+    display:inline-block;
 }
 
 .file-btn:hover{
-
-background:orangered;
-
-color:white;
-
+    background:#0ea5e9;
 }
 
 </style>
@@ -105,7 +89,14 @@ color:white;
 
 <body>
 
+<!-- VIDEO -->
+<video autoplay muted loop class="video-bg">
+<source src="${pageContext.request.contextPath}/resources/videos/teachdash.mp4">
+</video>
+
 <h2>Study Materials</h2>
+
+<div class="container">
 
 <div class="table-card">
 
@@ -116,17 +107,11 @@ color:white;
 <thead>
 
 <tr>
-
 <th>ID</th>
-
 <th>Subject</th>
-
 <th>File</th>
-
 <th>Teacher</th>
-
 <th>Date</th>
-
 </tr>
 
 </thead>
@@ -142,15 +127,19 @@ color:white;
 <td>${m.subject_name}</td>
 
 <td>
+
+<!-- FILE NAME -->
 <a href="${pageContext.request.contextPath}/uploads/study_material/${m.file_name}" target="_blank">
 ${m.file_name}
+</a>
 
+<br>
+
+<!-- VIEW BUTTON -->
 <a class="file-btn"
-href="uploads/study_material/${m.file_name}"
+href="${pageContext.request.contextPath}/uploads/study_material/${m.file_name}"
 target="_blank">
-
 View File
-
 </a>
 
 </td>
@@ -166,6 +155,8 @@ View File
 </tbody>
 
 </table>
+
+</div>
 
 </div>
 

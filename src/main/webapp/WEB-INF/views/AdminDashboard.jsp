@@ -1,247 +1,386 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> 
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Admin Dashboard - SmartGrade</title>
+<title>Admin Dashboard - BrainlyEdu</title>
 
-<!-- Bootstrap CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
 <style>
 
+/* BODY */
 body{
-    overflow:hidden;
-    background-color:rgb(26,56,82);
+	margin:0;
+	font-family:'Segoe UI',sans-serif;
+	background:#0b0f14;
+	color:white;
+	    overflow:visible !important;
+	
 }
 
-/* Hidden checkbox for toggle */
-#menu-toggle { display: none; }
-
-/* Sidebar */
-
-#sidebar {
-    position: fixed;
-    top: 0;
-    left: -250px;
-    width: 250px;
-    height: 100%;
-background:#02213e;
-    padding-top: 20px;
-    transition: left 0.3s ease;
-    z-index: 1000;
+/* HIDE CHECKBOX */
+#menu-toggle{
+	display:none;
 }
 
-#sidebar h4{
-color:orange;
+/* ================= NAVBAR ================= */
+.navbar-admin{
+	position:fixed;
+	top:0;
+	left:0;
+	width:100%;
+	height:60px;
+	z-index:9999;
+
+	background: linear-gradient(to right, #0b0f14, #121826);
+	padding:0 20px;
+
+	display:flex;
+	align-items:center;
+	justify-content:space-between;
+
+	box-shadow:0 2px 10px rgba(0,0,0,0.5);
 }
 
-#menu-toggle:checked ~ #sidebar { 
-left: 0; 
+/* TOGGLE ICON */
+.toggle-btn{
+	font-size:24px;
+	color:#38bdf8;
+	cursor:pointer;
+	transition:0.3s;
 }
 
-#sidebar a {
-    display: block;
-    padding: 12px 20px;
-    color: white;
-    text-decoration: none;
-    margin-bottom: 5px;
-    border-radius: 8px;
-    transition:0.2s;
+.toggle-btn:hover{
+	color:white;
 }
 
-#sidebar a:hover { 
-background-color: rgb(26,56,82);
-color: orange;
-border-left:4px solid orangered;
+/* CHANGE ICON WHEN OPEN */
+#menu-toggle:checked + .navbar-admin .toggle-btn i::before{
+	content:"\f62a"; /* close icon */
 }
 
-/* Overlay */
-
-#overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.5);
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease;
-    z-index: 500;
+/* LOGO */
+.logo{
+	color:white;
+	font-weight:600;
+	margin:0;
 }
 
-#menu-toggle:checked ~ #overlay { 
-opacity: 1; 
-visibility: visible; 
+/* ADMIN DROPDOWN */
+.admin-box{
+	position:relative;
+	cursor:pointer;
 }
 
-/* Navbar */
-
-.navbar-admin {
-background:#02213e;
-border-bottom:2px solid orangered;
-position: sticky;
-top: 0;
-padding: 10px 20px;
-z-index: 1100;
-display: flex;
-align-items: center;
-justify-content: space-between;
+.admin-box i{
+	font-size:22px;
+	color:#38bdf8;
 }
 
-/* SmartGrade text */
-
-.navbar-admin .navbar-brand { 
-color: orangered; 
-font-weight: bold; 
+.dropdown-menu-custom{
+	position:absolute;
+	right:0;
+	top:40px;
+	background:#1e293b;
+	border-radius:8px;
+	display:none;
+	min-width:140px;
 }
 
-/* Hamburger icon */
-
-.navbar-admin label.menu-toggle { 
-color: orange; 
-font-size: 28px; 
-cursor: pointer; 
+.dropdown-menu-custom a{
+	display:block;
+	padding:10px;
+	color:white;
+	text-decoration:none;
 }
 
-/* Profile icon */
-
-.navbar-admin .profile-icon { 
-color: orange; 
-font-size: 28px; 
-cursor: pointer; 
+.dropdown-menu-custom a:hover{
+	background:#334155;
 }
 
-.navbar-admin label.menu-toggle:hover,
-.navbar-admin .profile-icon:hover { 
-color: orangered; 
+/* ================= SIDEBAR ================= */
+#sidebar{
+	position:fixed;
+	top:60px;
+	left:-260px;
+	width:260px;
+	height:calc(100vh - 60px);
+background: linear-gradient(to right, #0b0f14, #121826);
+	padding-top:20px;
+	transition:0.3s;
+	z-index:1000;
 }
 
-/* Main Content */
-
-.main-content {
-margin-left: 0;
-transition: margin-left 0.3s ease;
-padding: 20px;
-height: 610px;
-background-color:rgb(5, 39, 69);
+#menu-toggle:checked ~ #sidebar{
+	left:0;
 }
 
-#menu-toggle:checked ~ .main-content { 
-margin-left: 250px;
+#sidebar a{
+	display:flex;
+	padding:12px 20px;
+	color:#cbd5e1;
+	text-decoration:none;
 }
 
-/* Iframe (UNCHANGED as you requested) */
-
-.main-content iframe {
-width: 100%;
-height: 100%;
-border: none;
-overflow: hidden;
+#sidebar a:hover{
+	background:#1e293b;
+	color:#38bdf8;
 }
 
-/* Footer */
-
-.footer {
-text-align: center;
-padding: 15px;
-background:#02213e;
-color:orange;
-border-top:2px solid orangered;
+/* ================= MAIN ================= */
+.main-content{
+	margin-top:60px;
+	height:calc(100vh - 60px);
+	position:relative;
 }
 
+/* VIDEO */
+.video-bg{
+	position:absolute;
+	width:100%;
+	height:100%;
+	object-fit:cover;
+	filter:blur(6px) brightness(0.5);
+}
+
+/* IFRAME */
+iframe{
+	width:100%;
+	height:100%;
+	border:none;
+	position:relative;
+	z-index:1;
+	 max-height:90vh;
+    overflow:auto;
+}
+
+/* ================= MODAL ================= */
+.custom-overlay{
+	position:fixed;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	background:rgba(0,0,0,0.6);
+	backdrop-filter:blur(8px);
+	opacity:0;
+	visibility:hidden;
+	transition:0.3s;
+	z-index:999998 !important;
+}
+
+.custom-overlay.show{
+	opacity:1;
+	visibility:visible;
+}
+
+.custom-modal{
+	position:fixed;
+	top:50%;
+	left:50%;
+	transform:translate(-50%,-50%) scale(0.8);
+	width:520px;
+	max-width:90%;
+	background:white;
+	border-radius:12px;
+	overflow:hidden;
+	opacity:0;
+	visibility:hidden;
+	transition:0.3s;
+	 z-index:999999 !important;
+}
+
+.custom-modal.show{
+	opacity:1;
+	visibility:visible;
+	transform:translate(-50%,-50%) scale(1);
+}
+
+.modal-content{
+	max-height:85vh;
+    overflow:auto;
+
+}
+
+/* ================= FOOTER ================= */
+.footer{
+	text-align:center;
+	padding:10px;
+	background:#0b0f14;
+	color:#94a3b8;
+}
+.logo {
+  color: white;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.edu {
+  color: #00c6ff;
+}
+
+.main-content iframe{
+    position:relative;
+    z-index:1;
+}
+#menu-toggle:checked ~ .main-content{
+    margin-left:260px;
+}
+#sidebar{
+    z-index:500;   
+}
+
+.modal-frame{
+    width:100%;
+    height:90vh;
+    border:none;
 </style>
-<title>Insert title here</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
 
-<!-- Hidden checkbox -->
 <input type="checkbox" id="menu-toggle">
 
-<!-- Sidebar -->
+<!-- ================= NAVBAR ================= -->
+<div class="navbar-admin">
 
+	<label for="menu-toggle" class="toggle-btn">
+		<i class="bi bi-list"></i>
+	</label>
+
+	<div class="logo">
+        <span class="brand-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+            <path d="M12 3L1 9L12 15L21 10.09V17H23V9L12 3Z" />
+            <path
+              d="M5 12V17C5 19.21 8.13 21 12 21C15.87 21 19 19.21 19 17V12L12 17L5 12Z"
+            />
+          </svg>
+        </span>
+        Brainly<span class="edu">Edu</span>
+      </div>
+
+	<!-- ADMIN -->
+	<div class="admin-box" onclick="toggleDropdown()">
+		<i class="bi bi-person-circle"></i>
+
+		<div class="dropdown-menu-custom" id="dropdown">
+			<a href="#">Edit Profile</a>
+			<a href="${pageContext.request.contextPath}/logout">Logout</a>
+		</div>
+	</div>
+
+</div>
+
+<!-- ================= SIDEBAR ================= -->
 <div id="sidebar">
 
-<h4 class="text-center mb-4">Admin Panel</h4>
-
 <a href="${pageContext.request.contextPath}/welcome" target="content-frame">
-<i class="bi bi-speedometer2"></i> Dashboard
+Dashboard
 </a>
 
-<a href="${pageContext.request.contextPath}/addteacher" target="content-frame">
+<a href="#" onclick="openModal()">
 <i class="bi bi-person-plus"></i> Add Teacher
 </a>
 
 <a href="${pageContext.request.contextPath}/viewteachers" target="content-frame">
-<i class="bi bi-people"></i> View Teachers
+View Teachers
 </a>
 
 <a href="${pageContext.request.contextPath}/admin/viewStudent" target="content-frame">
-<i class="bi bi-person-lines-fill"></i> View Students
+Students
 </a>
 
 <a href="${pageContext.request.contextPath}/admin/viewPerformance" target="content-frame">
-<i class="bi bi-graph-up"></i> View Performance
+Performance
 </a>
 
-<a href="#">
-<i class="bi bi-gear"></i> Settings
+<a href="${pageContext.request.contextPath}/">
+Logout
 </a>
-<a href="${pageContext.request.contextPath}/" >
-<i class="bi bi-box-arrow-right"></i> Logout
-</a>
-
 
 </div>
 
-<!-- Overlay -->
-<label id="overlay" for="menu-toggle"></label>
+<!-- ================= MAIN ================= -->
+<div class="main-content">
 
-<!-- Navbar -->
+<video autoplay muted loop class="video-bg">
+<source src="${pageContext.request.contextPath}/resources/videos/videoad.mp4">
+</video>
 
-<nav class="navbar navbar-dark navbar-admin">
-
-<label for="menu-toggle" class="menu-toggle">
-<i class="bi bi-list"></i>
-</label>
-
-<a class="navbar-brand" href="#">
-<i class="bi bi-mortarboard-fill"></i> SmartGrade
-</a>
-
-<div>
-<i class="bi bi-person-circle profile-icon"></i>
-</div>
-
-</nav>
-
-<!-- Main Content -->
-
-<div class="main-content"> 
-
-<iframe name="content-frame" src="${pageContext.request.contextPath}/welcome"></iframe>
+<iframe name="content-frame"
+src="${pageContext.request.contextPath}/welcome"></iframe>
 
 </div>
 
-<!-- Footer -->
+<!-- ================= FOOTER ================= -->
+<div class="footer">© 2026 BrainlyEdu</div>
 
-<div class="footer">
-&copy; 2026 SmartGrade. All Rights Reserved.
+<!-- ================= MODAL ================= -->
+<div class="custom-overlay" id="addOverlay" onclick="closeModal()"></div>
+
+<div class="custom-modal" id="modal">
+	<div class="modal-content">
+		<%@ include file="AddTeacher.jsp" %>
+	</div>
 </div>
 
+
+<!-- EDIT MODAL -->
+<div class="custom-overlay" id="editOverlay" onclick="closeEditModal()"></div>
+
+<div class="custom-modal" id="editModal">
+    <iframe id="editFrame" class="modal-frame"></iframe>
+</div>
+
+
+<!-- ================= SCRIPT ================= -->
 <script>
 
-document.querySelectorAll("#sidebar a").forEach(function(link){
-link.addEventListener("click", function(){
-document.getElementById("menu-toggle").checked = false;
-});
-});
+function openModal(){
+	document.getElementById("modal").classList.add("show");
+	document.getElementById("addOverlay").classList.add("show");
+}
+
+function closeModal(){
+	document.getElementById("modal").classList.remove("show");
+	document.getElementById("addOverlay").classList.remove("show");
+}
+
+
+/* DROPDOWN */
+function toggleDropdown(){
+	let d = document.getElementById("dropdown");
+	d.style.display = d.style.display === "block" ? "none" : "block";
+}
+
+/* CLICK OUTSIDE CLOSE */
+window.onclick = function(e){
+	if(!e.target.closest(".admin-box")){
+		document.getElementById("dropdown").style.display="none";
+	}
+}
+
+
+/* edit teacher */
+ 
+function openEditModal(id){
+    document.getElementById("editFrame").src = "editteacher?id=" + id;
+
+    document.getElementById("editModal").classList.add("show");
+    document.getElementById("editOverlay").classList.add("show"); // ✅ correct
+}
+
+function closeEditModal(){
+    document.getElementById("editModal").classList.remove("show");
+    document.getElementById("editOverlay").classList.remove("show"); // ✅ correct
+}
+
 
 </script>
 

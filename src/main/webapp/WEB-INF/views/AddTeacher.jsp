@@ -12,120 +12,117 @@
 
 <style>
 
-/* ===== Page Layout ===== */
+/* ===== BODY ===== */
 body{
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background-color: rgb(5, 39, 69);
+    font-family:'Segoe UI',sans-serif;
     margin:0;
-
-    /* makes form fit screen height */
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    color:#e6e6e6;
+    background:transparent;
 }
 
-/* ===== Form Card ===== */
+/* ===== CENTER BOX ===== */
 .container{
-
-    width:90%;
-    max-width:480px;
-
-    background:#02213e;
-    padding:30px;
-    border-radius:10px;
-
-    box-shadow:0 8px 25px rgba(0,0,0,0.5);
+    max-width:420px;
+	padding:10px;
+	margin-top:25px;
+    background:#ffffff;
+    border-radius:12px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
 }
 
-/* ===== Heading ===== */
-h2{
-    text-align:center;
-    margin-bottom:20px;
-    color:orange;
+/* ===== HEADER ===== */
+.form-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+h3{
+    margin:0;
     font-weight:600;
+    color:black;
 }
 
-/* ===== Labels ===== */
+/* CLOSE BUTTON */
+.close-btn{
+    font-size:20px;
+    cursor:pointer;
+    color:#e11d48;
+    transition:0.3s;
+}
+
+.close-btn:hover{
+    transform:rotate(90deg);
+}
+
+/* ===== FORM ===== */
+.form-group{
+    margin-bottom:15px;
+}
+
+/* LABEL */
 label{
-    display:block;
-    margin-top:12px;
     font-size:14px;
-    color:#d4d4d4;
+    display:block;
+    margin-bottom:5px;
+    color:black;
 }
 
-/* ===== Inputs ===== */
+/* INPUT */
 input,select{
-
     width:100%;
     padding:10px;
 
-    margin-top:4px;
-
     border-radius:6px;
-    border:1px solid #123a63;
-
-    background:#01172b;
-    color:white;
-
-    font-size:14px;
+    border:1px solid #ccc;
 }
 
-/* Focus effect */
+/* FOCUS */
 input:focus,select:focus{
-    border-color:orange;
+    border-color:#38bdf8;
     outline:none;
 }
 
-/* ===== Button ===== */
+/* BUTTON */
 button{
-
     width:100%;
-    margin-top:20px;
-
-    padding:11px;
+    margin-top:15px;
+    padding:12px;
 
     border:none;
-    border-radius:6px;
+    border-radius:8px;
 
-    background:orange;
-    color:black;
+    background:#0f172a;
+    color:white;
 
-    font-size:15px;
     font-weight:600;
-
     cursor:pointer;
 }
 
 button:hover{
-    background:orangered;
+    background:#38bdf8;
 }
 
-/* ===== Error ===== */
+/* ERROR */
 .error{
     font-size:12px;
-    color:#ff6b6b;
+    color:red;
 }
 
-/* ===== Small Screens ===== */
-@media(max-width:500px){
-
+/* ANIMATION */
 .container{
-padding:22px;
+    animation:fadeIn 0.3s ease;
 }
 
-h2{
-font-size:20px;
-}
-
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(20px);}
+    to{opacity:1; transform:translateY(0);}
 }
 
 </style>
 
 <script>
-function validateTeacherForm() {
+
+function validateTeacherForm(){
 
 let valid = true;
 document.querySelectorAll('.error').forEach(el => el.textContent = '');
@@ -150,7 +147,7 @@ valid=false;
 
 const contactRegex = /^\d{10}$/;
 if(!contactRegex.test(contact)){
-document.getElementById("contactError").textContent="Enter valid 10 digit contact";
+document.getElementById("contactError").textContent="Enter valid contact";
 valid=false;
 }
 
@@ -166,6 +163,12 @@ valid=false;
 
 return valid;
 }
+
+/* CLOSE MODAL */
+function closeModal(){
+    parent.closeModal();
+}
+
 </script>
 
 </head>
@@ -174,28 +177,40 @@ return valid;
 
 <div class="container">
 
-<h2>Add Teacher</h2>
+<div class="form-header">
+    <h3>Add Teacher</h3>
+    <span class="close-btn" onclick="closeModal()">❌</span>
+</div>
 
 <form action="${pageContext.request.contextPath}/addteacher"
 method="post"
 onsubmit="return validateTeacherForm()">
 
+<div class="form-group">
 <label>Name</label>
 <input type="text" id="name" name="name" placeholder="Enter full name">
 <div class="error" id="nameError"></div>
+</div>
 
+<div class="form-group">
 <label>Email</label>
 <input type="email" id="email" name="email" placeholder="Enter email">
 <div class="error" id="emailError"></div>
+</div>
 
+<div class="form-group">
 <label>Contact</label>
 <input type="text" id="contact" name="contact" placeholder="Enter contact number">
 <div class="error" id="contactError"></div>
+</div>
 
-<label>Experience (years)</label>
-<input type="number" id="experience" name="experience" placeholder="Enter experience">
+<div class="form-group">
+<label>Experience</label>
+<input type="number" id="experience" name="experience">
 <div class="error" id="experienceError"></div>
+</div>
 
+<div class="form-group">
 <label>Subject</label>
 <select id="subject_id" name="subject_id">
 <option value="">Select Subject</option>
@@ -205,9 +220,11 @@ onsubmit="return validateTeacherForm()">
 </c:forEach>
 
 </select>
-
 <div class="error" id="subjectError"></div>
+</div>
+
 <button type="submit">Add Teacher</button>
+
 </form>
 
 </div>

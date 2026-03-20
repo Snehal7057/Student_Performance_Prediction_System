@@ -22,88 +22,119 @@
 </head>
 
 <style>
-body {
-	font-family: 'Segoe UI', Arial;
-	background: rgb(5, 39, 69);
-	color: white;
-	height: 100vh;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	margin: 0;
-	overflow: hidden;
+
+/* ===== BODY ===== */
+body{
+    margin:0;
+    font-family:'Segoe UI',sans-serif;
+    background:rgba(0,0,0,0.6); /* overlay */
 }
 
-/* Card */
-.form-card {
-	background: #02213e;
-	padding: 28px;
-	border-radius: 12px;
-	width: 100%;
-	max-width: 520px;
-	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+/* ===== POPUP WRAPPER ===== */
+.popup-container{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    z-index:9999;
 }
 
-/* Heading */
-h2 {
-	text-align: center;
-	color: orangered;
-	margin-bottom: 20px;
+/* ===== FORM CARD ===== */
+.form-card{
+    background:white;
+    color:black;
+
+    width:100%;
+    max-width:450px;
+
+    padding:25px;
+    border-radius:12px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,0.5);
+
+    animation:popupFade 0.3s ease;
 }
 
-/* Inputs */
-.form-control {
-	background: #01172b;
-	border: 1px solid #123a63;
-	color: white;
+/* ===== HEADER ===== */
+.form-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
 }
 
-.form-control:focus {
-	background: #01172b;
-	border-color: orange;
-	box-shadow: 0 0 6px orange;
-	color: white;
+h2{
+    margin:0;
+    font-size:20px;
+    color:black;
 }
 
-/* Button */
-.submit-btn {
-	margin-top: 15px;
-	background: orange;
-	border: none;
-	color: black;
-	font-weight: 900;
+/* CLOSE */
+.close-btn{
+    font-size:22px;
+    cursor:pointer;
+    transition:0.3s;
 }
 
-.submit-btn:hover {
-	background: orangered;
+.close-btn:hover{
+    color:red;
+    transform:rotate(90deg);
 }
 
-/* Error */
-.error {
-	color: #ff6b6b;
-	font-size: 13px;
-	margin-top: 4px;
+/* ===== INPUT ===== */
+label{
+    font-size:14px;
+    margin-top:8px;
 }
 
-/* Success message */
-.msg {
-	text-align: center;
-	color: #4caf50;
-	margin-bottom: 10px;
+.form-control{
+    background:white;
+    color:black;
+    border:1px solid #ccc;
 }
 
-/* Back */
-.back-link {
-	display: block;
-	text-align: center;
-	margin-top: 15px;
-	color: orange;
-	text-decoration: none;
+.form-control:focus{
+    border-color:black;
+    box-shadow:none;
 }
 
-.back-link:hover {
-	color: orangered;
+/* ===== BUTTON ===== */
+.submit-btn{
+    margin-top:15px;
+    background:black;
+    color:white;
+    border:none;
+    font-weight:600;
 }
+
+.submit-btn:hover{
+    background:#333;
+}
+
+/* ===== ERROR ===== */
+.error{
+    color:red;
+    font-size:12px;
+}
+
+/* ===== ANIMATION ===== */
+@keyframes popupFade{
+    from{
+        opacity:0;
+        transform:scale(0.8);
+    }
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
 </style>
 
 <script>
@@ -154,7 +185,14 @@ return valid;
 
 
 <body>
+<div class="popup-container">
 
+<div class="form-card">
+
+<div class="form-header">
+    <h2>Add Performance</h2>
+    <span class="close-btn" onclick="window.history.back()">✖</span>
+</div>
 	<div class="form-card">
 
 		<h2>Add Student Performance</h2>
@@ -208,6 +246,6 @@ return valid;
 		</form:form>
 
 	</div>
-
+</div>
 </body>
 </html>

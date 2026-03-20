@@ -17,115 +17,89 @@ pageEncoding="UTF-8"%>
 
 <style>
 
+/* ===== BODY ===== */
 body{
-font-family:'Segoe UI',Arial;
-background:rgb(5,39,69);
-color:white;
-
-height:100vh;
-display:flex;
-align-items:center;
-justify-content:center;
-
-margin:0;
-overflow:hidden;
+    margin:0;
+    font-family:'Segoe UI',sans-serif;
+    color:white;
 }
 
-/* Card */
+/* VIDEO BG */
+.video-bg{
+    position:fixed;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:-2;
+}
 
+/* DARK OVERLAY */
+body::before{
+    content:"";
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.7);
+    z-index:-1;
+}
+
+/* CENTER */
+.main-wrapper{
+    height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+/* CARD */
 .form-card{
-
-background:#02213e;
-
-padding:30px;
-
-border-radius:12px;
-
-width:100%;
-max-width:500px;
-
-box-shadow:0 10px 25px rgba(0,0,0,0.6);
-
+    background:rgba(255,255,255,0.1);
+    backdrop-filter:blur(12px);
+    padding:30px;
+    border-radius:12px;
+    width:100%;
+    max-width:450px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.5);
+    animation:fadeIn 0.3s ease;
 }
 
-/* Heading */
-
+/* HEADING */
 h2{
-
-text-align:center;
-
-color:orange;
-
-margin-bottom:20px;
-
+    text-align:center;
+    margin-bottom:20px;
 }
 
-/* Inputs */
-
+/* INPUT */
 .form-control{
-
-background:#01172b;
-
-border:1px solid #123a63;
-
-color:white;
-
+    background:rgba(255,255,255,0.1);
+    border:1px solid rgba(255,255,255,0.3);
+    color:white;
 }
 
 .form-control:focus{
-
-background:#01172b;
-
-border-color:orange;
-
-box-shadow:0 0 6px orange;
-
-color:white;
-
+    border-color:#38bdf8;
+    box-shadow:0 0 6px #38bdf8;
+    background:rgba(255,255,255,0.1);
+    color:white;
 }
 
-/* Upload Button */
-
+/* BUTTON */
 .upload-btn{
-
-background:orange;
-
-border:none;
-
-color:black;
-
-font-weight:600;
-
-margin-top:10px;
-
+    background:linear-gradient(to right, #0b0f14, #121826);
+    color:white;
+    font-weight:600;
+    margin-top:10px;
+    border:none;
 }
 
 .upload-btn:hover{
-
-background:orangered;
-
+    background:#0ea5e9;
 }
 
-/* Back Link */
-
-.back-link{
-
-display:block;
-
-text-align:center;
-
-margin-top:15px;
-
-color:orange;
-
-text-decoration:none;
-
-}
-
-.back-link:hover{
-
-color:orangered;
-
+/* ANIMATION */
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(20px);}
+    to{opacity:1; transform:translateY(0);}
 }
 
 </style>
@@ -133,6 +107,13 @@ color:orangered;
 </head>
 
 <body>
+
+<!-- VIDEO -->
+<video autoplay muted loop class="video-bg">
+<source src="${pageContext.request.contextPath}/resources/videos/videoad.mp4">
+</video>
+
+<div class="main-wrapper">
 
 <div class="form-card">
 
@@ -177,6 +158,7 @@ Upload Material
 
 </form>
 
+</div>
 
 </div>
 

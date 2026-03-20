@@ -122,7 +122,7 @@ public class TeacherRepositoryImpl implements TeacherRepository {
 	// Upload Files
 	@Override
 	public boolean uploadMaterial(StudyMaterialModel model) {
-		String sql = "insert into study_material(subject_id,file_name,uploaded_by) values (?,?,?)";
+		String sql = "insert into study_materials(subject_id,file_name,uploaded_by) values (?,?,?)";
 
 		int value = jdbcTemplate.update(sql, model.getSubject_id(), model.getFile_name(), model.getUploaded_by());
 		return value > 0;

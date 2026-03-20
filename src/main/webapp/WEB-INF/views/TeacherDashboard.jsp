@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,151 +8,179 @@
 
 <title>Teacher Dashboard - SmartGrade</title>
 
-<!-- Bootstrap -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
 <style>
 
+/* ===== BODY ===== */
 body{
-overflow:hidden;
-background-color:rgb(26,56,82);
+	margin:0;
+	font-family:'Segoe UI',sans-serif;
+	color:white;
+	overflow:hidden;
 }
 
-/* Hidden checkbox */
+/* ===== VIDEO BACKGROUND ===== */
+.video-bg{
+	position:fixed;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	object-fit:cover;
+	z-index:-2;
+}
+
+/* DARK OVERLAY */
+body::before{
+	content:"";
+	position:fixed;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	background:rgba(11,15,20,0.7);
+	z-index:-1;
+}
+
+/* ===== HIDE CHECKBOX ===== */
 #menu-toggle{display:none;}
 
-/* Sidebar */
+/* ===== NAVBAR ===== */
+.navbar-admin{
+	position:fixed;
+	top:0;
+	left:0;
+	width:100%;
+	height:60px;
+	z-index:1100;
 
-#sidebar{
-position:fixed;
-top:0;
-left:-250px;
-width:250px;
-height:100%;
-background:#02213e;
-padding-top:20px;
-transition:left .3s ease;
-z-index:1000;
+	background:linear-gradient(to right, #0b0f14, #121826);
+	padding:0 20px;
+
+	display:flex;
+	align-items:center;
+	justify-content:space-between;
 }
 
-#sidebar h4{
-color:orange;
+/* TOGGLE */
+.menu-toggle{
+	font-size:26px;
+	color:#38bdf8;
+	cursor:pointer;
+}
+
+/* LOGO */
+.navbar-brand{
+	color:white;
+	font-weight:bold;
+}
+
+/* PROFILE */
+.profile-icon{
+	font-size:24px;
+	color:#38bdf8;
+}
+
+/* ===== SIDEBAR ===== */
+#sidebar{
+	position:fixed;
+	top:60px;
+	left:-250px;
+	width:250px;
+	height:calc(100vh - 60px);
+
+	background:linear-gradient(to right, #0b0f14, #121826);
+	padding-top:20px;
+
+	transition:0.3s;
+	z-index:1000;
 }
 
 #menu-toggle:checked ~ #sidebar{
-left:0;
+	left:0;
 }
 
+/* SIDEBAR LINKS */
 #sidebar a{
-display:block;
-padding:12px 20px;
-color:white;
-text-decoration:none;
-margin-bottom:5px;
-border-radius:8px;
-transition:.2s;
+	display:block;
+	padding:12px 20px;
+	color:#cbd5e1;
+	text-decoration:none;
+	transition:0.2s;
 }
 
 #sidebar a:hover{
-background-color:rgb(26,56,82);
-color:orange;
-border-left:4px solid orangered;
+	background:#1e293b;
+	color:#38bdf8;
 }
 
-/* Overlay */
-
-#overlay{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,.5);
-opacity:0;
-visibility:hidden;
-transition:opacity .3s ease;
-z-index:500;
-}
-
-#menu-toggle:checked ~ #overlay{
-opacity:1;
-visibility:visible;
-}
-
-/* Navbar */
-
-.navbar-admin{
-background:#02213e;
-border-bottom:2px solid orangered;
-position:sticky;
-top:0;
-padding:10px 20px;
-z-index:1100;
-display:flex;
-align-items:center;
-justify-content:space-between;
-}
-
-/* SmartGrade text */
-
-.navbar-admin .navbar-brand{
-color:orangered;
-font-weight:bold;
-}
-
-/* Hamburger */
-
-.navbar-admin label.menu-toggle{
-color:orange;
-font-size:28px;
-cursor:pointer;
-}
-
-/* Profile */
-
-.navbar-admin .profile-icon{
-color:orange;
-font-size:28px;
-cursor:pointer;
-}
-
-.navbar-admin label.menu-toggle:hover,
-.navbar-admin .profile-icon:hover{
-color:orangered;
-}
-
-/* Main Content */
-
+/* ===== MAIN ===== */
 .main-content{
-margin-left:0;
-transition:margin-left .3s ease;
-padding:20px;
-height:610px;
-background-color:rgb(5,39,69);
+	margin-top:60px;
+	height:calc(100vh - 60px);
+	transition:0.3s;
 }
 
 #menu-toggle:checked ~ .main-content{
-margin-left:250px;
+	margin-left:250px;
 }
 
-/* iframe */
-
+/* IFRAME */
 .main-content iframe{
-width:100%;
-height:100%;
-border:none;
-overflow:hidden;
+	width:100%;
+	height:100%;
+	border:none;
+	display:block;
 }
 
-/* Footer */
-
+/* ===== FOOTER ===== */
 .footer{
-text-align:center;
-padding:15px;
-background:#02213e;
-color:orange;
-border-top:2px solid orangered;
+	text-align:center;
+	padding:10px;
+	background:#0b0f14;
+	color:#94a3b8;
+}
+
+/* PROFILE DROPDOWN */
+.profile-box{
+    position:relative;
+    cursor:pointer;
+}
+
+.dropdown-menu-custom{
+    position:absolute;
+    right:0;
+    top:40px;
+
+    background:#1e293b;
+    border-radius:8px;
+
+    display:none;
+    min-width:150px;
+    overflow:hidden;
+}
+
+.dropdown-menu-custom a{
+    display:block;
+    padding:10px;
+    color:white;
+    text-decoration:none;
+}
+
+.dropdown-menu-custom a:hover{
+    background:#334155;
+}
+
+.logo {
+  color: white;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.edu {
+  color: #00c6ff;
 }
 
 </style>
@@ -159,14 +188,47 @@ border-top:2px solid orangered;
 
 <body>
 
-<!-- Toggle checkbox -->
+<!-- VIDEO BACKGROUND -->
+<video autoplay muted loop class="video-bg">
+<source src="${pageContext.request.contextPath}/resources/videos/teachdash.mp4">
+</video>
+
 <input type="checkbox" id="menu-toggle">
 
-<!-- Sidebar -->
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar-admin">
 
+<label for="menu-toggle" class="menu-toggle">
+<i class="bi bi-list"></i>
+</label>
+
+	<div class="logo">
+        <span class="brand-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+            <path d="M12 3L1 9L12 15L21 10.09V17H23V9L12 3Z" />
+            <path
+              d="M5 12V17C5 19.21 8.13 21 12 21C15.87 21 19 19.21 19 17V12L12 17L5 12Z"
+            />
+          </svg>
+        </span>
+        Brainly<span class="edu">Edu</span>
+      </div>
+      
+<div class="profile-box" onclick="toggleDropdown()">
+    <i class="bi bi-person-circle profile-icon"></i>
+
+    <div class="dropdown-menu-custom" id="dropdown">
+        <a href="#">Edit Profile</a>
+        <a href="${pageContext.request.contextPath}/">Logout</a>
+    </div>
+</div>
+
+</nav>
+
+<!-- ===== SIDEBAR ===== -->
 <div id="sidebar">
 
-<h4 class="text-center mb-4">Teacher Panel</h4>
+<h5 class="text-center mb-4">Teacher Panel</h5>
 
 <a href="${pageContext.request.contextPath}/welcome" target="content-frame">
 <i class="bi bi-speedometer2"></i> Dashboard
@@ -202,49 +264,40 @@ border-top:2px solid orangered;
 
 </div>
 
-<!-- Overlay -->
-
-<label id="overlay" for="menu-toggle"></label>
-
-<!-- Navbar -->
-
-<nav class="navbar navbar-dark navbar-admin">
-
-<label for="menu-toggle" class="menu-toggle">
-<i class="bi bi-list"></i>
-</label>
-
-<a class="navbar-brand" href="#">
-<i class="bi bi-mortarboard-fill"></i> SmartGrade
-</a>
-
-<div>
-<i class="bi bi-person-circle profile-icon"></i>
-</div>
-
-</nav>
-
-<!-- Main Content -->
-
+<!-- ===== MAIN ===== -->
 <div class="main-content">
 
-<iframe name="content-frame" src="${pageContext.request.contextPath}/welcome"></iframe>
+<iframe name="content-frame"
+src="${pageContext.request.contextPath}/welcome"></iframe>
 
 </div>
 
-<!-- Footer -->
-
+<!-- ===== FOOTER ===== -->
 <div class="footer">
-&copy; 2026 SmartGrade. All Rights Reserved.
+© 2026 SmartGrade. All Rights Reserved.
 </div>
 
 <script>
 
+/* CLOSE SIDEBAR AFTER CLICK */
 document.querySelectorAll("#sidebar a").forEach(function(link){
 link.addEventListener("click",function(){
 document.getElementById("menu-toggle").checked=false;
 });
 });
+
+
+function toggleDropdown(){
+    let d = document.getElementById("dropdown");
+    d.style.display = d.style.display === "block" ? "none" : "block";
+}
+
+/* CLICK OUTSIDE CLOSE */
+window.onclick = function(e){
+    if(!e.target.closest(".profile-box")){
+        document.getElementById("dropdown").style.display="none";
+    }
+}
 
 </script>
 

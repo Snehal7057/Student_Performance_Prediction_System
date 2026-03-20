@@ -14,123 +14,136 @@ pageEncoding="UTF-8"%>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <style>
 
-/* ===== Page ===== */
-
+/* ===== BODY ===== */
 body{
-    font-family:'Segoe UI', Arial, sans-serif;
-    background:rgb(5,39,69);
+    margin:0;
+    font-family:'Segoe UI', sans-serif;
+    background: linear-gradient(to right, #0b0f14, #121826);
     color:white;
     min-height:100vh;
 }
 
-/* ===== Card ===== */
-
+/* ===== CARD ===== */
 .main-card{
-    background:#02213e;
+    background:rgba(255,255,255,0.05);
+    backdrop-filter:blur(10px);
     border-radius:12px;
     box-shadow:0 10px 25px rgba(0,0,0,0.6);
 }
 
-/* ===== Heading ===== */
-
+/* ===== HEADING ===== */
 h3{
     text-align:center;
-    color:orange;
     margin-bottom:25px;
+    font-weight:600;
 }
 
-/* ===== Search Panel ===== */
-
+/* ===== SEARCH ===== */
 .search-box input{
-    background:#01172b;
-    border:1px solid #123a63;
+    background:rgba(255,255,255,0.1);
+    border:1px solid rgba(255,255,255,0.3);
     color:white;
 }
 
-.search-box input:focus{
-    border-color:orange;
-    box-shadow:0 0 6px orange;
+.search-box input::placeholder{
+    color:#ccc;
 }
 
-/* Search button */
+.search-box input:focus{
+    border-color:#38bdf8;
+    box-shadow:0 0 6px #38bdf8;
+}
 
+/* BUTTONS */
 .btn-search{
-    background:orange;
+    background:linear-gradient(to right, #0b0f14, #121826);
     border:none;
-    color:black;
+    color:white;
     font-weight:600;
 }
 
 .btn-search:hover{
-    background:orangered;
+    background:linear-gradient(to right, #1e293b, #0f172a);
 }
 
-/* Reset button */
-
 .btn-reset{
-    background:#02213e;
-    border:1px solid orange;
-    color:orange;
+    border:1px solid #aaa;
+    color:white;
 }
 
 .btn-reset:hover{
-    background:orange;
+    background:#38bdf8;
     color:black;
 }
 
-/* ===== Table ===== */
-
+/* ===== TABLE ===== */
 .table{
     color:white;
 }
 
 .table thead{
-    background:#01172b;
-    color:orange;
+    background:rgba(255,255,255,0.1);
 }
 
 .table tbody tr{
-    background:#02213e;
+    background:rgba(255,255,255,0.05);
     transition:0.3s;
 }
 
 .table tbody tr:hover{
-    background:#03345e;
+    background:rgba(255,255,255,0.15);
 }
 
-/* ===== Delete Button ===== */
-
+/* ===== DELETE BUTTON ===== */
 .btn-delete{
-    background:orange;
+    background:#ff4d4d;
     border:none;
-    color:black;
-    font-weight:500;
+    color:white;
+    padding:5px 10px;
+    border-radius:5px;
+    text-decoration:none;
+    font-size:14px;
 }
 
 .btn-delete:hover{
-    background:orangered;
+    background:#ff1a1a;
 }
 
-/* ===== Back Link ===== */
-
-.back-link{
-    display:block;
-    text-align:center;
-    margin-top:25px;
-    color:orange;
-    text-decoration:none;
+/* ===== ICON ===== */
+.fa-user-circle{
+    font-size:30px;
+    color:#38bdf8;
 }
-
-.back-link:hover{
-    color:orangered;
+.video-bg{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:-2;
 }
-
+body::before{
+    content:"";
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(11,15,20,0.75);
+    z-index:-1;
+}
 </style>
+
 </head>
 
 <body>
+<video autoplay muted loop class="video-bg">
+    <source src="${pageContext.request.contextPath}/resources/videos/videoad.mp4">
+</video>
 
 <div class="container mt-5">
 
@@ -166,38 +179,64 @@ value="${word != null ? word : ''}">
 
 </form>
 
+<!-- ===== TABLE ===== -->
 
+<div class="table-responsive">
+<table class="table table-bordered table-striped">
 
-        <div class="table-responsive">
-            <table class="table table-bordered table-striped" id="teacherTable">
-                <thead>
-                    <tr>
-                        <th>Photo</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Contact</th>
-                        <th>Location</th>
-                        <th>Delete</th>
-                        <th>Register Date</th>
-                    </tr>
-                </thead>
+<thead>
+<tr>
+<th>Photo</th>
+<th>Name</th>
+<th>Email</th>
+<th>Contact</th>
+<th>Location</th>
+<th>Delete</th>
+<th>Register Date</th>
+</tr>
+</thead>
 
-                <tbody>
-                <c:forEach var="student" items="${students}">
-                    <tr>
-                        <td><i class="fa-solid fa-user-circle" style="font-size:30px;color:#2c3e50;"></i></td>
-                        <td>${student.name}</td>
-                        <td>${student.email}</td>
-                        <td>${student.contact}</td>
-                        <td>${student.location}</td>
-                        <td><a href="deleteStudent?id=${student.id}" class="btn-delete">Delete</a></td>
-                        <td>${student.createdDate}</td>
-                        </tr>
-               </c:forEach>
-                </tbody>
-            </table>
-        </div>
-    </div>
+<tbody>
+
+<c:forEach var="student" items="${students}">
+<tr>
+
+<td>
+<i class="fa-solid fa-user-circle"></i>
+</td>
+
+<td>${student.name}</td>
+<td>${student.email}</td>
+<td>${student.contact}</td>
+<td>${student.location}</td>
+
+<td>
+<a href="deleteStudent?id=${student.id}"
+   class="btn-delete"
+   onclick="return confirmDelete()">
+   Delete
+</a>
+</td>
+
+<td>${student.createdDate}</td>
+
+</tr>
+</c:forEach>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+</div>
+
+<!-- ===== SCRIPT ===== -->
+<script>
+function confirmDelete(){
+    return confirm("Are you sure you want to delete this student?");
+}
+</script>
 
 </body>
 </html>
