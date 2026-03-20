@@ -165,8 +165,8 @@ value="${keyword != null ? keyword : ''}">
 
 <div class="d-flex gap-2 mt-3">
 
-<a href="${pageContext.request.contextPath}/teacher/updateStudent?id=${s.id}"  class="btn card-btn w-50">
-    Update
+<a href="${pageContext.request.contextPath}/teacher/updateStudent?id=1"  class="btn card-btn w-50">
+     Update
 </a>
 
 <a href="addPerformance?student_id=${student.id}"
