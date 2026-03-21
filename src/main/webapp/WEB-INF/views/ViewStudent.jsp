@@ -109,6 +109,51 @@ h2{
     background:#0ea5e9;
 }
 
+
+/* MODAL BACKGROUND */
+.modal-overlay{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.7);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+/* MODAL BOX */
+.modal-box{
+background:#f1f1f1;
+padding:25px;
+border-radius:15px;
+width:400px;
+animation:fadeIn 0.3s ease;
+}
+
+/* CLOSE */
+.close-btn{
+cursor:pointer;
+color:red;
+font-size:20px;
+}
+
+/* BUTTON */
+.submit-btn{
+background:linear-gradient(to right,#0f2027,#203a43,#2c5364);
+color:white;
+border:none;
+border-radius:10px;
+padding:10px;
+}
+
+/* ANIMATION */
+@keyframes fadeIn{
+from{transform:scale(0.8);opacity:0;}
+to{transform:scale(1);opacity:1;}
+}
 </style>
 
 </head>
@@ -165,8 +210,9 @@ value="${keyword != null ? keyword : ''}">
 
 <div class="d-flex gap-2 mt-3">
 
-<a href="${pageContext.request.contextPath}/teacher/updateStudent?id=1"  class="btn card-btn w-50">
-     Update
+<a href="#" class="btn card-btn w-50"
+   onclick="openUpdateModal(${student.id}, '${student.name}', '${student.email}', '${student.contact}', '${student.location}')">
+   Update
 </a>
 
 <a href="addPerformance?student_id=${student.id}"
@@ -193,10 +239,67 @@ Delete
 </div>
 </div>
 
+
+
+<!-- 🔥 UPDATE MODAL -->
+<div id="updateModal" class="modal-overlay">
+
+<div class="modal-box">
+
+<div class="modal-header">
+<h4>Update Student</h4>
+<span onclick="closeModal()" class="close-btn">✖</span>
+</div>
+
+<form action="updateStudent" method="post">
+
+<input type="hidden" name="id" id="studentId">
+
+<div class="mb-3">
+<label>Name</label>
+<input type="text" name="name" id="name" class="form-control">
+</div>
+
+<div class="mb-3">
+<label>Email</label>
+<input type="text" name="email" id="email" class="form-control">
+</div>
+
+<div class="mb-3">
+<label>Contact</label>
+<input type="text" name="contact" id="contact" class="form-control">
+</div>
+
+<div class="mb-3">
+<label>Location</label>
+<input type="text" name="location" id="location" class="form-control">
+</div>
+
+<button class="btn submit-btn w-100">Update</button>
+
+</form>
+
+</div>
+</div>
 <!-- SCRIPT -->
 <script>
 function confirmDelete(){
     return confirm("Are you sure you want to delete this student?");
+}
+
+function openUpdateModal(id, name, email, contact, location){
+
+    document.getElementById("updateModal").style.display="flex";
+
+    document.getElementById("studentId").value=id;
+    document.getElementById("name").value=name;
+    document.getElementById("email").value=email;
+    document.getElementById("contact").value=contact;
+    document.getElementById("location").value=location;
+}
+
+function closeModal(){
+    document.getElementById("updateModal").style.display="none";
 }
 </script>
 

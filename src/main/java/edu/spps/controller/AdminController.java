@@ -9,12 +9,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import edu.spps.model.AdminModel;
 import edu.spps.model.StudentModel;
 import edu.spps.model.SubjectModel;
 import edu.spps.model.TeacherModel;
 import edu.spps.service.AdminService;
 import edu.spps.service.TeacherService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class AdminController {
@@ -146,5 +148,36 @@ public class AdminController {
 		model.addAttribute("students", studentList);
 		model.addAttribute("word", word);
 		return "ViewStud";
+	}
+
+	@GetMapping("/changeTeacherStatus")
+	public String changeTeacherStatus(@RequestParam("id") int id, @RequestParam("status") String status) {
+
+		adminservice.updateTeacherStatus(id, status);
+		return "redirect:/viewteachers";
+	}
+
+	@GetMapping("/editAdminProfile")
+	public String editAdminProfile(HttpSession session, Model model) {
+
+		AdminModel admin = (AdminModel) session.getAttribute("admin");
+
+		model.addAttribute("admin", admin);
+
+		return "EditAdminProfile";
+	}
+
+	@PostMapping("/updateAdminProfileData")
+	public String updateAdminProfile(AdminModel admin, HttpSession session) {
+
+		if (admin.getId() == 0) {
+			return "redirect:/admin"; // avoid crash
+		}
+
+		adminservice.updateAdmin(admin);
+
+		session.setAttribute("admin", admin);
+
+		return "redirect:/admin";
 	}
 }

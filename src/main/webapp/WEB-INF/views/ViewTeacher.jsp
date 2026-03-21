@@ -243,6 +243,23 @@ value="${param.keyword}">
    onclick="openDeleteModal(${t.id}); return false;">
    Delete
 </a>
+<c:choose>
+
+    <c:when test="${t.status == 'ACTIVE'}">
+       <a href="${pageContext.request.contextPath}/changeTeacherStatus?id=${t.id}&status=INACTIVE"
+   class="btn btn-danger">
+   Deactivate
+</a>
+    </c:when>
+
+    <c:otherwise>
+        <a href="${pageContext.request.contextPath}/changeTeacherStatus?id=${t.id}&status=ACTIVE"
+           class="btn btn-success w-50">
+           Activate
+        </a>
+    </c:otherwise>
+
+</c:choose>
 </div>
 
 </div>

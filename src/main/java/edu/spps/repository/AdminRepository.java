@@ -3,6 +3,7 @@ package edu.spps.repository;
 
 import java.util.List;
 
+import edu.spps.model.AdminModel;
 import edu.spps.model.StudentModel;
 import edu.spps.model.SubjectModel;
 import edu.spps.model.TeacherModel;
@@ -25,4 +26,8 @@ public interface AdminRepository {
 	public List<StudentModel> getAllStudents();
 
 	public List<StudentModel> searchStudent(String word);
+
+	public boolean updateTeacherStatus(int id, String status);
+
+	public boolean updateAdmin(AdminModel admin);
 }

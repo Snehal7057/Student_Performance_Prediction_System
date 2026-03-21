@@ -270,7 +270,7 @@ iframe{
 		<i class="bi bi-person-circle"></i>
 
 		<div class="dropdown-menu-custom" id="dropdown">
-			<a href="#">Edit Profile</a>
+			<a href="#" onclick="openAdminEditModal()">Edit Profile</a>
 			<a href="${pageContext.request.contextPath}/logout">Logout</a>
 		</div>
 	</div>
@@ -339,6 +339,38 @@ src="${pageContext.request.contextPath}/welcome"></iframe>
 </div>
 
 
+<div id="adminEditModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+background:rgba(0,0,0,0.6); z-index:9999; justify-content:center; align-items:center;">
+
+<div style="background:white; padding:25px; border-radius:10px; width:350px;">
+
+<h4>Edit Profile</h4>
+
+<form action="updateAdminProfileData" method="post">
+
+<input type="hidden" name="id" value="${sessionScope.admin.id}">
+
+<label>Name</label>
+<input type="text" name="name" value="${sessionScope.admin.name}" class="form-control"><br>
+
+<label>Email</label>
+<input type="text" name="email" value="${sessionScope.admin.email}" class="form-control"><br>
+
+<label>Contact</label>
+<input type="text" name="contact" value="${sessionScope.admin.contact}" class="form-control"><br>
+
+<div class="d-flex justify-content-between">
+<button class="btn btn-success">Update</button>
+<button type="button" onclick="closeAdminEditModal()" class="btn btn-secondary">Cancel</button>
+</div>
+
+</form>
+
+</div>
+</div>
+
+
+
 <!-- ================= SCRIPT ================= -->
 <script>
 
@@ -381,6 +413,15 @@ function closeEditModal(){
     document.getElementById("editOverlay").classList.remove("show"); // ✅ correct
 }
 
+/* edit admin */
+
+function openAdminEditModal(){
+    document.getElementById("adminEditModal").style.display = "flex";
+}
+
+function closeAdminEditModal(){
+    document.getElementById("adminEditModal").style.display = "none";
+}
 
 </script>
 

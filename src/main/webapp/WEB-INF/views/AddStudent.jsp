@@ -223,7 +223,7 @@ function closeModal(){
 
 <input type="hidden" name="role_id" value="3">
 
-<button type="submit">Add Student</button>
+<button type="submit">Submit</button>
 
 <c:if test="${not empty msg}">
 <p class="msg">${msg}</p>

@@ -235,7 +235,7 @@ return valid;
 
 <div class="error" id="subjectError"></div>
 
-<button class="btn update-btn w-100">Update Teacher</button>
+<button class="btn update-btn w-100">Update</button>
 
 </form>
 

@@ -153,7 +153,7 @@ required>
 </div>
 
 <button class="btn upload-btn w-100">
-Upload Material
+Upload
 </button>
 
 </form>

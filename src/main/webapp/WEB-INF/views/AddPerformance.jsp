@@ -241,7 +241,7 @@ return valid;
 				<div class="error" id="percentageError"></div>
 			</div>
 
-			<button class="btn submit-btn w-100">Add Performance</button>
+			<button class="btn submit-btn w-100">Submit</button>
 
 		</form:form>
 

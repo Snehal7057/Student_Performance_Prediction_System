@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import edu.spps.model.AdminModel;
 import edu.spps.model.StudentModel;
 import edu.spps.model.SubjectModel;
 import edu.spps.model.TeacherModel;
@@ -18,7 +19,7 @@ public class AdminRepositoryImpl implements AdminRepository {
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 
-	//Add Teacher
+	// Add Teacher
 	@Override
 	public boolean addTeacher(TeacherModel model) {
 		String sql = "insert into teachers(name,email,contact,experience,subject_id) values(?,?,?,?,?)";
@@ -28,7 +29,7 @@ public class AdminRepositoryImpl implements AdminRepository {
 		return value > 0 ? true : false;
 	}
 
-	//view All Subject
+	// view All Subject
 	@Override
 	public List<SubjectModel> getAllSubjects() {
 		String sql = "select *from subjects";
@@ -46,10 +47,11 @@ public class AdminRepositoryImpl implements AdminRepository {
 		});
 	}
 
-	//View All Teacher
+	// View All Teacher
 	@Override
 	public List<TeacherModel> getAllTeacher() {
-		String sql = "Select t.id, t.name, t.email, t.contact, t.experience, s.subject_name ,t.created_date from teachers t inner join subjects s on t.subject_id = s.id";
+		String sql = "Select t.id, t.name, t.email, t.contact, t.experience, s.subject_name ,DATE(t.created_date) AS created_date,t.status\r\n"
+				+ " from teachers t inner join subjects s on t.subject_id = s.id";
 
 		return jdbcTemplate.query(sql, new RowMapper<TeacherModel>() {
 
@@ -63,6 +65,7 @@ public class AdminRepositoryImpl implements AdminRepository {
 				tm.setExperience(rs.getInt("experience"));
 				tm.setSubjectName(rs.getString("subject_name"));
 				tm.setCreatedDate(rs.getString("created_date"));
+				tm.setStatus(rs.getString("status"));
 				System.out.println("Teacher ID = " + rs.getInt("id"));
 				return tm;
 			}
@@ -70,7 +73,7 @@ public class AdminRepositoryImpl implements AdminRepository {
 		});
 	}
 
-	//Delete Teacher
+	// Delete Teacher
 	@Override
 	public boolean deleteTeacher(int id) {
 		String sql = "delete from teachers where id=?";
@@ -78,7 +81,7 @@ public class AdminRepositoryImpl implements AdminRepository {
 		return value > 0 ? true : false;
 	}
 
-	//Delete by ID
+	// Delete by ID
 	@Override
 	public TeacherModel getTeacherById(int id) {
 		String sql = "select * from teachers where id=?";
@@ -106,7 +109,7 @@ public class AdminRepositoryImpl implements AdminRepository {
 		return list.get(0);
 	}
 
-	//Update Teacher
+	// Update Teacher
 	@Override
 	public boolean updateTeacher(TeacherModel teacher) {
 
@@ -118,7 +121,7 @@ public class AdminRepositoryImpl implements AdminRepository {
 		return value > 0;
 	}
 
-	//Search Teacher
+	// Search Teacher
 	@Override
 	public List<TeacherModel> searchTeacher(String keyword) {
 
@@ -140,8 +143,8 @@ public class AdminRepositoryImpl implements AdminRepository {
 			return teacher;
 		});
 	}
-	
-     //view Student Data
+
+	// view Student Data
 	@Override
 	public List<StudentModel> getAllStudents() {
 		String sql = "select * from students";
@@ -158,20 +161,37 @@ public class AdminRepositoryImpl implements AdminRepository {
 		return list;
 	}
 
-	//Search Student
+	// Search Student
 	@Override
 	public List<StudentModel> searchStudent(String word) {
-		 String sql="select * from students where name like ?";
-		
-		 String search="%" + word +"%";
-		 return jdbcTemplate.query(sql, new Object[] {search}, (rs,rowNum) -> {
-			 StudentModel s=new StudentModel();
-		     	s.setId(rs.getInt("id"));
-				s.setName(rs.getString("name"));
-				s.setEmail(rs.getString("email"));
-				s.setContact(rs.getString("contact"));
-				s.setLocation(rs.getString("location"));		
-				return s;		
-		 });
+		String sql = "select * from students where name like ?";
+
+		String search = "%" + word + "%";
+		return jdbcTemplate.query(sql, new Object[] { search }, (rs, rowNum) -> {
+			StudentModel s = new StudentModel();
+			s.setId(rs.getInt("id"));
+			s.setName(rs.getString("name"));
+			s.setEmail(rs.getString("email"));
+			s.setContact(rs.getString("contact"));
+			s.setLocation(rs.getString("location"));
+			return s;
+		});
+	}
+
+	public boolean updateTeacherStatus(int id, String status) {
+		String sql = "UPDATE teachers SET status=? WHERE id=?";
+		int value = jdbcTemplate.update(sql, status, id);
+		return value > 0;
+	}
+
+	@Override
+	public boolean updateAdmin(AdminModel admin) {
+
+		String sql = "UPDATE admins SET name=?, email=?, contact=? WHERE id=?";
+
+		int result = jdbcTemplate.update(sql, admin.getAdmin_name(), admin.getEmail(), admin.getContact(),
+				admin.getId());
+
+		return result > 0;
 	}
 }

@@ -27,7 +27,7 @@ public class TeacherRepositoryImpl implements TeacherRepository {
 	// View Student
 	@Override
 	public List<StudentModel> getAllStudents() {
-		String sql = "select * from students";
+		String sql = "select id, name, email, contact, location, DATE(created_date) as created_date from students";
 		List<StudentModel> list = jdbcTemplate.query(sql, (rs, rowNum) -> {
 			StudentModel s = new StudentModel();
 			s.setId(rs.getInt("id"));
@@ -152,7 +152,7 @@ public class TeacherRepositoryImpl implements TeacherRepository {
 
 	@Override
 	public List<StudyMaterialModel> getAllMaterials() {
-		String sql = "select sm.id, s.subject_name, sm.file_name, t.name as teacher_name, sm.upload_date from study_materials sm inner join subjects s on sm.subject_id = s.id inner join teachers t on sm.uploaded_by = t.id";
+		String sql = "select sm.id, s.subject_name, sm.file_name, t.name as teacher_name,DATE(sm.upload_date) as upload_date from study_materials sm inner join subjects s on sm.subject_id = s.id inner join teachers t on sm.uploaded_by = t.id";
 		return jdbcTemplate.query(sql, (rs, rowNum) -> {
 
 			StudyMaterialModel m = new StudyMaterialModel();

@@ -15,5 +15,6 @@ public class TeacherModel {
 	private int role_id;
 	private String subjectName;
 	private String createdDate;
+	private String status;
 
 }

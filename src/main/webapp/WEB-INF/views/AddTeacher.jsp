@@ -223,7 +223,7 @@ onsubmit="return validateTeacherForm()">
 <div class="error" id="subjectError"></div>
 </div>
 
-<button type="submit">Add Teacher</button>
+<button type="submit">Submit</button>
 
 </form>
 

@@ -5,8 +5,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class StudentController {
-@GetMapping("/student")
-public String dashboard() {
-	return "StudentDashboard";
-  }
+
+	@GetMapping("/student")
+	public String dashboard() {
+		return "StudentDashboard";
+	}
+
 }
