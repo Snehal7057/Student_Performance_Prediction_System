@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.spps.model.PerformanceModel;
+import edu.spps.model.PredictionModel;
 import edu.spps.model.StudentModel;
 import edu.spps.model.StudyMaterialModel;
+import edu.spps.model.TeacherModel;
 import edu.spps.repository.TeacherRepository;
 
 @Service
@@ -68,6 +70,36 @@ public class TeacherServiceImpl implements TeacherService {
 	@Override
 	public List<PerformanceModel> searchNameforPerformance(String word) {
 		return studRepo.searchNameforPerformance(word);
+	}
+
+	@Override
+	public boolean deactivateStudent(int id) {
+		// TODO Auto-generated method stub
+		return studRepo.deactivateStudent(id);
+	}
+
+	@Override
+	public boolean activateStudent(int id) {
+		// TODO Auto-generated method stub
+		return studRepo.activateStudent(id);
+	}
+
+	@Override
+	public PerformanceModel getAvgPerformance(int studentId) {
+		// TODO Auto-generated method stub
+		return studRepo.getAvgPerformance(studentId);
+	}
+
+	@Override
+	public List<PredictionModel> getAllPrediction() {
+		// TODO Auto-generated method stub
+		return studRepo.getAllPrediction();
+	}
+
+	@Override
+	public TeacherModel getTeacherByEmail(String email) {
+		// TODO Auto-generated method stub
+		return studRepo.findByEmail(email);
 	}
 
 }

@@ -13,4 +13,7 @@ public class StudentModel {
 	private String location;
 	private int role_id;
 	private String createdDate;
+	private String status;
+	private String password;
+
 }

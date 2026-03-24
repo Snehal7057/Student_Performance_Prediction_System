@@ -1,215 +1,291 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!DOCTYPE html>
-<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Student Performance</title>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+	rel="stylesheet">
 <link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-
-/* ===== BODY ===== */
-body{
-    margin:0;
-    font-family:'Segoe UI',sans-serif;
-    color:white;
-    overflow-x:hidden;
+body {
+	margin: 0;
+	font-family: 'Segoe UI', sans-serif;
+	color: white;
+	overflow-x: hidden;
 }
 
-/* ===== VIDEO BACKGROUND ===== */
-.video-bg{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    z-index:-2;
+.video-bg {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	z-index: -2;
 }
 
-/* DARK OVERLAY */
-body::before{
-    content:"";
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:rgba(11,15,20,0.75);
-    z-index:-1;
+body::before {
+	content: "";
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(11, 15, 20, 0.75);
+	z-index: -1;
 }
 
-/* ===== HEADING ===== */
-h2{
-    text-align:center;
-    margin:30px 0;
-    font-weight:600;
+h2 {
+	text-align: center;
+	margin: 30px 0;
+	font-weight: 600;
 }
 
-/* ===== SEARCH ===== */
-.search-box input{
-    background:rgba(255,255,255,0.1);
-    border:1px solid rgba(255,255,255,0.3);
-    color:white;
+.search-box input {
+	background: rgba(255, 255, 255, 0.1);
+	border: 1px solid rgba(255, 255, 255, 0.9);
+	color: white;
 }
 
-.search-box input::placeholder{
-    color:#ccc;
+.search-box input::placeholder {
+	color: #ccc;
 }
 
-/* BUTTONS */
-.search-btn{
-    background:linear-gradient(to right, #0b0f14, #121826);
-    border:none;
-    color:white;
+.search-btn {
+	background: linear-gradient(to right, #0b0f14, #121826);
+	border: 1px solid rgba(255, 255, 255, 0.9);
+	color: white;
 }
 
-.reset-btn{
-    border:1px solid #aaa;
-    color:white;
+.reset-btn {
+	border: 1px solid #aaa;
+	color: white;
 }
 
-/* ===== CARD ===== */
-.performance-card{
-    background:white;
-    color:black;
-    backdrop-filter:blur(12px);
-    border-radius:15px;
-    padding:20px;
-    padding-top:50px;
-    position:relative;
-    transition:0.3s;
-    height:100%;
+.performance-card {
+	background: white;
+	color: black;
+	border-radius: 15px;
+	padding: 20px;
+	padding-top: 50px;
+	position: relative;
+	transition: 0.3s;
+	height: 100%;
+	margin-top: 30px;
+	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
 }
 
-.performance-card:hover{
-    transform:translateY(-6px);
+.performance-card:hover {
+	transform: translateY(-6px);
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
-/* PROFILE ICON (Teacher style 🔥) */
-.profile-icon{
-    position:absolute;
-    top:-30px;
-    left:50%;
-    transform:translateX(-50%);
-    width:60px;
-    height:60px;
-    background:#1e293b;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:22px;
-    color:#38bdf8;
+.profile-icon {
+	position: absolute;
+	top: -30px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 60px;
+	height: 60px;
+	background: #1e293b;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 22px;
+	color: #38bdf8;
 }
 
-/* TEXT */
-.performance-card h5{
-    text-align:center;
-    margin-top:10px;
+.performance-card h5 {
+	text-align: center;
+	margin-top: 10px;
 }
 
-.performance-card p{
-    font-size:14px;
-    margin:10px 0;
-    margin-left:20px;
+.performance-card p {
+	font-size: 14px;
+	margin: 10px 0;
+	margin-left: 20px;
 }
 
-/* DIVIDER */
-.card-divider{
-    border-top:1px solid rgba(255,255,255,0.2);
-    margin:10px 0;
+.card-divider {
+	border-top: 1px solid rgba(0, 0, 0, 0.1);
+	margin: 10px 0;
 }
 
+.toggle-btn {
+	border: 1px solid #3b82f6;
+	background: none;
+	color: #3b82f6;
+	border-radius: 8px;
+	padding: 6px;
+	cursor: pointer;
+	transition: 0.3s;
+	font-size: 14px;
+}
+
+.toggle-btn:hover {
+	background: #3b82f6;
+	color: white;
+}
+
+.extra-records {
+	display: none;
+}
 </style>
 </head>
 
 <body>
 
-<!-- 🔥 VIDEO BACKGROUND -->
-<video autoplay muted loop class="video-bg">
-    <source src="${pageContext.request.contextPath}/resources/videos/videoad.mp4">
-</video>
+	<video autoplay muted loop class="video-bg">
+		<source
+			src="${pageContext.request.contextPath}/resources/videos/videoad.mp4">
+	</video>
 
-<h2>Student Performance List</h2>
+	<h2>Student Performance List</h2>
 
-<!-- SEARCH -->
-<div class="container mb-4">
+	<div class="container mb-4">
+		<form action="<c:url value='/searchPerformance'/>" method="get"
+			class="row g-2 justify-content-center search-box">
 
-<form action="<c:url value='/searchPerformance'/>"
-method="get"
-class="row g-2 justify-content-center search-box">
+			<div class="col-lg-6 col-md-8 col-12">
+				<input type="text" class="form-control" name="word"
+					placeholder="Search by Name" value="${word != null ? word : ''}">
+			</div>
 
-<div class="col-lg-6 col-md-8 col-12">
+			<div class="col-lg-auto col-6">
+				<button class="btn w-100 search-btn">Search</button>
+			</div>
 
-<input type="text"
-class="form-control"
-name="word"
-placeholder="Search by Name"
-value="${word != null ? word : ''}">
+			<div class="col-lg-auto col-6">
+				<a href="<c:url value='/viewPerformance'/>"
+					class="btn w-100 reset-btn">Reset</a>
+			</div>
 
-</div>
+		</form>
+	</div>
 
-<div class="col-lg-auto col-6">
-<button class="btn w-100 search-btn">Search</button>
-</div>
+	<div class="container">
+		<div class="row g-4">
+			<c:choose>
 
-<div class="col-lg-auto col-6">
-<a href="<c:url value='/viewPerformance'/>" class="btn w-100 reset-btn">Reset</a>
-</div>
+				<c:when test="${empty studentPerformances}">
+					<div class="col-12">
+						<h2 style="color: red; text-align: center;">Performance Not
+							Available</h2>
+					</div>
+				</c:when>
 
-</form>
+				<c:otherwise>
 
-</div>
+					<c:forEach var="entry" items="${studentPerformances}">
+						<div class="col-lg-4 col-md-6 col-12">
 
-<!-- CARDS -->
-<div class="container">
+							<div class="performance-card">
 
-<div class="row g-4">
+								<div class="profile-icon">
+									<i class="fas fa-user"></i>
+								</div>
 
-<c:forEach var="entry" items="${studentPerformances}">
+								<h5>${entry.key}</h5>
 
-<div class="col-lg-4 col-md-6 col-12">
+								<div class="first-records">
+									<c:set var="count" value="0" />
 
-<div class="performance-card">
+									<c:forEach var="viewP" items="${entry.value}">
+										<c:if test="${count == 0}">
+											<p>
+												<strong>Date:</strong> ${viewP.performance_date}
+											</p>
+											<p>
+												<strong>Attendance:</strong> ${viewP.attendance}
+											</p>
+											<p>
+												<strong>Study Hours:</strong> ${viewP.study_hours}
+											</p>
+											<p>
+												<strong>Assessment:</strong> ${viewP.assessment}
+											</p>
+											<p>
+												<strong>Participation:</strong> ${viewP.participation}
+											</p>
+											<p>
+												<strong>Percentage:</strong> ${viewP.percentage}%
+											</p>
+											<div class="card-divider"></div>
+										</c:if>
+										<c:set var="count" value="${count + 1}" />
+									</c:forEach>
+								</div>
 
-<!-- PROFILE ICON -->
-<div class="profile-icon">
-<i class="fas fa-user"></i>
-</div>
+								<div class="extra-records">
+									<c:set var="count" value="0" />
 
-<h5>${entry.key}</h5>
+									<c:forEach var="viewP" items="${entry.value}">
+										<c:if test="${count >= 1}">
+											<p>
+												<strong>Date:</strong> ${viewP.performance_date}
+											</p>
+											<p>
+												<strong>Attendance:</strong> ${viewP.attendance}
+											</p>
+											<p>
+												<strong>Study Hours:</strong> ${viewP.study_hours}
+											</p>
+											<p>
+												<strong>Assessment:</strong> ${viewP.assessment}
+											</p>
+											<p>
+												<strong>Participation:</strong> ${viewP.participation}
+											</p>
+											<p>
+												<strong>Percentage:</strong> ${viewP.percentage}%
+											</p>
+											<div class="card-divider"></div>
+										</c:if>
+										<c:set var="count" value="${count + 1}" />
+									</c:forEach>
+								</div>
 
-<c:forEach var="viewP" items="${entry.value}">
+								<c:if test="${fn:length(entry.value) > 1}">
+									<button type="button" class="toggle-btn w-100 mt-2"
+										onclick="toggleRecords(this)">See More</button>
+								</c:if>
 
-<p><strong>Date:</strong> ${viewP.performance_date}</p>
-<p><strong>Attendance:</strong> ${viewP.attendance}</p>
-<p><strong>Study Hours:</strong> ${viewP.study_hours}</p>
-<p><strong>Assessment:</strong> ${viewP.assessment}</p>
-<p><strong>Participation:</strong> ${viewP.participation}</p>
-<p><strong>Percentage:</strong> ${viewP.percentage}%</p>
+							</div>
+						</div>
+					</c:forEach>
 
-<div class="card-divider"></div>
+				</c:otherwise>
 
-</c:forEach>
+			</c:choose>
 
-</div>
+		</div>
+	</div>
 
-</div>
+	<script>
+		function toggleRecords(btn) {
+			const card = btn.closest('.performance-card');
+			const extra = card.querySelector('.extra-records');
 
-</c:forEach>
-
-</div>
-
-</div>
+			if (extra.style.display === 'none' || extra.style.display === '') {
+				extra.style.display = 'block';
+				btn.textContent = 'See Less';
+			} else {
+				extra.style.display = 'none';
+				btn.textContent = 'See More';
+			}
+		}
+	</script>
 
 </body>
 </html>

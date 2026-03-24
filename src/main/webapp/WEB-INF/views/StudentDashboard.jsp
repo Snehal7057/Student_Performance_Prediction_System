@@ -75,7 +75,6 @@ box-shadow:4px 0 20px rgba(0,0,0,0.6);
 left:0;
 }
 
-/* TITLE */
 #sidebar h4{
 color:#38bdf8;
 text-align:center;
@@ -240,7 +239,7 @@ color:#94a3b8;
 <i class="bi bi-speedometer2"></i> Dashboard
 </a>
 
-<a href="${pageContext.request.contextPath}/student/viewPerformance" target="content-frame">
+<a href="${pageContext.request.contextPath}/student/myPerformance" target="content-frame">
 <i class="bi bi-graph-up"></i> My Performance
 </a>
 

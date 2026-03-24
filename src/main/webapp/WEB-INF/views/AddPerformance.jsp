@@ -22,119 +22,102 @@
 </head>
 
 <style>
-
-/* ===== BODY ===== */
-body{
-    margin:0;
-    font-family:'Segoe UI',sans-serif;
-    background:rgba(0,0,0,0.6); /* overlay */
+body {
+	margin: 0;
+	font-family: 'Segoe UI', sans-serif;
+	background: rgba(0, 0, 0, 0.6); /* overlay */
 }
 
-/* ===== POPUP WRAPPER ===== */
-.popup-container{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    z-index:9999;
+.popup-container {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 9999;
 }
 
-/* ===== FORM CARD ===== */
-.form-card{
-    background:white;
-    color:black;
-
-    width:100%;
-    max-width:450px;
-
-    padding:25px;
-    border-radius:12px;
-
-    box-shadow:0 10px 30px rgba(0,0,0,0.5);
-
-    animation:popupFade 0.3s ease;
+.form-card {
+	background: white;
+	color: black;
+	width: 100%;
+	max-width: 450px;
+	padding: 25px;
+	border-radius: 12px;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+	animation: popupFade 0.3s ease;
 }
 
-/* ===== HEADER ===== */
-.form-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:15px;
+.form-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 15px;
 }
 
-h2{
-    margin:0;
-    font-size:20px;
-    color:black;
+h2 {
+	margin: 0;
+	font-size: 20px;
+	color: black;
 }
 
-/* CLOSE */
-.close-btn{
-    font-size:22px;
-    cursor:pointer;
-    transition:0.3s;
+.close-btn {
+	font-size: 22px;
+	cursor: pointer;
+	transition: 0.3s;
 }
 
-.close-btn:hover{
-    color:red;
-    transform:rotate(90deg);
+.close-btn:hover {
+	color: red;
+	transform: rotate(90deg);
 }
 
-/* ===== INPUT ===== */
-label{
-    font-size:14px;
-    margin-top:8px;
+label {
+	font-size: 14px;
+	margin-top: 8px;
 }
 
-.form-control{
-    background:white;
-    color:black;
-    border:1px solid #ccc;
+.form-control {
+	background: white;
+	color: black;
+	border: 1px solid #ccc;
 }
 
-.form-control:focus{
-    border-color:black;
-    box-shadow:none;
+.form-control:focus {
+	border-color: black;
+	box-shadow: none;
 }
 
-/* ===== BUTTON ===== */
-.submit-btn{
-    margin-top:15px;
-    background:black;
-    color:white;
-    border:none;
-    font-weight:600;
+.submit-btn {
+	margin-top: 15px;
+	background: black;
+	color: white;
+	border: none;
+	font-weight: 600;
 }
 
-.submit-btn:hover{
-    background:#333;
+.submit-btn:hover {
+	background: #333;
 }
 
-/* ===== ERROR ===== */
-.error{
-    color:red;
-    font-size:12px;
+.error {
+	color: red;
+	font-size: 12px;
 }
 
-/* ===== ANIMATION ===== */
-@keyframes popupFade{
-    from{
-        opacity:0;
-        transform:scale(0.8);
-    }
-    to{
-        opacity:1;
-        transform:scale(1);
-    }
+@
+keyframes popupFade {from { opacity:0;
+	transform: scale(0.8);
 }
 
+to {
+	opacity: 1;
+	transform: scale(1);
+}
+}
 </style>
 
 <script>
@@ -185,67 +168,67 @@ return valid;
 
 
 <body>
-<div class="popup-container">
+	<div class="popup-container">
 
-<div class="form-card">
+		<div class="form-card">
 
-<div class="form-header">
-    <h2>Add Performance</h2>
-    <span class="close-btn" onclick="window.history.back()">✖</span>
-</div>
-	<div class="form-card">
-
-		<h2>Add Student Performance</h2>
-
-		<c:if test="${not empty msg}">
-			<p class="msg">${msg}</p>
-		</c:if>
-
-		<form:form method="post" modelAttribute="performance"
-			onsubmit="return validatePerformance()">
-
-			<form:hidden path="student_id" />
-
-			<div class="mb-2">
-				<label>Attendance</label>
-				<form:input path="attendance" id="attendance" type="number"
-					cssClass="form-control" placeholder="0-100" />
-				<div class="error" id="attendanceError"></div>
+			<div class="form-header">
+				<h2>Add Performance</h2>
+				<span class="close-btn" onclick="window.history.back()">✖</span>
 			</div>
+			<div class="form-card">
 
-			<div class="mb-2">
-				<label>Study Hours</label>
-				<form:input path="study_hours" id="study_hours" type="number"
-					cssClass="form-control" placeholder="Hours" />
-				<div class="error" id="studyHoursError"></div>
+				<h2>Add Student Performance</h2>
+
+				<c:if test="${not empty msg}">
+					<p class="msg">${msg}</p>
+				</c:if>
+
+				<form:form method="post" modelAttribute="performance"
+					onsubmit="return validatePerformance()">
+
+					<form:hidden path="student_id" />
+
+					<div class="mb-2">
+						<label>Attendance</label>
+						<form:input path="attendance" id="attendance" type="number"
+							cssClass="form-control" placeholder="0-100" />
+						<div class="error" id="attendanceError"></div>
+					</div>
+
+					<div class="mb-2">
+						<label>Study Hours</label>
+						<form:input path="study_hours" id="study_hours" type="number"
+							cssClass="form-control" placeholder="Hours" />
+						<div class="error" id="studyHoursError"></div>
+					</div>
+
+					<div class="mb-2">
+						<label>Assessment</label>
+						<form:input path="assessment" id="assessment" type="number"
+							cssClass="form-control" placeholder="0-100" />
+						<div class="error" id="assessmentError"></div>
+					</div>
+
+					<div class="mb-2">
+						<label>Participation</label>
+						<form:input path="participation" id="participation" type="number"
+							cssClass="form-control" placeholder="0-10" />
+						<div class="error" id="participationError"></div>
+					</div>
+
+					<div class="mb-2">
+						<label>Percentage</label>
+						<form:input path="percentage" id="percentage" type="number"
+							cssClass="form-control" placeholder="0-100" />
+						<div class="error" id="percentageError"></div>
+					</div>
+
+					<button class="btn submit-btn w-100">Submit</button>
+
+				</form:form>
+
 			</div>
-
-			<div class="mb-2">
-				<label>Assessment</label>
-				<form:input path="assessment" id="assessment" type="number"
-					cssClass="form-control" placeholder="0-100" />
-				<div class="error" id="assessmentError"></div>
-			</div>
-
-			<div class="mb-2">
-				<label>Participation</label>
-				<form:input path="participation" id="participation" type="number"
-					cssClass="form-control" placeholder="0-10" />
-				<div class="error" id="participationError"></div>
-			</div>
-
-			<div class="mb-2">
-				<label>Percentage</label>
-				<form:input path="percentage" id="percentage" type="number"
-					cssClass="form-control" placeholder="0-100" />
-				<div class="error" id="percentageError"></div>
-			</div>
-
-			<button class="btn submit-btn w-100">Submit</button>
-
-		</form:form>
-
-	</div>
-</div>
+		</div>
 </body>
 </html>

@@ -21,12 +21,13 @@ body{
 
 /* ===== CENTER BOX ===== */
 .container{
-    max-width:420px;
-	padding:10px;
-	margin-top:25px;
-    background:#ffffff;
+    max-width:400px;
+    height:530px;
+    padding:9px;
+    margin-top:15px;
     border-radius:12px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+    background: transparent; /* remove white background */
+    box-shadow: none;       /* remove shadow if you want flat look */
 }
 
 /* ===== HEADER ===== */
@@ -36,9 +37,10 @@ body{
     align-items:center;
 }
 
-h3{
-    margin:0;
-    font-weight:600;
+h4{
+    text-align:center;
+    font-weight:bold;
+    
     color:black;
 }
 
@@ -70,8 +72,7 @@ label{
 /* INPUT */
 input,select{
     width:100%;
-    padding:10px;
-
+    padding:8px;
     border-radius:6px;
     border:1px solid #ccc;
 }
@@ -85,13 +86,13 @@ input:focus,select:focus{
 /* BUTTON */
 button{
     width:100%;
-    margin-top:15px;
-    padding:12px;
+    margin-top:10px;
+    padding:10px;
 
     border:none;
     border-radius:8px;
 
-    background:#0f172a;
+    background:blue;
     color:white;
 
     font-weight:600;
@@ -178,7 +179,7 @@ function closeModal(){
 <div class="container">
 
 <div class="form-header">
-    <h3>Add Teacher</h3>
+    <h4>Add Teacher</h4>
     <span class="close-btn" onclick="closeModal()">❌</span>
 </div>
 

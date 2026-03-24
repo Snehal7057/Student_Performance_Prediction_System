@@ -1,7 +1,153 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
+<style>
+.footer {
+  background: linear-gradient(to right, #0b0f14, #121826);
+  color: #ccc;
+  padding: 60px 50px 20px;
+  font-family: "Poppins", sans-serif;
+}
 
+/* container */
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+/* columns */
+.footer-col {
+  flex: 1;
+  min-width: 220px;
+}
+
+/* logo */
+.footer .logo {
+  font-size: 26px;
+  color: white;
+  margin-bottom: 15px;
+}
+
+.footer .logo span {
+  color: #00c6ff;
+}
+
+/* text */
+.footer p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #aaa;
+}
+
+/* headings */
+.footer h3 {
+  color: white;
+  margin-bottom: 15px;
+}
+
+/* links */
+.footer ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer ul li {
+  margin: 10px 0;
+}
+
+/* anchor links */
+.footer ul li a {
+  text-decoration: none;
+  color: #ccc;
+  position: relative;
+  display: inline-block;
+  transition: 0.3s;
+}
+
+/* underline animation */
+.footer ul li a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0%;
+  height: 2px;
+  background: #00c6ff;
+  transition: 0.3s;
+}
+
+.footer ul li a:hover::after {
+  width: 100%;
+}
+
+/* hover effect */
+.footer ul li a:hover {
+  color: white;
+  transform: translateX(5px);
+  text-shadow: 0 0 8px rgba(0, 198, 255, 0.5);
+}
+
+/* icons */
+.footer ul li i {
+  margin-right: 10px;
+  color: #00c6ff;
+}
+
+/* subscribe */
+.subscribe-box {
+  display: flex;
+  margin-top: 15px;
+  gap: 10px;
+}
+
+.subscribe-box input {
+  padding: 10px;
+  border-radius: 25px;
+  border: 1px solid #2a2f3a;
+  background: #0f141c;
+  color: white;
+  outline: none;
+  flex: 1;
+}
+
+.subscribe-box input::placeholder {
+  color: #777;
+}
+
+.subscribe-box button {
+  background: #00c6ff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  color: black;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.subscribe-box button:hover {
+  background: white;
+  transform: scale(1.05);
+}
+
+/* bottom */
+.footer-bottom {
+  text-align: center;
+  border-top: 1px solid #2a2f3a;
+  margin-top: 40px;
+  padding-top: 20px;
+  font-size: 14px;
+  color: #aaa;
+}
+
+/* mobile */
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+  }
+}
+</style>
  <footer class="footer">
       <div class="footer-container">
         <!-- LEFT -->
@@ -40,7 +186,6 @@
           </ul>
         </div>
 
-        <!-- SUBSCRIBE -->
         <div class="footer-col">
           <h3>Join Our Community</h3>
           <p>Stay updated with new courses, tips, and BrainlyEdu updates.</p>
@@ -52,7 +197,6 @@
         </div>
       </div>
 
-      <!-- BOTTOM -->
       <div class="footer-bottom">© 2026 BrainlyEdu. All Rights Reserved.</div>
     </footer>
 

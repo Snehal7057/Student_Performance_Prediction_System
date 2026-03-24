@@ -127,7 +127,6 @@ body::before{
 	margin-left:250px;
 }
 
-/* IFRAME */
 .main-content iframe{
 	width:100%;
 	height:100%;
@@ -188,14 +187,12 @@ body::before{
 
 <body>
 
-<!-- VIDEO BACKGROUND -->
 <video autoplay muted loop class="video-bg">
 <source src="${pageContext.request.contextPath}/resources/videos/teachdash.mp4">
 </video>
 
 <input type="checkbox" id="menu-toggle">
 
-<!-- ===== NAVBAR ===== -->
 <nav class="navbar-admin">
 
 <label for="menu-toggle" class="menu-toggle">
@@ -225,7 +222,6 @@ body::before{
 
 </nav>
 
-<!-- ===== SIDEBAR ===== -->
 <div id="sidebar">
 
 <h5 class="text-center mb-4">Teacher Panel</h5>
@@ -254,6 +250,13 @@ body::before{
 <i class="bi bi-journal-text"></i> View Material
 </a>
 
+<a href="${pageContext.request.contextPath}/teacher/predictStudent" target="content-frame" onclick="openPredictPopup()">
+    <i class="bi bi-cpu"></i> Predict Student
+</a>
+<a href="${pageContext.request.contextPath}/teacher/viewPredictions" >
+    <i class="bi bi-graph-up-arrow"></i> View Predictions
+</a>
+
 <a href="#">
 <i class="bi bi-gear"></i> Settings
 </a>
@@ -264,7 +267,6 @@ body::before{
 
 </div>
 
-<!-- ===== MAIN ===== -->
 <div class="main-content">
 
 <iframe name="content-frame"
@@ -272,14 +274,31 @@ src="${pageContext.request.contextPath}/welcome"></iframe>
 
 </div>
 
-<!-- ===== FOOTER ===== -->
 <div class="footer">
 © 2026 SmartGrade. All Rights Reserved.
 </div>
+<div id="popupContainer" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.7);
+z-index:2000;
+justify-content:center;
+align-items:center;
+">
 
+    <div style="width:80%; height:85%; background:white; border-radius:12px; overflow:hidden;">
+
+        <iframe id="popupFrame" style="width:100%; height:100%; border:none;"></iframe>
+
+    </div>
+
+</div>
 <script>
 
-/* CLOSE SIDEBAR AFTER CLICK */
 document.querySelectorAll("#sidebar a").forEach(function(link){
 link.addEventListener("click",function(){
 document.getElementById("menu-toggle").checked=false;
@@ -292,12 +311,12 @@ function toggleDropdown(){
     d.style.display = d.style.display === "block" ? "none" : "block";
 }
 
-/* CLICK OUTSIDE CLOSE */
 window.onclick = function(e){
     if(!e.target.closest(".profile-box")){
         document.getElementById("dropdown").style.display="none";
     }
 }
+
 
 </script>
 

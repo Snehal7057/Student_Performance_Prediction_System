@@ -1,14 +1,11 @@
-package edu.spps.service;
+package edu.spps.repository;
 
 import java.util.List;
-
-import org.springframework.stereotype.Service;
 
 import edu.spps.model.PerformanceModel;
 import edu.spps.model.StudentModel;
 
-@Service
-public interface StudentService {
+public interface StudentRepo {
 	public List<PerformanceModel> getPerformanceByStudentId(int studentId);
 
 	public StudentModel getStudentByEmail(String email);

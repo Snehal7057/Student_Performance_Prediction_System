@@ -3,8 +3,10 @@ package edu.spps.service;
 import java.util.List;
 
 import edu.spps.model.PerformanceModel;
+import edu.spps.model.PredictionModel;
 import edu.spps.model.StudentModel;
 import edu.spps.model.StudyMaterialModel;
+import edu.spps.model.TeacherModel;
 
 public interface TeacherService {
 	public boolean addStudent(StudentModel model);
@@ -22,9 +24,21 @@ public interface TeacherService {
 	public boolean addPerformance(PerformanceModel model);
 
 	public List<PerformanceModel> getAllPerformance();
+
 	public List<PerformanceModel> searchNameforPerformance(String word);
 
 	public boolean uploadMaterial(StudyMaterialModel model);
 
 	public List<StudyMaterialModel> getAllMaterials();
+
+	public boolean deactivateStudent(int id);
+
+	public boolean activateStudent(int id);
+
+	PerformanceModel getAvgPerformance(int studentId);
+
+	public List<PredictionModel> getAllPrediction();
+
+	public TeacherModel getTeacherByEmail(String email);
+
 }

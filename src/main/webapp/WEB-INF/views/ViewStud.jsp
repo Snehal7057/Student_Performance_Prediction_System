@@ -214,7 +214,7 @@ value="${word != null ? word : ''}">
 <a href="deleteStudent?id=${student.id}"
    class="btn-delete"
    onclick="return confirmDelete()">
-   Delete
+   Debarred
 </a>
 </td>
 

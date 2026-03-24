@@ -4,10 +4,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Student List</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -15,16 +13,12 @@
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-
-/* ===== BODY ===== */
 body{
     margin:0;
-    padding::0;
+    padding:0;
     font-family:'Segoe UI',sans-serif;
-    color:white;
+    color:#1e293b;
 }
-
-/* VIDEO BG */
 .video-bg{
     position:fixed;
     width:100%;
@@ -32,8 +26,6 @@ body{
     object-fit:cover;
     z-index:-2;
 }
-
-/* OVERLAY */
 body::before{
     content:"";
     position:fixed;
@@ -42,75 +34,60 @@ body::before{
     background:rgba(0,0,0,0.9);
     z-index:-1;
 }
-
-/* HEADING */
 h2{
     text-align:center;
-    margin:30px 0;
-     margin:0;
     padding-top:20px;
+    color:white;
 }
-
-/* SEARCH */
 .search-box input{
     background:rgba(255,255,255,0.1);
     border:1px solid rgba(255,255,255,0.3);
     color:white;
 }
-
-.search-btn{
-    background:linear-gradient(to right, #0b0f14, #121826);
-    color:white;
-}
-
-.reset-btn{
-    border:1px solid white;
-    color:white;
-}
-
-/* CARD */
 .student-card{
-    background:rgba(255,255,255,0.1);
-    backdrop-filter:blur(10px);
-    border-radius:12px;
-    padding:20px;
-    padding-top:50px;
-    position:relative;
-    transition:0.3s;
+    margin-top:30px;
+    background:#ffffff;
+    border-radius:15px;
+    padding:40px 20px 20px 20px;
+    position: relative;
+    transition: transform 0.3s, box-shadow 0.3s;
+    color:#1e293b;
+    box-shadow:0 6px 20px rgba(0,0,0,0.1);
 }
-
 .student-card:hover{
     transform:translateY(-5px);
+    box-shadow:0 10px 30px rgba(0,0,0,0.15);
 }
-
-/* PROFILE ICON */
 .profile-icon{
-    position:absolute;
-    top:-25px;
-    left:50%;
-    transform:translateX(-50%);
-    background:#1e293b;
-    width:50px;
-    height:50px;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-
-/* BUTTON */
-.card-btn{
-    background:linear-gradient(to right, #0b0f14, #121826);
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #3b82f6;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color:white;
-    border:none;
+    font-size:22px;
+    z-index: 1;
 }
-
-.card-btn:hover{
-    background:#0ea5e9;
+.btn-border{
+    border:1px solid #3b82f6;
+    color:#3b82f6;
+    background:none;
+    transition: all 0.3s;
 }
-
-
-/* MODAL BACKGROUND */
+.btn-border:hover{
+    background:#3b82f6;
+    color:white;
+}
+.btn-border.disabled{
+    opacity:0.5;
+    pointer-events:none;
+}
 .modal-overlay{
 position:fixed;
 top:0;
@@ -123,44 +100,39 @@ justify-content:center;
 align-items:center;
 z-index:9999;
 }
-
-/* MODAL BOX */
 .modal-box{
-background:#f1f1f1;
+background:#ffffff;
 padding:25px;
 border-radius:15px;
 width:400px;
 animation:fadeIn 0.3s ease;
+color:#1e293b;
 }
-
-/* CLOSE */
 .close-btn{
 cursor:pointer;
 color:red;
 font-size:20px;
 }
-
-/* BUTTON */
 .submit-btn{
-background:linear-gradient(to right,#0f2027,#203a43,#2c5364);
-color:white;
 border:none;
 border-radius:10px;
 padding:10px;
+background:#3b82f6;
+color:white;
+font-weight:600;
+transition:0.3s;
 }
-
-/* ANIMATION */
+.submit-btn:hover{
+background:#2563eb;
+}
 @keyframes fadeIn{
 from{transform:scale(0.8);opacity:0;}
 to{transform:scale(1);opacity:1;}
 }
 </style>
-
 </head>
 
 <body>
-
-<!-- VIDEO -->
 <video autoplay muted loop class="video-bg">
 <source src="${pageContext.request.contextPath}/resources/videos/teachdash.mp4">
 </video>
@@ -170,89 +142,99 @@ to{transform:scale(1);opacity:1;}
 <!-- SEARCH -->
 <div class="container mb-4">
 <form action="searchstudent" method="get" class="row g-2 justify-content-center search-box">
-
 <div class="col-lg-6">
 <input type="text" class="form-control" name="keyword"
 placeholder="Search by Name"
 value="${keyword != null ? keyword : ''}">
 </div>
-
 <div class="col-lg-auto col-6">
-<button class="btn w-100 search-btn">Search</button>
+<button class="btn btn-border w-100">Search</button>
 </div>
-
 <div class="col-lg-auto col-6">
-<a href="viewStudent" class="btn w-100 reset-btn">Reset</a>
+<a href="viewStudent" class="btn btn-border w-100">Reset</a>
 </div>
-
 </form>
 </div>
 
-<!-- CARDS -->
+<!-- STUDENT CARDS -->
 <div class="container">
 <div class="row g-4">
 
 <c:forEach var="student" items="${students}">
-
 <div class="col-lg-3 col-md-4 col-sm-6">
-
 <div class="student-card">
 
 <div class="profile-icon">
 <i class="fa-solid fa-user"></i>
 </div>
 
-<h5 class="text-center">${student.name}</h5>
-
+<h5 class="text-center mt-3">${student.name}</h5>
 <p><strong>Email:</strong> ${student.email}</p>
 <p><strong>Contact:</strong> ${student.contact}</p>
 <p><strong>Location:</strong> ${student.location}</p>
 
 <div class="d-flex gap-2 mt-3">
 
-<a href="#" class="btn card-btn w-50"
-   onclick="openUpdateModal(${student.id}, '${student.name}', '${student.email}', '${student.contact}', '${student.location}')">
+<!-- UPDATE BUTTON -->
+<a href="#"
+   class="btn btn-border w-50 ${student.status != 'active' ? 'disabled' : ''}"
+   <c:if test="${student.status == 'active'}">
+       onclick="openUpdateModal(${student.id}, '${student.name}', '${student.email}', '${student.contact}', '${student.location}')"
+   </c:if>>
    Update
 </a>
 
+<!-- PERFORMANCE BUTTON -->
 <a href="addPerformance?student_id=${student.id}"
-class="btn card-btn w-50">Performance</a>
+   class="btn btn-border w-50 ${student.status != 'active' ? 'disabled' : ''}"
+   <c:if test="${student.status != 'active'}">onclick="return false;"</c:if>>
+   Performance
+</a>
 
 </div>
 
 <div class="mt-2">
-
+<!-- DELETE BUTTON -->
 <a href="deleteStudent?id=${student.id}"
-class="btn card-btn w-100"
-onclick="return confirmDelete()">
-Delete
+   class="btn btn-border w-100 ${student.status != 'active' ? 'disabled' : ''}"
+   <c:if test="${student.status != 'active'}">onclick="return false;"</c:if>
+   <c:if test="${student.status == 'active'}">onclick="return confirmDelete();"</c:if>>
+   Delete
 </a>
+</div>
 
+<!-- ACTIVATE / DEACTIVATE -->
+<div class="mt-2">
+<c:choose>
+<c:when test="${student.status == 'active'}">
+<a href="${pageContext.request.contextPath}/teacher/deactivatestudent?id=${student.id}" class="btn btn-border w-100">
+Deactivate
+</a>
+</c:when>
+<c:otherwise>
+<a href="${pageContext.request.contextPath}/teacher/activatestudent?id=${student.id}" class="btn btn-border w-100">
+Activate
+</a>
+</c:otherwise>
+</c:choose>
 </div>
 
 </div>
-
 </div>
-
 </c:forEach>
 
 </div>
 </div>
 
-
-
-<!-- 🔥 UPDATE MODAL -->
+<!-- UPDATE MODAL -->
 <div id="updateModal" class="modal-overlay">
-
 <div class="modal-box">
-
 <div class="modal-header">
 <h4>Update Student</h4>
 <span onclick="closeModal()" class="close-btn">✖</span>
 </div>
 
 <form action="updateStudent" method="post">
-
 <input type="hidden" name="id" id="studentId">
 
 <div class="mb-3">
@@ -276,21 +258,17 @@ Delete
 </div>
 
 <button class="btn submit-btn w-100">Update</button>
-
 </form>
+</div>
+</div>
 
-</div>
-</div>
-<!-- SCRIPT -->
 <script>
 function confirmDelete(){
     return confirm("Are you sure you want to delete this student?");
 }
 
 function openUpdateModal(id, name, email, contact, location){
-
     document.getElementById("updateModal").style.display="flex";
-
     document.getElementById("studentId").value=id;
     document.getElementById("name").value=name;
     document.getElementById("email").value=email;

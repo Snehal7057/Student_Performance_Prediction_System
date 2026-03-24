@@ -117,7 +117,7 @@ select {
 
 /* READ BUTTON */
 .read-btn {
-  margin-top: auto; /* 🔥 pushes button to bottom */
+  margin-top: auto; 
   padding: 6px 12px;
   background: #1c1f26;
   color: white;
@@ -146,10 +146,6 @@ select {
   background: black;
   transform: scale(1.05);
 }
-
-
-
-
 
 
 /* SECTION */
@@ -275,9 +271,6 @@ select {
   }
 }
 
-
-
-
 .testimonial-section {
   padding: 60px 20px;
   text-align: center;
@@ -372,13 +365,13 @@ select {
 <section class="main-section">
 
   <!-- TITLE -->
-  <h2 class="section-title">Courses for 10th Students</h2>
+  <h2 class="section-title">Courses for Our Students</h2>
 
   <!-- COURSES -->
   <div class="courses-container">
 
     <div class="course-card">
-      <img src="https://images.unsplash.com/photo-1588072432836-e10032774350">
+      <img  src="${pageContext.request.contextPath}/resources/images/sci.jpg">
       <div class="course-content">
         <h3>Science Foundation</h3>
         <p>Strong base in Physics, Chemistry & Biology.</p>
@@ -386,7 +379,7 @@ select {
     </div>
 
     <div class="course-card">
-      <img src="https://images.unsplash.com/photo-1606326608606-aa0b62935f2b">
+      <img  src="${pageContext.request.contextPath}/resources/images/math.jpg">
       <div class="course-content">
         <h3>Mathematics Mastery</h3>
         <p>Improve problem solving & board exam preparation.</p>
@@ -394,7 +387,7 @@ select {
     </div>
 
     <div class="course-card">
-      <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f">
+      <img  src="${pageContext.request.contextPath}/resources/images/carrie.jpg">
       <div class="course-content">
         <h3>Career Guidance</h3>
         <p>Choose best stream after 10th with expert advice.</p>
@@ -415,7 +408,7 @@ select {
   <div class="features-section">
 
     <div class="feature-img">
-      <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7">
+      <img src="${pageContext.request.contextPath}/resources/images/why.jpg">
     </div>
 
     <div class="feature-text">
@@ -437,27 +430,27 @@ select {
   <div class="mentors-container">
 
     <div class="mentor-card">
-      <img src="https://images.unsplash.com/photo-1607746882042-944635dfe10e">
+      <img src="${pageContext.request.contextPath}/resources/images/first.jpg">
       <h3>Mrs. Kavita Patil</h3>
-      <p>Science Teacher (10+ yrs)</p>
+      <p>Science Teacher (30+ yrs)</p>
     </div>
 
     <div class="mentor-card">
-      <img src="https://images.unsplash.com/photo-1595152772835-219674b2a8a6">
+      <img src="${pageContext.request.contextPath}/resources/images/last.jpg">
       <h3>Mr. Rahul Sharma</h3>
-      <p>Math Expert</p>
+      <p>Math Expert (10+ yrs)</p>
     </div>
 
     <div class="mentor-card">
-      <img src="https://images.unsplash.com/photo-1580894908361-967195033215">
+      <img src="${pageContext.request.contextPath}/resources/images/third.jpg">
       <h3>Ms. Sneha Joshi</h3>
-      <p>Career Counselor</p>
+      <p>Career Counselor(5+ yrs)</p>
     </div>
 
     <div class="mentor-card">
-      <img src="https://images.unsplash.com/photo-1527980965255-d3b416303d12">
+      <img src="${pageContext.request.contextPath}/resources/images/sec.jpg">
       <h3>Mr. Amit Verma</h3>
-      <p>Coding Mentor</p>
+      <p>Coding Mentor(15+ yrs)</p>
     </div>
 
   </div>

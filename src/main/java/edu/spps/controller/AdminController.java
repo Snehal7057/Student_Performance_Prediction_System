@@ -9,7 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import edu.spps.ml.WekaPredictionService;
 import edu.spps.model.AdminModel;
+import edu.spps.model.PerformanceModel;
+import edu.spps.model.PredictionModel;
 import edu.spps.model.StudentModel;
 import edu.spps.model.SubjectModel;
 import edu.spps.model.TeacherModel;
@@ -25,14 +28,10 @@ public class AdminController {
 	AdminService adminservice;
 	@Autowired
 	TeacherService teacherService;
+	@Autowired
+	private WekaPredictionService wekaService;
 
-	@GetMapping("/")
-	public String home() {
-
-		return "LandingPage";
-	}
-
-	@GetMapping("/admin")
+	@GetMapping("/admin/dashboard")
 	public String adminDashboard(Model model) {
 
 		List<SubjectModel> subjectList = adminservice.getAllSubjects();
@@ -43,7 +42,7 @@ public class AdminController {
 
 	@GetMapping("/welcome")
 	public String welcomePage() {
-		return "Welcome"; // Spring will resolve to /WEB-INF/views/Welcome.jsp
+		return "Welcome";
 	}
 
 	@GetMapping("/addteacher")
@@ -62,7 +61,7 @@ public class AdminController {
 		List<SubjectModel> subjectList = adminservice.getAllSubjects();
 		m.addAttribute("subjects", subjectList);
 
-		return "redirect:/admin";
+		return "redirect:/admin/dashboard";
 	}
 
 	@GetMapping("/viewteachers")
@@ -80,7 +79,7 @@ public class AdminController {
 		return "redirect:/viewteachers";
 	}
 
-	@GetMapping("/editteacher")
+	@GetMapping("/admin/editteacher")
 	public String editTeacher(@RequestParam("id") int id, Model model) {
 
 		TeacherModel teacher = adminservice.getTeacherById(id);
@@ -92,12 +91,12 @@ public class AdminController {
 		return "editteacher";
 	}
 
-	@PostMapping("/updateteacher")
+	@PostMapping("/admin/updateteacher")
 	public String updateTeacher(TeacherModel teacher) {
 
 		adminservice.updateTeacher(teacher);
 
-		return "redirect:/admin";
+		return "redirect:/admin/dashboard";
 	}
 
 	@GetMapping("/searchteacher")
@@ -171,7 +170,7 @@ public class AdminController {
 	public String updateAdminProfile(AdminModel admin, HttpSession session) {
 
 		if (admin.getId() == 0) {
-			return "redirect:/admin"; // avoid crash
+			return "redirect:/admin";
 		}
 
 		adminservice.updateAdmin(admin);
@@ -179,5 +178,48 @@ public class AdminController {
 		session.setAttribute("admin", admin);
 
 		return "redirect:/admin";
+	}
+
+	// ADMIN - Predict Page
+	@GetMapping("/admin/predictStudent")
+	public String adminPredictPage(Model model) {
+		model.addAttribute("students", teacherService.getAllStudents());
+		return "PredictPerformance";
+	}
+
+	// ADMIN - Predict Submit
+	@PostMapping("/admin/predictAuto")
+	public String adminPredictAuto(@RequestParam("studentId") int studentId, Model model) {
+
+		PerformanceModel p = teacherService.getAvgPerformance(studentId);
+
+		if (p == null) {
+			model.addAttribute("msg", "⚠️ No previous data present for this student!");
+			model.addAttribute("students", teacherService.getAllStudents());
+			return "PredictPerformance";
+		}
+
+		double result = wekaService.predict(studentId, p.getAttendance(), p.getStudy_hours(), p.getAssessment(),
+				p.getParticipation());
+
+		if (result == -1)
+			model.addAttribute("msg", "⚠️ Already Predicted for this month!");
+		else
+			model.addAttribute("msg", "✅ Prediction: " + result + "%");
+
+		model.addAttribute("result", result);
+		model.addAttribute("students", teacherService.getAllStudents());
+
+		return "PredictPerformance";
+	}
+
+	// ADMIN - View Predictions
+	@GetMapping("/admin/viewPredictions")
+	public String adminViewPredictions(Model model) {
+
+		List<PredictionModel> list = teacherService.getAllPrediction();
+		model.addAttribute("predictions", list);
+
+		return "ViewPrediction";
 	}
 }

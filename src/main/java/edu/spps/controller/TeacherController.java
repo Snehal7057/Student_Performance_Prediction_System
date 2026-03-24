@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,14 +14,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import edu.spps.ml.WekaPredictionService;
 import edu.spps.model.PerformanceModel;
+import edu.spps.model.PredictionModel;
 import edu.spps.model.StudentModel;
 import edu.spps.model.StudyMaterialModel;
 import edu.spps.model.SubjectModel;
+import edu.spps.model.TeacherModel;
 import edu.spps.service.AdminService;
 import edu.spps.service.TeacherService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class TeacherController {
@@ -28,9 +31,11 @@ public class TeacherController {
 	AdminService adminservice;
 	@Autowired
 	TeacherService teacherService;
+	@Autowired
+	private WekaPredictionService wekaService;
 
 	// Teacher Dashboard
-	@GetMapping("/teacher")
+	@GetMapping("/teacher/dashboard")
 	public String teacherDashboard() {
 		return "TeacherDashboard";
 	}
@@ -150,7 +155,7 @@ public class TeacherController {
 
 		// Group performances by student
 		Map<String, List<PerformanceModel>> studentPerformances = performancelist.stream()
-				.collect(Collectors.groupingBy(p -> p.getName())); // assuming getStudentName() exists
+				.collect(Collectors.groupingBy(p -> p.getName()));
 
 		model.addAttribute("studentPerformances", studentPerformances);
 		return "ViewPerformance";
@@ -183,38 +188,37 @@ public class TeacherController {
 	// upload
 	@PostMapping("/uploadMaterial")
 	public String uploadMaterial(@RequestParam("subject_id") int subjectId, @RequestParam("file") MultipartFile file,
-			HttpServletRequest request, HttpSession session) {
+			HttpServletRequest request, Authentication auth) {
 
 		try {
-			// Get upload folder path
 			String uploadPath = request.getServletContext().getRealPath("/uploads/study_material/");
 			File dir = new File(uploadPath);
 
-			// Create folder if it doesn't exist
 			if (!dir.exists()) {
 				dir.mkdirs();
 			}
 
-			// Get file name
 			String fileName = file.getOriginalFilename();
 			File destination = new File(uploadPath + File.separator + fileName);
 
-			// Save file
 			file.transferTo(destination);
 
-			// Save to database
+			// 🔥 Logged-in user
+			String email = auth.getName();
+
+			TeacherModel teacher = teacherService.getTeacherByEmail(email);
+
 			StudyMaterialModel material = new StudyMaterialModel();
 			material.setSubject_id(subjectId);
 			material.setFile_name(fileName);
-
-			// TEMPORARY teacher id (must exist in teachers table)
-			material.setUploaded_by(11);
+			material.setUploaded_by(teacher.getId());
 
 			teacherService.uploadMaterial(material);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 		return "redirect:/viewMaterial";
 	}
 
@@ -224,6 +228,59 @@ public class TeacherController {
 		List<StudyMaterialModel> materials = teacherService.getAllMaterials();
 		model.addAttribute("materials", materials);
 		return "ViewMaterial";
+	}
+
+	// deactivate
+	@GetMapping("teacher/deactivatestudent")
+	public String deactivateStudent(@RequestParam("id") int id) {
+		teacherService.deactivateStudent(id);
+		return "redirect:/teacher/viewStudent";
+	}
+
+	// activated
+	@GetMapping("teacher/activatestudent")
+	public String activateStudent(@RequestParam("id") int id) {
+		teacherService.activateStudent(id);
+		return "redirect:/teacher/viewStudent";
+	}
+
+	@GetMapping("/teacher/predictStudent")
+	public String showPage(Model model) {
+		model.addAttribute("students", teacherService.getAllStudents());
+		return "PredictPerformance";
+	}
+
+	@PostMapping("/teacher/predictAuto")
+	public String predictAuto(@RequestParam("studentId") int studentId, Model model) {
+		PerformanceModel p = teacherService.getAvgPerformance(studentId);
+		if (p == null) {
+			model.addAttribute("msg", "⚠️ No previous data present for this student!");
+			model.addAttribute("students", teacherService.getAllStudents());
+			return "PredictPerformance";
+		}
+
+		double result = wekaService.predict(studentId, p.getAttendance(), p.getStudy_hours(), p.getAssessment(),
+				p.getParticipation());
+
+		if (result == -1)
+			model.addAttribute("msg", "⚠️ Already Predicted for this month!");
+		else
+			model.addAttribute("msg", "✅ Prediction: " + result + "%");
+
+		model.addAttribute("result", result);
+		model.addAttribute("students", teacherService.getAllStudents());
+		return "PredictPerformance";
+	}
+
+	//
+	@GetMapping("/teacher/viewPredictions")
+	public String viewPredictions(Model model) {
+
+		List<PredictionModel> list = teacherService.getAllPrediction();
+
+		model.addAttribute("predictions", list);
+
+		return "ViewPrediction";
 	}
 
 }

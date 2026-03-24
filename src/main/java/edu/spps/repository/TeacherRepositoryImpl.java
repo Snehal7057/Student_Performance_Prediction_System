@@ -1,14 +1,19 @@
 package edu.spps.repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import edu.spps.model.PerformanceModel;
+import edu.spps.model.PredictionModel;
 import edu.spps.model.StudentModel;
 import edu.spps.model.StudyMaterialModel;
+import edu.spps.model.TeacherModel;
 
 @Repository
 public class TeacherRepositoryImpl implements TeacherRepository {
@@ -27,7 +32,7 @@ public class TeacherRepositoryImpl implements TeacherRepository {
 	// View Student
 	@Override
 	public List<StudentModel> getAllStudents() {
-		String sql = "select id, name, email, contact, location, DATE(created_date) as created_date from students";
+		String sql = "SELECT id, name, email, contact, location, status, DATE(created_date) as created_date FROM students";
 		List<StudentModel> list = jdbcTemplate.query(sql, (rs, rowNum) -> {
 			StudentModel s = new StudentModel();
 			s.setId(rs.getInt("id"));
@@ -36,6 +41,7 @@ public class TeacherRepositoryImpl implements TeacherRepository {
 			s.setContact(rs.getString("contact"));
 			s.setLocation(rs.getString("location"));
 			s.setCreatedDate(rs.getString("created_date"));
+			s.setStatus(rs.getString("status"));
 			// s.setRole_id(rs.getInt("role_id"));
 			return s;
 		});
@@ -166,4 +172,86 @@ public class TeacherRepositoryImpl implements TeacherRepository {
 			return m;
 		});
 	}
+
+	// Deactivate Student
+	@Override
+	public boolean deactivateStudent(int id) {
+		String sql = "update students set status='inactive' where id=?";
+		int result = jdbcTemplate.update(sql, id);
+		return result > 0;
+	}
+
+	// Activate Student
+	@Override
+	public boolean activateStudent(int id) {
+		String sql = "update students set status='active' where id=?";
+		int result = jdbcTemplate.update(sql, id);
+		return result > 0;
+	}
+
+	public PerformanceModel getAvgPerformance(int studentId) {
+		String countSql = "SELECT COUNT(*) FROM performance WHERE student_id=?";
+		int count = jdbcTemplate.queryForObject(countSql, Integer.class, studentId);
+		if (count == 0)
+			return null;
+
+		String sqlAvg = "SELECT AVG(attendance) AS attendance, " + "AVG(study_hours) AS study_hours, "
+				+ "AVG(assessment) AS assessment, " + "AVG(participation) AS participation "
+				+ "FROM performance WHERE student_id=?";
+
+		return jdbcTemplate.queryForObject(sqlAvg, new Object[] { studentId }, (rs, rowNum) -> {
+			PerformanceModel m = new PerformanceModel();
+			m.setStudent_id(studentId);
+			m.setAttendance(rs.getDouble("attendance"));
+			m.setStudy_hours(rs.getDouble("study_hours"));
+			m.setAssessment(rs.getDouble("assessment"));
+			m.setParticipation(rs.getDouble("participation"));
+
+			return m;
+		});
+	}
+
+	@Override
+	public List<PredictionModel> getAllPrediction() {
+		String sql = "SELECT p.prediction_id, p.student_id, s.name, p.month, p.predicted_score, p.created_at "
+				+ "FROM predictions p " + "JOIN students s ON p.student_id = s.id " + "ORDER BY p.month DESC";
+
+		return jdbcTemplate.query(sql, (rs, rowNum) -> {
+			PredictionModel p = new PredictionModel();
+			p.setPrediction_id(rs.getInt("prediction_id"));
+			p.setStudent_id(rs.getInt("student_id"));
+			p.setName(rs.getString("name"));
+			p.setMonth(rs.getString("month"));
+			p.setPredicted_score(rs.getDouble("predicted_score"));
+			p.setCreated_at(rs.getTimestamp("created_at").toLocalDateTime().toLocalDate());
+			return p;
+		});
+	}
+
+	private RowMapper<TeacherModel> rowMapper = new RowMapper<TeacherModel>() {
+		@Override
+		public TeacherModel mapRow(ResultSet rs, int rowNum) throws SQLException {
+			TeacherModel t = new TeacherModel();
+			t.setId(rs.getInt("id"));
+			t.setEmail(rs.getString("email"));
+			t.setPassword(rs.getString("contact"));
+			t.setName(rs.getString("name"));
+			return t;
+		}
+	};
+
+	@Override
+	public TeacherModel findByEmail(String email) {
+
+		String sql = "SELECT * FROM teachers WHERE email = ?";
+
+		List<TeacherModel> list = jdbcTemplate.query(sql, rowMapper, email);
+
+		if (list.isEmpty()) {
+			return null;
+		}
+
+		return list.get(0);
+	}
+
 }
