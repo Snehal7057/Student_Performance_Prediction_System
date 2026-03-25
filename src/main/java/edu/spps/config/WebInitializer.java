@@ -31,8 +31,6 @@ public class WebInitializer implements WebApplicationInitializer {
 		servlet.setLoadOnStartup(1);
 		servlet.addMapping("/");
 
-		// temparary file creation
-
 		MultipartConfigElement multipartConfigElement = new MultipartConfigElement(null, 10 * 1024 * 1024,
 				20 * 1024 * 1024, 0);
 

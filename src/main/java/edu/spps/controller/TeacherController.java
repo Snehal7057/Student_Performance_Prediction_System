@@ -185,27 +185,27 @@ public class TeacherController {
 
 	}
 
-	// upload
 	@PostMapping("/uploadMaterial")
 	public String uploadMaterial(@RequestParam("subject_id") int subjectId, @RequestParam("file") MultipartFile file,
 			HttpServletRequest request, Authentication auth) {
 
 		try {
-			String uploadPath = request.getServletContext().getRealPath("/uploads/study_material/");
-			File dir = new File(uploadPath);
+			String rootPath = request.getServletContext().getRealPath("/");
 
+			String uploadPath = rootPath + "uploads/study_material/";
+			System.out.println(uploadPath);
+
+			File dir = new File(uploadPath);
 			if (!dir.exists()) {
 				dir.mkdirs();
 			}
 
-			String fileName = file.getOriginalFilename();
-			File destination = new File(uploadPath + File.separator + fileName);
+			String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
 
+			File destination = new File(uploadPath + fileName);
 			file.transferTo(destination);
 
-			// 🔥 Logged-in user
 			String email = auth.getName();
-
 			TeacherModel teacher = teacherService.getTeacherByEmail(email);
 
 			StudyMaterialModel material = new StudyMaterialModel();
