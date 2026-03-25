@@ -1,95 +1,99 @@
-<%@ taglib prefix="c"
-uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 <html>
 <head>
-
 <title>Study Materials</title>
-
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
-
-/* ===== BODY ===== */
-body{
+body {
     margin:0;
-    font-family:'Segoe UI',sans-serif;
-    color:white;
+    font-family: 'Segoe UI', sans-serif;
+    color: #fff;
+    background: transparent;
 }
 
-/* VIDEO BG */
-.video-bg{
-    position:fixed;
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    z-index:-2;
+.video-bg {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
 }
 
-/* OVERLAY */
-body::before{
-    content:"";
-    position:fixed;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,0.7);
-    z-index:-1;
+body::before {
+    content: "";
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    z-index: -1;
 }
 
-/* HEADING */
-h2{
-    text-align:center;
-    margin:0;
-    padding:10px
+h2 {
+    text-align: center;
+    padding-top:35px;
+    margin-bottom: 45px;
+    font-weight: 700;
+    font-size: 32px;
 }
 
-/* CARD */
-.table-card{
-    background:rgba(255,255,255,0.1);
-    backdrop-filter:blur(12px);
-    padding:20px;
-    border-radius:12px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.6);
+.table {
+    color: #fff;
+    border-collapse: collapse;
+    width: 100%;
 }
 
-/* TABLE */
-.table{
-    color:white;
+.table th, .table td {
+    vertical-align: middle;
+    text-align: center;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
 }
 
-.table thead{
-    background:rgba(0,0,0,0.6);
+.table thead {
+    background: rgba(0,0,0,0.6);
+    color: black;
+    font-weight: 600;
+    text-transform: uppercase;
 }
 
-.table tbody tr:hover{
-    background:rgba(255,255,255,0.1);
+.table tbody tr:hover {
+    background: rgba(255,255,255,0.1);
 }
 
-/* FILE BUTTON */
-.file-btn{
-    background:linear-gradient(to right, #0b0f14, #121826);
-    color:white;
-    font-size:13px;
-    padding:6px 10px;
-    border-radius:6px;
-    text-decoration:none;
-    display:inline-block;
+/* Button style for filename */
+.file-btn {
+    display: inline-block;
+    background-color: #0ea5e9;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: 0.3s;
+    cursor: pointer;
 }
 
-.file-btn:hover{
-    background:#0ea5e9;
+.file-btn:hover {
+    background-color: #0284c7;
+    transform: translateY(-1px);
 }
 
+/* Responsive table scroll */
+.table-responsive {
+    max-height: 550px;
+    overflow-y: auto;
+}
 </style>
-
 </head>
 
 <body>
 
-<!-- VIDEO -->
 <video autoplay muted loop class="video-bg">
 <source src="${pageContext.request.contextPath}/resources/videos/teachdash.mp4">
 </video>
@@ -97,69 +101,39 @@ h2{
 <h2>Study Materials</h2>
 
 <div class="container">
-
 <div class="table-card">
-
 <div class="table-responsive">
-
 <table class="table table-bordered align-middle text-center">
-
 <thead>
-
 <tr>
-<th>ID</th>
-<th>Subject</th>
-<th>File</th>
-<th>Teacher</th>
-<th>Date</th>
+<th style="width:5%;">PID</th>
+<th style="width:20%;">Subject</th>
+<th style="width:20%;">File</th>
+<th style="width:30%;">Teacher</th>
+<th style="width:15%;">Date</th>
 </tr>
-
 </thead>
 
 <tbody>
-
 <c:forEach var="m" items="${materials}" varStatus="status">
-
 <tr>
-
 <td>${status.count}</td>
-
 <td>${m.subject_name}</td>
-
 <td>
-
-<!-- FILE NAME -->
-<a href="${pageContext.request.contextPath}/uploads/study_material/${m.file_name}" target="_blank">
-${m.file_name}
-</a>
-
-<br>
-
-<!-- VIEW BUTTON -->
-<a class="file-btn"
-href="${pageContext.request.contextPath}/uploads/study_material/${m.file_name}"
-target="_blank">
-View File
-</a>
-
+    <!-- Filename button that is clickable -->
+    <a href="${pageContext.request.contextPath}/uploads/study_material/${m.file_name}" 
+       target="_blank"
+       class="file-btn">Download</a>
 </td>
-
 <td>${m.teacher_name}</td>
-
 <td>${m.upload_date}</td>
-
 </tr>
-
 </c:forEach>
-
 </tbody>
 
 </table>
-
 </div>
-
 </div>
-
 </div>
 
 </body>

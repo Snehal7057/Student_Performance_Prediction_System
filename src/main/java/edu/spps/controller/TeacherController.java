@@ -256,30 +256,30 @@ public class TeacherController {
 		if (p == null) {
 			model.addAttribute("msg", "⚠️ No previous data present for this student!");
 			model.addAttribute("students", teacherService.getAllStudents());
+			model.addAttribute("showResult", false);
 			return "PredictPerformance";
 		}
 
 		double result = wekaService.predict(studentId, p.getAttendance(), p.getStudy_hours(), p.getAssessment(),
 				p.getParticipation());
 
-		if (result == -1)
+		if (result < 0) {
 			model.addAttribute("msg", "⚠️ Already Predicted for this month!");
-		else
-			model.addAttribute("msg", "✅ Prediction: " + result + "%");
+			model.addAttribute("showResult", false);
+		} else {
+			model.addAttribute("msg", "✅ Prediction Done");
+			model.addAttribute("result", result);
+			model.addAttribute("showResult", true); // show result
+		}
 
-		model.addAttribute("result", result);
 		model.addAttribute("students", teacherService.getAllStudents());
 		return "PredictPerformance";
 	}
 
-	//
 	@GetMapping("/teacher/viewPredictions")
 	public String viewPredictions(Model model) {
-
 		List<PredictionModel> list = teacherService.getAllPrediction();
-
 		model.addAttribute("predictions", list);
-
 		return "ViewPrediction";
 	}
 
